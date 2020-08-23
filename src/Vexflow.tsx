@@ -41,7 +41,8 @@ export function Score({
           clef: "treble",
           keys: [note],
           duration: "q",
-        }).setStemDirection(-1),
+          auto_stem: true,
+        }),
       ];
 
       const voice = new VF.Voice({ num_beats: 1, beat_value: 4 });

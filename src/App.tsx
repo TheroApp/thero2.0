@@ -43,7 +43,7 @@ const AuthStateApp: React.FunctionComponent = () => {
 
   const classes = useStyles();
 
-  const practicePool = ["a/5", "b/5", "c/5", "d/5", "e/5", "f/5", "g/5"];
+  const practicePool = ["a/4", "b/4", "c/5", "d/5", "e/5", "f/5", "g/5"];
 
   const getRandomNoteFromNotePool = () => {
     return practicePool[Math.floor(Math.random() * practicePool.length)];
@@ -86,8 +86,8 @@ const AuthStateApp: React.FunctionComponent = () => {
         </div>
         <Score note="d/4" />
         <div className={classes.container}>
-          <Button onClick={() => checkNote("a/5")}>A</Button>
-          <Button onClick={() => checkNote("b/5")}>B</Button>
+          <Button onClick={() => checkNote("a/4")}>A</Button>
+          <Button onClick={() => checkNote("b/4")}>B</Button>
           <Button onClick={() => checkNote("c/5")}>C</Button>
           <Button onClick={() => checkNote("d/5")}>D</Button>
           <Button onClick={() => checkNote("e/5")}>E</Button>
