@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-theroapp-staging-05824-authRole",
+      "UnauthRoleArn": "arn:aws:iam::452418081462:role/amplify-theroapp-staging-05824-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::452418081462:role/amplify-theroapp-staging-05824-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-theroapp-staging-05824-deployment",
+      "UnauthRoleName": "amplify-theroapp-staging-05824-unauthRole",
+      "StackName": "amplify-theroapp-staging-05824",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:452418081462:stack/amplify-theroapp-staging-05824/6ae7bd40-03dd-11eb-9af0-069ce1d5103a",
+      "AmplifyAppId": "d2l1xht9ig0kt6"
+    },
+    "categories": {
+      "auth": {
+        "theroapp3b30bbf3": {}
+      }
+    }
+  }
+}
