@@ -45,7 +45,7 @@ function App() {
         </Toolbar>
       </AppBar>
       <Container maxWidth="sm">{}
-        <div>
+        <div style={{paddingTop: '50px'}}>
           <h2>Amplify Tasks</h2>      {
             tasks.map((item: any, index) => (
               <div key={item.id ? item.id : index}>
