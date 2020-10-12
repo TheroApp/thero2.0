@@ -37,7 +37,11 @@ export function Score({
       stave.setContext(context).draw();
 
       const notes = [
-        new StaveNote({ clef: "treble", keys: [note], duration: "q" }),
+        new StaveNote({
+          clef: "treble",
+          keys: [note],
+          duration: "q",
+        }).setStemDirection(-1),
       ];
 
       const voice = new VF.Voice({ num_beats: 1, beat_value: 4 });

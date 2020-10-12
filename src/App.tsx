@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
-import { Container, Typography, Toolbar, IconButton } from "@material-ui/core";
+import {
+  Container,
+  Typography,
+  Toolbar,
+  IconButton,
+  Button,
+} from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
@@ -37,7 +43,22 @@ const AuthStateApp: React.FunctionComponent = () => {
 
   const classes = useStyles();
 
+  const practicePool = ["a/5", "b/5", "c/5", "d/5", "e/5", "f/5", "g/5"];
+
+  const getRandomNoteFromNotePool = () => {
+    return practicePool[Math.floor(Math.random() * practicePool.length)];
+  };
+
+  const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
+
+  const checkNote = (selectedNote: string) => {
+    if (selectedNote === currentNote) {
+      setCurrentNote(getRandomNoteFromNotePool);
+    }
+  };
+
   return authState === AuthState.SignedIn && user ? (
+
     <ThemeProvider>
       <AppBar position="relative">
         <Toolbar>
@@ -64,6 +85,15 @@ const AuthStateApp: React.FunctionComponent = () => {
           }
         </div>
         <Score note="d/4" />
+        <div className={classes.container}>
+          <Button onClick={() => checkNote("a/5")}>A</Button>
+          <Button onClick={() => checkNote("b/5")}>B</Button>
+          <Button onClick={() => checkNote("c/5")}>C</Button>
+          <Button onClick={() => checkNote("d/5")}>D</Button>
+          <Button onClick={() => checkNote("e/5")}>E</Button>
+          <Button onClick={() => checkNote("f/5")}>F</Button>
+          <Button onClick={() => checkNote("g/5")}>G</Button>
+        </div>
         <AmplifySignOut />
         <AmplifyS3Image imgKey={`Asset 2 1.png`} />
       </Container>
@@ -90,6 +120,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     title: {
       flexGrow: 1,
+    },
+    container: {
+      display: "flex",
+      justifyContent: "center",
     },
   })
 );
