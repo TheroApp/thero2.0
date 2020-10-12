@@ -10,6 +10,7 @@ import { GetTaskQuery } from './API';
 import { listTasks } from './graphql/queries';
 import { AmplifyAuthenticator, AmplifyS3Image, AmplifySignIn, AmplifySignInButton, AmplifySignOut, AmplifySignUp } from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
+import { Score } from "./Vexflow";
 
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
@@ -38,7 +39,7 @@ const AuthStateApp: React.FunctionComponent = () => {
 
   return authState === AuthState.SignedIn && user ? (
     <ThemeProvider>
-      <AppBar>
+      <AppBar position="relative">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             Thero
@@ -62,9 +63,9 @@ const AuthStateApp: React.FunctionComponent = () => {
             ))
           }
         </div>
+        <Score note="d/4" />
         <AmplifySignOut />
         <AmplifyS3Image imgKey={`Asset 2 1.png`} />
-
       </Container>
     </ThemeProvider>
   ) : (
