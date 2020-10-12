@@ -15,11 +15,13 @@
     "@types/react-dom": "^16.9.8",
     "aws-amplify": "^3.3.2",
     "aws-amplify-react": "^4.2.7",
+    "@types/vexflow": "^3.0.0",
     "cra-template-typescript": "1.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "vexflow": "^3.0.9"
   },
   "scripts": {
     "start": "react-scripts start",
