@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+amplify-authenticator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+img {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+
+:root {
+    --amplify-primary-color: #798DFA;
+    --amplify-primary-tint: #5870F9;
+    --amplify-primary-shade: #5870F9;
+    --amplify-font-family: 'Roboto';
+}
