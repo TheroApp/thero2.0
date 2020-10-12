@@ -84,7 +84,7 @@ const AuthStateApp: React.FunctionComponent = () => {
             ))
           }
         </div>
-        <Score note="d/4" />
+        <Score note={currentNote} />
         <div className={classes.container}>
           <Button onClick={() => checkNote("a/4")}>A</Button>
           <Button onClick={() => checkNote("b/4")}>B</Button>
