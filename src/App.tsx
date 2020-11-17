@@ -14,9 +14,10 @@ import { ThemeProvider } from "./ThemeProvider";
 import { API, graphqlOperation, loadingOverlay } from 'aws-amplify';
 import { GetTaskQuery } from './API';
 import { listTasks } from './graphql/queries';
-import { AmplifyAuthenticator, AmplifyS3Image, AmplifySignIn, AmplifySignInButton, AmplifySignOut, AmplifySignUp } from '@aws-amplify/ui-react';
+import { AmplifyAuthenticator, AmplifyFacebookButton, AmplifyS3Image, AmplifySignIn, AmplifySignInButton, AmplifySignOut, AmplifySignUp } from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { Score } from "./Vexflow";
+import logo from "./logo.png";
 
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
@@ -73,7 +74,7 @@ const AuthStateApp: React.FunctionComponent = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="sm">{}
+      <Container maxWidth="sm">{ }
         <div style={{ paddingTop: '50px' }}>
           <h2>Amplify Tasks</h2>      {
             tasks.map((item: any, index) => (
@@ -99,7 +100,10 @@ const AuthStateApp: React.FunctionComponent = () => {
       </Container>
     </ThemeProvider>
   ) : (
-      <>
+      <div className="sign-up-container">
+        <img src={logo} height="80px" width="80px"></img>
+        <AmplifyFacebookButton className="fb-button"/>
+
         <AmplifyAuthenticator>
           <AmplifySignInButton provider='facebook'>
           </AmplifySignInButton>
@@ -109,10 +113,12 @@ const AuthStateApp: React.FunctionComponent = () => {
             formFields={[
               { type: "email" },
               { type: "password" }
-            ]}
-          />
+            ]}>
+          </AmplifySignUp>
+
         </AmplifyAuthenticator>
-      </>
+
+      </div>
     );
 }
 
