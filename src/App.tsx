@@ -14,7 +14,7 @@ import { ThemeProvider } from "./ThemeProvider";
 import { API, graphqlOperation, loadingOverlay } from 'aws-amplify';
 import { GetTaskQuery } from './API';
 import { listTasks } from './graphql/queries';
-import { AmplifyAuthenticator, AmplifyFacebookButton, AmplifyS3Image, AmplifySignIn, AmplifySignInButton, AmplifySignOut, AmplifySignUp } from '@aws-amplify/ui-react';
+import { AmplifyAuthenticator, AmplifySignIn, AmplifyS3Image, AmplifySignOut, AmplifySignUp } from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
 import { Score } from "./Vexflow";
 import logo from "./logo.png";
@@ -96,25 +96,35 @@ const AuthStateApp: React.FunctionComponent = () => {
           <Button onClick={() => checkNote("g/5")}>G</Button>
         </div>
         <AmplifySignOut />
-        <AmplifyS3Image imgKey={`Asset 2 1.png`} />
       </Container>
     </ThemeProvider>
   ) : (
       <div className="sign-up-container">
-        <img src={logo} height="80px" width="80px"></img>
-        <AmplifyFacebookButton className="fb-button"/>
-
-        <AmplifyAuthenticator>
-          <AmplifySignInButton provider='facebook'>
-          </AmplifySignInButton>
-
+        <img src={logo} height="100px" width="300px"></img>
+        <AmplifyAuthenticator
+        >
           <AmplifySignUp
             slot="sign-up"
+            headerText="Sign up to Thero"
+            haveAccountText="Already signed up?"
             formFields={[
-              { type: "email" },
-              { type: "password" }
+              { type: "username", label: "Username", placeholder: "", required: true },
+              { type: "email", label: "Email", placeholder: "", required: true},
+              { type: "password", label: "Password", placeholder: "", required: true }
             ]}>
           </AmplifySignUp>
+          <AmplifySignIn
+          slot="sign-in"
+          headerText=""
+          formFields={[
+            {type: "username", label: "Username", placeholder: "", required: true},
+            {type: "password", label: "Password", placeholder: "", required: true}
+          ]}
+          >
+
+          </AmplifySignIn>
+
+
 
         </AmplifyAuthenticator>
 

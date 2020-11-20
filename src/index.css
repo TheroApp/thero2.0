@@ -12,7 +12,7 @@ code {
     monospace;
 }
 .sign-up-container {
-  padding-top: 5em;
+  padding-top: 3em;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -42,5 +42,5 @@ img {
     --amplify-primary-color: #798DFA;
     --amplify-primary-tint: #5870F9;
     --amplify-primary-shade: #5870F9;
-    --amplify-font-family: 'Roboto';
+    --amplify-font-family: -apple-system, BlinkMacSystemFont, Roboto;
 }
