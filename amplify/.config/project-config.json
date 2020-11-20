@@ -1,4 +1,7 @@
 {
+  "providers": [
+    "awscloudformation"
+  ],
   "projectName": "theroapp",
   "version": "3.0",
   "frontend": "javascript",
@@ -7,11 +10,8 @@
     "config": {
       "SourceDir": "src",
       "DistributionDir": "build",
-      "BuildCommand": "npm build",
+      "BuildCommand": "npm run-script build",
       "StartCommand": "npm start"
     }
-  },
-  "providers": [
-    "awscloudformation"
-  ]
+  }
 }

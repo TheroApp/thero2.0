@@ -11,11 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-amplify-authenticator {
+.sign-up-container {
+  padding-top: 3em;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  height: 100vh;
+}
+
+.fb-button {
+  width: 280px;
+  font-family: 'Roboto';
+
+}
+
+amplify-signup {
+  font-family: 'Roboto';
 }
 
 img {
@@ -23,6 +34,7 @@ img {
   justify-content: center;
   align-items: center;
   flex: 1;
+  padding-bottom: 2em;
 }
 
 
@@ -30,5 +42,5 @@ img {
     --amplify-primary-color: #798DFA;
     --amplify-primary-tint: #5870F9;
     --amplify-primary-shade: #5870F9;
-    --amplify-font-family: 'Roboto';
+    --amplify-font-family: -apple-system, BlinkMacSystemFont, Roboto;
 }
