@@ -7,35 +7,33 @@ import {
   IconButton,
   Button,
 } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles, responsiveFontSizes, Theme } from "@material-ui/core/styles";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
-}
+};
 
-export const NoteReaderLevel = ({practicePool}: NoteReaderLevelProp) => {
+export const NoteReaderLevel = ({ practicePool }: NoteReaderLevelProp) => {
   const getRandomNoteFromNotePool = () => {
     return practicePool[Math.floor(Math.random() * practicePool.length)];
   };
-const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
 
-const checkNote = (selectedNote: string) => {
-  if (selectedNote === currentNote) {
-    setCurrentNote(getRandomNoteFromNotePool);
-  }
-};
-const classes = useStyles();
+  const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
+
+  const checkNote = (selectedNote: string) => {
+    if (selectedNote === currentNote) {
+      setCurrentNote(getRandomNoteFromNotePool);
+    }
+  };
+  const classes = useStyles();
 
   return (
     <>
       <Score note={currentNote} />
       <div className={classes.container}>
-        <Button onClick={() => checkNote("b/4")}>B</Button>
-        <Button onClick={() => checkNote("c/5")}>C</Button>
-        <Button onClick={() => checkNote("d/5")}>D</Button>
-        <Button onClick={() => checkNote("e/5")}>E</Button>
-        <Button onClick={() => checkNote("f/5")}>F</Button>
-        <Button onClick={() => checkNote("g/5")}>G</Button>
+        {practicePool.map((note) => {
+          return <Button  className={classes.button} onClick={() => {checkNote(note)}}><h1>{note.charAt(0)}</h1></Button>;
+        })}
       </div>
     </>
   );
@@ -48,8 +46,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     container: {
       display: "flex",
-      justifyContent: "center",
+      justifyContent: "space-between",
     },
+    button: {
+      backgroundColor: "#5870F9",
+      color: "#FFFFFF",
+      height: "80px",
+      width: "80px"
+    },
+    h3: {
+      fontSize: "64px"
+
+    }
   })
 );
 

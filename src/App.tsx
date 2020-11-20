@@ -91,7 +91,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                     width="80px"
                     height="80px"
                     src={on}
-                    onClick={() => setSelectedLevel(["e/4", "g/4", "b/4", "d/4", "f/3"])} />
+                    onClick={() => setSelectedLevel(["e/4", "g/4", "b/4", "d/5", "f/5"])} />
                   <img
                     width="80px"
                     height="80px"
@@ -100,7 +100,6 @@ const AuthStateApp: React.FunctionComponent = () => {
                 </div>
                 </>
               )}
-              <AmplifySignOut />
       </Container>
     </ThemeProvider>
   ) : (
