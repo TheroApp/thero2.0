@@ -9,6 +9,8 @@ Amplify.configure(awsExports);
 
 ReactDOM.render(
   <React.StrictMode>
+    <meta name="apple-mobile-web-app-capable" content="yes"></meta>
+    <meta name="mobile-web-app-capable" content="yes"></meta>
     <link rel="manifest" href="/manifest.webmanifest"></link>
     <link //iPhone splashscreens
       rel="apple-touch-startup-image"
