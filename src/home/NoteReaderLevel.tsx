@@ -32,7 +32,7 @@ export const NoteReaderLevel = ({ practicePool }: NoteReaderLevelProp) => {
       <Score note={currentNote} />
       <div className={classes.container}>
         {practicePool.map((note) => {
-          return <Button  className={classes.button} onClick={() => {checkNote(note)}}><h1>{note.charAt(0)}</h1></Button>;
+          return <Button  key={note} className={classes.button} onClick={() => {checkNote(note)}}><h1>{note.charAt(0)}</h1></Button>;
         })}
       </div>
     </>
