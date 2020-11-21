@@ -11,55 +11,56 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import { ThemeProvider } from "./ThemeProvider";
-import { API, graphqlOperation, loadingOverlay } from 'aws-amplify';
-import { GetTaskQuery } from './API';
-import { listTasks } from './graphql/queries';
-import { AmplifyAuthenticator, AmplifySignIn, AmplifyS3Image, AmplifySignOut, AmplifySignUp } from '@aws-amplify/ui-react';
-import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
-import { Score } from "./Vexflow";
+import { API, graphqlOperation, loadingOverlay } from "aws-amplify";
+import { GetTaskQuery } from "./API";
+import { listTasks } from "./graphql/queries";
+import {
+  AmplifyAuthenticator,
+  AmplifySignIn,
+  AmplifyS3Image,
+  AmplifySignOut,
+  AmplifySignUp,
+} from "@aws-amplify/ui-react";
+import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+
+import NoteReaderLevel from "./home/NoteReaderLevel";
+
 import logo from "./logo.png";
+import between from "./images/BetweenLines.svg";
+import all from "./images/AllTheLines.svg";
+import on from "./images/OnTheLines.svg";
 
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
   const [user, setUser] = React.useState<object | undefined>();
+  const [selectedLevel, setSelectedLevel] = React.useState<
+    Array<string> | undefined
+  >();
 
   React.useEffect(() => {
-    fetchTasks()
+    fetchTasks();
 
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
-      setUser(authData)
+      setUser(authData);
     });
   }, []);
 
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState([]);
 
   async function fetchTasks() {
     try {
-      const taskData: any = await API.graphql(graphqlOperation(listTasks))
+      const taskData: any = await API.graphql(graphqlOperation(listTasks));
       const tasks = taskData.data.listTasks.items;
-      setTasks(tasks)
-    } catch (err) { console.log('error fetching tasks') }
+      setTasks(tasks);
+    } catch (err) {
+      console.log("error fetching tasks");
+    }
   }
 
   const classes = useStyles();
 
-  const practicePool = ["a/4", "b/4", "c/5", "d/5", "e/5", "f/5", "g/5"];
-
-  const getRandomNoteFromNotePool = () => {
-    return practicePool[Math.floor(Math.random() * practicePool.length)];
-  };
-
-  const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
-
-  const checkNote = (selectedNote: string) => {
-    if (selectedNote === currentNote) {
-      setCurrentNote(getRandomNoteFromNotePool);
-    }
-  };
-
   return authState === AuthState.SignedIn && user ? (
-
     <ThemeProvider>
       <AppBar position="relative">
         <Toolbar>
@@ -74,63 +75,79 @@ const AuthStateApp: React.FunctionComponent = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="sm">{ }
-        <div style={{ paddingTop: '50px' }}>
-          <h2>Amplify Tasks</h2>      {
-            tasks.map((item: any, index) => (
-              <div key={item.id ? item.id : index}>
-                <p>{item.name}</p>
-                <p>{item.description}</p>
-              </div>
-            ))
-          }
-        </div>
-        <Score note={currentNote} />
-        <div className={classes.container}>
-          <Button onClick={() => checkNote("a/4")}>A</Button>
-          <Button onClick={() => checkNote("b/4")}>B</Button>
-          <Button onClick={() => checkNote("c/5")}>C</Button>
-          <Button onClick={() => checkNote("d/5")}>D</Button>
-          <Button onClick={() => checkNote("e/5")}>E</Button>
-          <Button onClick={() => checkNote("f/5")}>F</Button>
-          <Button onClick={() => checkNote("g/5")}>G</Button>
-        </div>
-        <AmplifySignOut />
+      <Container maxWidth="sm">
+          {selectedLevel ? (
+            <NoteReaderLevel practicePool={selectedLevel} />
+          ) : (
+            <>
+                <h2>Note Reading</h2>
+                <div style={{ paddingTop: "50px", paddingLeft: "200px" }}>
+                  <img
+                    width="80px"
+                    height="80px"
+                    src={between}
+                    onClick={() => setSelectedLevel(["f/4", "a/4", "c/5", "e/5"])} />
+                  <img
+                    width="80px"
+                    height="80px"
+                    src={on}
+                    onClick={() => setSelectedLevel(["e/4", "g/4", "b/4", "d/5", "f/5"])} />
+                  <img
+                    width="80px"
+                    height="80px"
+                    src={all}
+                    onClick={() => setSelectedLevel(["f/4", "a/4", "c/4", "e/3"])} />
+                </div>
+                </>
+              )}
       </Container>
     </ThemeProvider>
   ) : (
-      <div className="sign-up-container">
-        <img src={logo} height="100px" width="300px"></img>
-        <AmplifyAuthenticator
-        >
-          <AmplifySignUp
-            slot="sign-up"
-            headerText="Sign up to Thero"
-            haveAccountText="Already signed up?"
-            formFields={[
-              { type: "username", label: "Username", placeholder: "", required: true },
-              { type: "email", label: "Email", placeholder: "", required: true},
-              { type: "password", label: "Password", placeholder: "", required: true }
-            ]}>
-          </AmplifySignUp>
-          <AmplifySignIn
+    <div className="sign-up-container">
+      <img src={logo} height="100px" width="300px"></img>
+      <AmplifyAuthenticator>
+        <AmplifySignUp
+          slot="sign-up"
+          headerText="Sign up to Thero"
+          haveAccountText="Already signed up?"
+          formFields={[
+            {
+              type: "username",
+              label: "Username",
+              placeholder: "",
+              required: true,
+            },
+            { type: "email", label: "Email", placeholder: "", required: true },
+            {
+              type: "password",
+              label: "Password",
+              placeholder: "",
+              required: true,
+            },
+          ]}
+        ></AmplifySignUp>
+        <AmplifySignIn
           slot="sign-in"
           headerText=""
           formFields={[
-            {type: "username", label: "Username", placeholder: "", required: true},
-            {type: "password", label: "Password", placeholder: "", required: true}
+            {
+              type: "username",
+              label: "Username",
+              placeholder: "",
+              required: true,
+            },
+            {
+              type: "password",
+              label: "Password",
+              placeholder: "",
+              required: true,
+            },
           ]}
-          >
-
-          </AmplifySignIn>
-
-
-
-        </AmplifyAuthenticator>
-
-      </div>
-    );
-}
+        ></AmplifySignIn>
+      </AmplifyAuthenticator>
+    </div>
+  );
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -143,6 +160,5 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
 
 export default AuthStateApp;
