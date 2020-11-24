@@ -18,6 +18,8 @@ code {
   justify-content: space-around;
   align-items: center;
 }
+.rotate-in-ver{-webkit-animation:rotate-in-ver .5s cubic-bezier(.25,.46,.45,.94) both;animation:rotate-in-ver .5s cubic-bezier(.25,.46,.45,.94) both}
+@-webkit-keyframes rotate-in-ver{0%{-webkit-transform:rotateY(-360deg);transform:rotateY(-360deg);opacity:0}100%{-webkit-transform:rotateY(0deg);transform:rotateY(0deg);opacity:1}}@keyframes rotate-in-ver{0%{-webkit-transform:rotateY(-360deg);transform:rotateY(-360deg);opacity:0}100%{-webkit-transform:rotateY(0deg);transform:rotateY(0deg);opacity:1}}
 
 .fb-button {
   width: 280px;
