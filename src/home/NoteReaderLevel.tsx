@@ -21,6 +21,7 @@ import "../index.css";
 import AppBar from "@material-ui/core/AppBar";
 import { ArrowBack } from "@material-ui/icons";
 import ProgressBar from "../components/progressBar";
+import MediaQuery from "react-responsive";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
@@ -67,8 +68,8 @@ export const NoteReaderLevel = ({
   const classes = useStyles();
 
   return (
-    <>
-      <AppBar position="fixed">
+    <div style={{height: "70vh"}}>
+      <AppBar position="absolute">
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="back">
             <ArrowBack
@@ -82,24 +83,92 @@ export const NoteReaderLevel = ({
       </AppBar>
       <h3 className={classes.h3}>What is this note?</h3>
       <Score note={currentNote} />
-      <div className={classes.container}>
-        {practicePool.map((note) => {
-          return (
-            <Button
+      <MediaQuery minDeviceWidth={600}>
+        <div className={classes.container}>
+          {practicePool.map((note) => {
+            return (
+              <Button
+                disabled={levelState === "" ? false : true}
+                key={note}
+                className={
+                  selectedNote === note
+                    ? classes.selectedButton
+                    : classes.button
+                }
+                onClick={() => {
+                  setSelectedNote(note);
+                }}
+              >
+                <h1>{note.charAt(0)}</h1>
+              </Button>
+            );
+          })}
+        </div>
+      </MediaQuery>
+      <MediaQuery maxDeviceWidth={600}>
+        <div className={classes.mobileContainer}>
+          <div className={classes.mobileRow}>
+            <button
               disabled={levelState === "" ? false : true}
-              key={note}
+              key={practicePool[0]}
               className={
-                selectedNote === note ? classes.selectedButton : classes.button
+                selectedNote === practicePool[0]
+                  ? classes.selectedButton
+                  : classes.button
               }
               onClick={() => {
-                setSelectedNote(note);
+                setSelectedNote(practicePool[0]);
               }}
             >
-              <h1>{note.charAt(0)}</h1>
-            </Button>
-          );
-        })}
-      </div>
+              <h1>{practicePool[0].charAt(0).toUpperCase()}</h1>
+            </button>
+            <button
+              disabled={levelState === "" ? false : true}
+              key={practicePool[1]}
+              className={
+                selectedNote === practicePool[1]
+                  ? classes.selectedButton
+                  : classes.button
+              }
+              onClick={() => {
+                setSelectedNote(practicePool[1]);
+              }}
+            >
+              <h1>{practicePool[1].charAt(0).toUpperCase()}</h1>
+            </button>
+          </div>
+          <div className={classes.mobileRow}>
+            <button
+              disabled={levelState === "" ? false : true}
+              key={practicePool[2]}
+              className={
+                selectedNote === practicePool[2]
+                  ? classes.selectedButton
+                  : classes.button
+              }
+              onClick={() => {
+                setSelectedNote(practicePool[2]);
+              }}
+            >
+              <h1>{practicePool[2].charAt(0).toUpperCase()}</h1>
+            </button>
+            <button
+              disabled={levelState === "" ? false : true}
+              key={practicePool[3]}
+              className={
+                selectedNote === practicePool[3]
+                  ? classes.selectedButton
+                  : classes.button
+              }
+              onClick={() => {
+                setSelectedNote(practicePool[3]);
+              }}
+            >
+              <h1>{practicePool[3].charAt(0).toUpperCase()}</h1>
+            </button>
+          </div>
+        </div>
+      </MediaQuery>
       <div className={classes.buttonContainer}>
         {selectedNote ? (
           <Button
@@ -149,7 +218,7 @@ export const NoteReaderLevel = ({
           <></>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
@@ -162,6 +231,16 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "space-between",
     },
+    mobileContainer: {
+      display: "flex",
+      justifyContent: "space-around",
+      flexDirection: "column",
+    },
+    mobileRow: {
+      display: "flex",
+      justifyContent: "space-around",
+      marginBottom: "2em",
+    },
     button: {
       backgroundColor: "#FFFFFF",
       color: "#5870F9",
@@ -172,6 +251,8 @@ const useStyles = makeStyles((theme: Theme) =>
     selectedButton: {
       backgroundColor: "#5870F9",
       color: "#FFFFFF",
+      border: "2px solid #5870F9",
+      outline: "none",
       height: "80px",
       width: "80px",
     },

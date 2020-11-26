@@ -83,7 +83,7 @@ const AuthStateApp: React.FunctionComponent = () => {
           ) : (
             <>
                 <h2>Note Reading</h2>
-                <div style={{ paddingTop: "50px", paddingLeft: "200px" }}>
+                <div style={{ paddingTop: "50px", display:"flex", justifyContent: "center"}}>
                   <img
                     width="80px"
                     height="80px"
