@@ -53,8 +53,8 @@ export const NoteReaderLevel = ({
   };
 
   const getNewNote = () => {
-    if (score == 10){
-      setSelectedLevel('')
+    if (score == 10) {
+      setSelectedLevel("");
     }
     var randomNote = getRandomNoteFromNotePool();
     while (randomNote == currentNote) {
@@ -100,53 +100,55 @@ export const NoteReaderLevel = ({
           );
         })}
       </div>
-      {selectedNote ? (
-        <Button
-          className={classes.continueButton}
-          onClick={() => {
-            checkNote(selectedNote);
-          }}
-        >
-          <div style={{ marginTop: "20px" }}>
-            <img width="42px" height="42px" src={arrow}></img>
-          </div>
-        </Button>
-      ) : (
-        <></>
-      )}
-
-      {levelState == "Success" ? (
-        <>
+      <div className={classes.buttonContainer}>
+        {selectedNote ? (
           <Button
-            className={classes.successbutton}
+            className={classes.continueButton}
             onClick={() => {
-              getNewNote();
+              checkNote(selectedNote);
             }}
           >
             <div style={{ marginTop: "20px" }}>
-              <img width="42px" height="42px" src={done}></img>
+              <img width="42px" height="42px" src={arrow}></img>
             </div>
           </Button>
-        </>
-      ) : (
-        <></>
-      )}
-      {levelState == "Fail" ? (
-        <>
-          <Button
-            className={classes.errorButton}
-            onClick={() => {
-              getNewNote();
-            }}
-          >
-            <div style={{ marginTop: "25px" }}>
-              <img width="32px" height="32px" src={wrong}></img>
-            </div>
-          </Button>
-        </>
-      ) : (
-        <></>
-      )}
+        ) : (
+          <></>
+        )}
+
+        {levelState == "Success" ? (
+          <>
+            <Button
+              className={classes.successbutton}
+              onClick={() => {
+                getNewNote();
+              }}
+            >
+              <div style={{ marginTop: "20px" }}>
+                <img width="42px" height="42px" src={done}></img>
+              </div>
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
+        {levelState == "Fail" ? (
+          <>
+            <Button
+              className={classes.errorButton}
+              onClick={() => {
+                getNewNote();
+              }}
+            >
+              <div style={{ marginTop: "25px" }}>
+                <img width="32px" height="32px" src={wrong}></img>
+              </div>
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
     </>
   );
 };
@@ -178,30 +180,23 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "82px",
       width: "250px",
       borderRadius: "24px",
-      display: "flex",
-      justifyContent: "center",
-      marginTop: "150px",
-      marginLeft: "150px",
     },
     successbutton: {
       background: "#F9E058",
       height: "82px",
       width: "250px",
       borderRadius: "24px",
-      display: "flex",
-      justifyContent: "center",
-      marginTop: "150px",
-      marginLeft: "150px",
     },
     errorButton: {
       background: "#F4302B",
       height: "82px",
       width: "250px",
       borderRadius: "24px",
+    },
+    buttonContainer: {
       display: "flex",
       justifyContent: "center",
-      marginTop: "150px",
-      marginLeft: "150px",
+      marginTop: "5em",
     },
     h3: {
       marginTop: "6em",
