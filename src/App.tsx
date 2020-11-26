@@ -62,6 +62,7 @@ const AuthStateApp: React.FunctionComponent = () => {
 
   return authState === AuthState.SignedIn && user ? (
     <ThemeProvider>
+      {!selectedLevel ? 
       <AppBar position="relative">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
@@ -75,9 +76,10 @@ const AuthStateApp: React.FunctionComponent = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
+      : <></>}
       <Container maxWidth="sm">
           {selectedLevel ? (
-            <NoteReaderLevel practicePool={selectedLevel} />
+            <NoteReaderLevel practicePool={selectedLevel} setSelectedLevel={setSelectedLevel}/>
           ) : (
             <>
                 <h2>Note Reading</h2>
