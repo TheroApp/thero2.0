@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { Score } from "../Vexflow";
 import {
   Container,
@@ -6,36 +6,219 @@ import {
   Toolbar,
   IconButton,
   Button,
+  Icon,
 } from "@material-ui/core";
-import { createStyles, makeStyles, responsiveFontSizes, Theme } from "@material-ui/core/styles";
+import {
+  createStyles,
+  makeStyles,
+  responsiveFontSizes,
+  Theme,
+} from "@material-ui/core/styles";
+import arrow from "../images/thin_big_right.png";
+import done from "../images/done.svg";
+import wrong from "../images/wrong.png";
+import "../index.css";
+import AppBar from "@material-ui/core/AppBar";
+import { ArrowBack } from "@material-ui/icons";
+import ProgressBar from "../components/progressBar";
+import MediaQuery from "react-responsive";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
+  setSelectedLevel: Function;
 };
 
-export const NoteReaderLevel = ({ practicePool }: NoteReaderLevelProp) => {
+export const NoteReaderLevel = ({
+  practicePool,
+  setSelectedLevel,
+}: NoteReaderLevelProp) => {
   const getRandomNoteFromNotePool = () => {
     return practicePool[Math.floor(Math.random() * practicePool.length)];
   };
 
   const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
+  const [selectedNote, setSelectedNote] = useState("");
+  const [levelState, setLevelState] = useState("");
+
+  const [score, setScore] = useState(0);
 
   const checkNote = (selectedNote: string) => {
     if (selectedNote === currentNote) {
-      setCurrentNote(getRandomNoteFromNotePool);
+      setScore(score + 1);
+      setLevelState("Success");
+      setSelectedNote("");
+    } else {
+      setLevelState("Fail");
+      setSelectedNote("");
     }
   };
+
+  const getNewNote = () => {
+    if (score == 10) {
+      setSelectedLevel("");
+    }
+    var randomNote = getRandomNoteFromNotePool();
+    while (randomNote == currentNote) {
+      randomNote = getRandomNoteFromNotePool();
+    }
+    setCurrentNote(randomNote);
+    setLevelState("");
+  };
+
   const classes = useStyles();
 
   return (
-    <>
+    <div style={{height: "70vh"}}>
+      <AppBar position="absolute">
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="back">
+            <ArrowBack
+              onClick={() => {
+                setSelectedLevel("");
+              }}
+            />
+          </IconButton>
+          <ProgressBar completed={score * 10}></ProgressBar>
+        </Toolbar>
+      </AppBar>
+      <h3 className={classes.h3}>What is this note?</h3>
       <Score note={currentNote} />
-      <div className={classes.container}>
-        {practicePool.map((note) => {
-          return <Button  key={note} className={classes.button} onClick={() => {checkNote(note)}}><h1>{note.charAt(0)}</h1></Button>;
-        })}
+      <MediaQuery minDeviceWidth={600}>
+        <div className={classes.container}>
+          {practicePool.map((note) => {
+            return (
+              <Button
+                disabled={levelState === "" ? false : true}
+                key={note}
+                className={
+                  selectedNote === note
+                    ? classes.selectedButton
+                    : classes.button
+                }
+                onClick={() => {
+                  setSelectedNote(note);
+                }}
+              >
+                <h1>{note.charAt(0)}</h1>
+              </Button>
+            );
+          })}
+        </div>
+      </MediaQuery>
+      <MediaQuery maxDeviceWidth={600}>
+        <div className={classes.mobileContainer}>
+          <div className={classes.mobileRow}>
+            <button
+              disabled={levelState === "" ? false : true}
+              key={practicePool[0]}
+              className={
+                selectedNote === practicePool[0]
+                  ? classes.selectedButton
+                  : classes.button
+              }
+              onClick={() => {
+                setSelectedNote(practicePool[0]);
+              }}
+            >
+              <h1>{practicePool[0].charAt(0).toUpperCase()}</h1>
+            </button>
+            <button
+              disabled={levelState === "" ? false : true}
+              key={practicePool[1]}
+              className={
+                selectedNote === practicePool[1]
+                  ? classes.selectedButton
+                  : classes.button
+              }
+              onClick={() => {
+                setSelectedNote(practicePool[1]);
+              }}
+            >
+              <h1>{practicePool[1].charAt(0).toUpperCase()}</h1>
+            </button>
+          </div>
+          <div className={classes.mobileRow}>
+            <button
+              disabled={levelState === "" ? false : true}
+              key={practicePool[2]}
+              className={
+                selectedNote === practicePool[2]
+                  ? classes.selectedButton
+                  : classes.button
+              }
+              onClick={() => {
+                setSelectedNote(practicePool[2]);
+              }}
+            >
+              <h1>{practicePool[2].charAt(0).toUpperCase()}</h1>
+            </button>
+            <button
+              disabled={levelState === "" ? false : true}
+              key={practicePool[3]}
+              className={
+                selectedNote === practicePool[3]
+                  ? classes.selectedButton
+                  : classes.button
+              }
+              onClick={() => {
+                setSelectedNote(practicePool[3]);
+              }}
+            >
+              <h1>{practicePool[3].charAt(0).toUpperCase()}</h1>
+            </button>
+          </div>
+        </div>
+      </MediaQuery>
+      <div className={classes.buttonContainer}>
+        {selectedNote ? (
+          <Button
+            className={classes.continueButton}
+            onClick={() => {
+              checkNote(selectedNote);
+            }}
+          >
+            <div style={{ marginTop: "20px" }}>
+              <img width="42px" height="42px" src={arrow}></img>
+            </div>
+          </Button>
+        ) : (
+          <></>
+        )}
+
+        {levelState == "Success" ? (
+          <>
+            <Button
+              className={classes.successbutton}
+              onClick={() => {
+                getNewNote();
+              }}
+            >
+              <div style={{ marginTop: "20px" }}>
+                <img width="42px" height="42px" src={done}></img>
+              </div>
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
+        {levelState == "Fail" ? (
+          <>
+            <Button
+              className={classes.errorButton}
+              onClick={() => {
+                getNewNote();
+              }}
+            >
+              <div style={{ marginTop: "25px" }}>
+                <img width="32px" height="32px" src={wrong}></img>
+              </div>
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
@@ -48,16 +231,60 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "space-between",
     },
+    mobileContainer: {
+      display: "flex",
+      justifyContent: "space-around",
+      flexDirection: "column",
+    },
+    mobileRow: {
+      display: "flex",
+      justifyContent: "space-around",
+      marginBottom: "2em",
+    },
     button: {
+      backgroundColor: "#FFFFFF",
+      color: "#5870F9",
+      height: "80px",
+      border: "2px solid #5870F9",
+      width: "80px",
+    },
+    selectedButton: {
       backgroundColor: "#5870F9",
       color: "#FFFFFF",
+      border: "2px solid #5870F9",
+      outline: "none",
       height: "80px",
-      width: "80px"
+      width: "80px",
+    },
+    continueButton: {
+      backgroundColor: "#5870F9",
+      height: "82px",
+      width: "250px",
+      borderRadius: "24px",
+    },
+    successbutton: {
+      background: "#F9E058",
+      height: "82px",
+      width: "250px",
+      borderRadius: "24px",
+    },
+    errorButton: {
+      background: "#F4302B",
+      height: "82px",
+      width: "250px",
+      borderRadius: "24px",
+    },
+    buttonContainer: {
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "5em",
     },
     h3: {
-      fontSize: "64px"
-
-    }
+      marginTop: "6em",
+      fontSize: "16px",
+      fontWeight: "normal",
+      textAlign: "center",
+    },
   })
 );
 

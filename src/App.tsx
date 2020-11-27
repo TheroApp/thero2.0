@@ -62,44 +62,62 @@ const AuthStateApp: React.FunctionComponent = () => {
 
   return authState === AuthState.SignedIn && user ? (
     <ThemeProvider>
-      <AppBar position="relative">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Thero
-          </Typography>
-          <IconButton edge="end" color="inherit" aria-label="teacher mode">
-            <SupervisorAccountIcon />
-          </IconButton>
-          <IconButton edge="end" color="inherit" aria-label="menu">
-            <MoreVertIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      {!selectedLevel ? (
+        <AppBar position="relative">
+          <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              Thero
+            </Typography>
+            <IconButton edge="end" color="inherit" aria-label="teacher mode">
+              <SupervisorAccountIcon />
+            </IconButton>
+            <IconButton edge="end" color="inherit" aria-label="menu">
+              <MoreVertIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      ) : (
+        <></>
+      )}
       <Container maxWidth="sm">
-          {selectedLevel ? (
-            <NoteReaderLevel practicePool={selectedLevel} />
-          ) : (
-            <>
-                <h2>Note Reading</h2>
-                <div style={{ paddingTop: "50px", paddingLeft: "200px" }}>
-                  <img
-                    width="80px"
-                    height="80px"
-                    src={between}
-                    onClick={() => setSelectedLevel(["f/4", "a/4", "c/5", "e/5"])} />
-                  <img
-                    width="80px"
-                    height="80px"
-                    src={on}
-                    onClick={() => setSelectedLevel(["e/4", "g/4", "b/4", "d/5", "f/5"])} />
-                  <img
-                    width="80px"
-                    height="80px"
-                    src={all}
-                    onClick={() => setSelectedLevel(["f/4", "a/4", "c/4", "e/3"])} />
-                </div>
-                </>
-              )}
+        {selectedLevel ? (
+          <NoteReaderLevel
+            practicePool={selectedLevel}
+            setSelectedLevel={setSelectedLevel}
+          />
+        ) : (
+          <>
+            <h2>Note Reading</h2>
+            <div
+              style={{
+                paddingTop: "50px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                width="80px"
+                height="80px"
+                src={between}
+                onClick={() => setSelectedLevel(["f/4", "a/4", "c/5", "e/5"])}
+              />
+              <img
+                width="80px"
+                height="80px"
+                src={on}
+                onClick={() =>
+                  setSelectedLevel(["e/4", "g/4", "b/4", "d/5", "f/5"])
+                }
+              />
+              <img
+                width="80px"
+                height="80px"
+                src={all}
+                onClick={() => setSelectedLevel(["f/4", "a/4", "c/4", "e/3"])}
+              />
+            </div>
+          </>
+        )}
       </Container>
     </ThemeProvider>
   ) : (
@@ -128,6 +146,7 @@ const AuthStateApp: React.FunctionComponent = () => {
         ></AmplifySignUp>
         <AmplifySignIn
           slot="sign-in"
+          hideSignUp
           headerText=""
           formFields={[
             {
