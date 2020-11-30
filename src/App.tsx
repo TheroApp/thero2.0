@@ -113,7 +113,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                 width="80px"
                 height="80px"
                 src={all}
-                onClick={() => setSelectedLevel(["f/4", "a/4", "c/4", "e/3"])}
+                onClick={() => setSelectedLevel(["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"])}
               />
             </div>
           </>
