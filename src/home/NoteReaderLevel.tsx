@@ -36,10 +36,33 @@ export const NoteReaderLevel = ({
     return practicePool[Math.floor(Math.random() * practicePool.length)];
   };
 
+  const getFourOptions = (rightAnswer: string) => {
+    var first = [rightAnswer];
+    var note = practicePool[Math.floor(Math.random() * practicePool.length)];
+
+    while(first.length < 4) {
+      if (!first.includes(note)){
+        first.push(note);
+      }
+      note = practicePool[Math.floor(Math.random() * practicePool.length)];
+    }
+
+    //shuffle the array
+    var i = first.length - 1;
+    for(i; i > 0; i--){
+      const j = Math.floor(Math.random() * i)
+      const temp = first[i]
+      first[i] = first[j]
+      first[j] = temp
+    }
+    return first;
+
+  };
+
   const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
   const [selectedNote, setSelectedNote] = useState("");
   const [levelState, setLevelState] = useState("");
-
+  const [fourOptions, setFourOptions] = useState(getFourOptions(currentNote));
   const [score, setScore] = useState(0);
 
   const checkNote = (selectedNote: string) => {
@@ -62,6 +85,8 @@ export const NoteReaderLevel = ({
       randomNote = getRandomNoteFromNotePool();
     }
     setCurrentNote(randomNote);
+    setFourOptions(getFourOptions(randomNote));
+
     setLevelState("");
   };
 
@@ -85,7 +110,7 @@ export const NoteReaderLevel = ({
       <Score note={currentNote} />
       <MediaQuery minDeviceWidth={600}>
         <div className={classes.container}>
-          {practicePool.map((note) => {
+          {fourOptions.map((note) => {
             return (
               <Button
                 disabled={levelState === "" ? false : true}
@@ -110,61 +135,61 @@ export const NoteReaderLevel = ({
           <div className={classes.mobileRow}>
             <button
               disabled={levelState === "" ? false : true}
-              key={practicePool[0]}
+              key={fourOptions[0]}
               className={
-                selectedNote === practicePool[0]
+                selectedNote === fourOptions[0]
                   ? classes.selectedButton
                   : classes.button
               }
               onClick={() => {
-                setSelectedNote(practicePool[0]);
+                setSelectedNote(fourOptions[0]);
               }}
             >
-              <h1>{practicePool[0].charAt(0).toUpperCase()}</h1>
+              <h1>{fourOptions[0].charAt(0).toUpperCase()}</h1>
             </button>
             <button
               disabled={levelState === "" ? false : true}
-              key={practicePool[1]}
+              key={fourOptions[1]}
               className={
-                selectedNote === practicePool[1]
+                selectedNote === fourOptions[1]
                   ? classes.selectedButton
                   : classes.button
               }
               onClick={() => {
-                setSelectedNote(practicePool[1]);
+                setSelectedNote(fourOptions[1]);
               }}
             >
-              <h1>{practicePool[1].charAt(0).toUpperCase()}</h1>
+              <h1>{fourOptions[1].charAt(0).toUpperCase()}</h1>
             </button>
           </div>
           <div className={classes.mobileRow}>
             <button
               disabled={levelState === "" ? false : true}
-              key={practicePool[2]}
+              key={fourOptions[2]}
               className={
-                selectedNote === practicePool[2]
+                selectedNote === fourOptions[2]
                   ? classes.selectedButton
                   : classes.button
               }
               onClick={() => {
-                setSelectedNote(practicePool[2]);
+                setSelectedNote(fourOptions[2]);
               }}
             >
-              <h1>{practicePool[2].charAt(0).toUpperCase()}</h1>
+              <h1>{fourOptions[2].charAt(0).toUpperCase()}</h1>
             </button>
             <button
               disabled={levelState === "" ? false : true}
-              key={practicePool[3]}
+              key={fourOptions[3]}
               className={
-                selectedNote === practicePool[3]
+                selectedNote === fourOptions[3]
                   ? classes.selectedButton
                   : classes.button
               }
               onClick={() => {
-                setSelectedNote(practicePool[3]);
+                setSelectedNote(fourOptions[3]);
               }}
             >
-              <h1>{practicePool[3].charAt(0).toUpperCase()}</h1>
+              <h1>{fourOptions[3].charAt(0).toUpperCase()}</h1>
             </button>
           </div>
         </div>
