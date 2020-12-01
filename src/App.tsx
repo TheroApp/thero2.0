@@ -87,7 +87,6 @@ const AuthStateApp: React.FunctionComponent = () => {
           />
         ) : (
           <>
-            <h2>Note Reading</h2>
             <div
               style={{
                 paddingTop: "50px",
