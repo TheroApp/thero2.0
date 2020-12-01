@@ -132,6 +132,7 @@ const AuthStateApp: React.FunctionComponent = () => {
               type: "username",
               label: "Username",
               placeholder: "",
+              hint: "Usernames are case sensitive",
               required: true,
             },
             { type: "email", label: "Email", placeholder: "", required: true },
@@ -145,13 +146,13 @@ const AuthStateApp: React.FunctionComponent = () => {
         ></AmplifySignUp>
         <AmplifySignIn
           slot="sign-in"
-          hideSignUp
           headerText=""
           formFields={[
             {
               type: "username",
               label: "Username",
               placeholder: "",
+              hint: "Usernames are case sensitive",
               required: true,
             },
             {
