@@ -47,8 +47,8 @@ export const NoteReaderLevel = ({
     var first = [rightAnswer];
     var note = practicePool[Math.floor(Math.random() * practicePool.length)];
 
-    while(first.length < 4) {
-      if (!first.includes(note)){
+    while (first.length < 4) {
+      if (!first.includes(note)) {
         first.push(note);
       }
       note = practicePool[Math.floor(Math.random() * practicePool.length)];
@@ -56,14 +56,13 @@ export const NoteReaderLevel = ({
 
     //shuffle the array
     var i = first.length - 1;
-    for(i; i > 0; i--){
-      const j = Math.floor(Math.random() * i)
-      const temp = first[i]
-      first[i] = first[j]
-      first[j] = temp
+    for (i; i > 0; i--) {
+      const j = Math.floor(Math.random() * i);
+      const temp = first[i];
+      first[i] = first[j];
+      first[j] = temp;
     }
     return first;
-
   };
 
   const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
@@ -71,8 +70,10 @@ export const NoteReaderLevel = ({
   const [levelState, setLevelState] = useState("");
   const [fourOptions, setFourOptions] = useState(getFourOptions(currentNote));
   const [score, setScore] = useState(0);
+  const [tries, setTries] = useState(0);
 
   const checkNote = (selectedNote: string) => {
+    setTries(tries + 1);
     if (selectedNote === currentNote) {
       setScore(score + 1);
       setLevelState("Success");
@@ -85,7 +86,7 @@ export const NoteReaderLevel = ({
 
   const getNewNote = async () => {
     if (score == 10) {
-      var total = globalScore + 10;
+      var total = globalScore + Math.round(100 - (tries - 10) * 10);
 
       const studentUser = {
         id: user.attributes.sub,
@@ -93,7 +94,7 @@ export const NoteReaderLevel = ({
       };
       const studentUserData: any = await API.graphql({
         query: updateStudentUser,
-        variables: { input: studentUser},
+        variables: { input: studentUser },
       });
       setSelectedLevel("");
     }
@@ -110,7 +111,7 @@ export const NoteReaderLevel = ({
   const classes = useStyles();
 
   return (
-    <div style={{height: "70vh"}}>
+    <div style={{ height: "70vh" }}>
       <AppBar position="absolute">
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="back">
@@ -219,7 +220,7 @@ export const NoteReaderLevel = ({
               checkNote(selectedNote);
             }}
           >
-              <div style={{ marginTop: "16px", marginLeft: "100px" }}>
+            <div style={{ marginTop: "16px", marginLeft: "100px" }}>
               <img width="42px" height="42px" src={arrow}></img>
             </div>
           </button>
@@ -304,7 +305,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "250px",
       borderRadius: "24px",
       border: "2px solid #5870F9",
-      outline: "none"
+      outline: "none",
     },
     successbutton: {
       background: "#F9E058",
