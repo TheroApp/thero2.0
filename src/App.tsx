@@ -57,24 +57,22 @@ const AuthStateApp: React.FunctionComponent = () => {
           variables: { id: user.attributes.sub },
         });
         setScore(studentUserData.data.getStudentUser.score);
-
-        if (!studentUserData) {
-          const studentUserData = {
-            id: user.attributes.sub,
-            score: 0,
-          };
-          try {
-            await API.graphql({
-              query: createStudentUser,
-              variables: { input: studentUserData },
-            });
-          } catch {
-            console.log("error creating score");
-          }
-        }
       }
     } catch (err) {
-      console.log("error fetching score");
+      console.log("error fetching score, creating score");
+
+      const studentUserData = {
+        id: user.attributes.sub,
+        score: 0,
+      };
+      try {
+        await API.graphql({
+          query: createStudentUser,
+          variables: { input: studentUserData },
+        });
+      } catch {
+        console.log("error creating score");
+      }
     }
   }
 
