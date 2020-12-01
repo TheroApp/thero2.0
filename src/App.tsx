@@ -11,9 +11,11 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import { ThemeProvider } from "./ThemeProvider";
-import { API, graphqlOperation, loadingOverlay } from "aws-amplify";
-import { GetTaskQuery } from "./API";
-import { listTasks } from "./graphql/queries";
+import { API, graphqlOperation } from "aws-amplify";
+import { GetStudentUserQuery } from "./API";
+import { getStudentUser } from "./graphql/queries";
+import { createStudentUser } from "./graphql/mutations";
+
 import {
   AmplifyAuthenticator,
   AmplifySignIn,
@@ -32,29 +34,47 @@ import on from "./images/OnTheLines.svg";
 
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
-  const [user, setUser] = React.useState<object | undefined>();
+  const [user, setUser] = React.useState<any | undefined>();
   const [selectedLevel, setSelectedLevel] = React.useState<
     Array<string> | undefined
   >();
+  const [score, setScore] = useState(0);
 
   React.useEffect(() => {
-    fetchTasks();
+    fetchScore();
 
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
       setUser(authData);
     });
-  }, []);
+  }, [user, selectedLevel]);
 
-  const [tasks, setTasks] = useState([]);
-
-  async function fetchTasks() {
+  async function fetchScore() {
     try {
-      const taskData: any = await API.graphql(graphqlOperation(listTasks));
-      const tasks = taskData.data.listTasks.items;
-      setTasks(tasks);
+      if (user) {
+        const studentUserData: any = await API.graphql({
+          query: getStudentUser,
+          variables: { id: user.attributes.sub },
+        });
+        setScore(studentUserData.data.getStudentUser.score);
+
+        if (!studentUserData) {
+          const studentUserData = {
+            id: user.attributes.sub,
+            score: 0,
+          };
+          try {
+            await API.graphql({
+              query: createStudentUser,
+              variables: { input: studentUserData },
+            });
+          } catch {
+            console.log("error creating score");
+          }
+        }
+      }
     } catch (err) {
-      console.log("error fetching tasks");
+      console.log("error fetching score");
     }
   }
 
@@ -66,11 +86,8 @@ const AuthStateApp: React.FunctionComponent = () => {
         <AppBar position="relative">
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
-              Thero
+              {user.username}: {score}
             </Typography>
-            <IconButton edge="end" color="inherit" aria-label="teacher mode">
-              <SupervisorAccountIcon />
-            </IconButton>
             <IconButton edge="end" color="inherit" aria-label="menu">
               <MoreVertIcon />
             </IconButton>
@@ -84,6 +101,8 @@ const AuthStateApp: React.FunctionComponent = () => {
           <NoteReaderLevel
             practicePool={selectedLevel}
             setSelectedLevel={setSelectedLevel}
+            user={user}
+            globalScore={score}
           />
         ) : (
           <>
@@ -112,7 +131,17 @@ const AuthStateApp: React.FunctionComponent = () => {
                 width="80px"
                 height="80px"
                 src={all}
-                onClick={() => setSelectedLevel(["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"])}
+                onClick={() =>
+                  setSelectedLevel([
+                    "a/4",
+                    "c/5",
+                    "e/4",
+                    "g/4",
+                    "b/4",
+                    "d/5",
+                    "f/5",
+                  ])
+                }
               />
             </div>
           </>

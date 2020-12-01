@@ -71,3 +71,75 @@ export const onDeletePrivateNote = /* GraphQL */ `
     }
   }
 `;
+export const onCreateStudentUser = /* GraphQL */ `
+  subscription OnCreateStudentUser($owner: String!) {
+    onCreateStudentUser(owner: $owner) {
+      id
+      score
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateStudentUser = /* GraphQL */ `
+  subscription OnUpdateStudentUser($owner: String!) {
+    onUpdateStudentUser(owner: $owner) {
+      id
+      score
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteStudentUser = /* GraphQL */ `
+  subscription OnDeleteStudentUser($owner: String!) {
+    onDeleteStudentUser(owner: $owner) {
+      id
+      score
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateStudentHistory = /* GraphQL */ `
+  subscription OnCreateStudentHistory($owner: String!) {
+    onCreateStudentHistory(owner: $owner) {
+      id
+      level
+      accuracy
+      date
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateStudentHistory = /* GraphQL */ `
+  subscription OnUpdateStudentHistory($owner: String!) {
+    onUpdateStudentHistory(owner: $owner) {
+      id
+      level
+      accuracy
+      date
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteStudentHistory = /* GraphQL */ `
+  subscription OnDeleteStudentHistory($owner: String!) {
+    onDeleteStudentHistory(owner: $owner) {
+      id
+      level
+      accuracy
+      date
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;

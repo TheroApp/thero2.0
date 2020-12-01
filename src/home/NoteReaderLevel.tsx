@@ -22,15 +22,22 @@ import AppBar from "@material-ui/core/AppBar";
 import { ArrowBack } from "@material-ui/icons";
 import ProgressBar from "../components/progressBar";
 import MediaQuery from "react-responsive";
+import { AnyARecord } from "dns";
+import { updateStudentUser } from "../graphql/mutations";
+import { API } from "aws-amplify";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
   setSelectedLevel: Function;
+  user: any;
+  globalScore: number;
 };
 
 export const NoteReaderLevel = ({
   practicePool,
   setSelectedLevel,
+  user,
+  globalScore,
 }: NoteReaderLevelProp) => {
   const getRandomNoteFromNotePool = () => {
     return practicePool[Math.floor(Math.random() * practicePool.length)];
@@ -76,8 +83,18 @@ export const NoteReaderLevel = ({
     }
   };
 
-  const getNewNote = () => {
+  const getNewNote = async () => {
     if (score == 10) {
+      var total = globalScore + 10;
+
+      const studentUser = {
+        id: user.attributes.sub,
+        score: total,
+      };
+      const studentUserData: any = await API.graphql({
+        query: updateStudentUser,
+        variables: { input: studentUser},
+      });
       setSelectedLevel("");
     }
     var randomNote = getRandomNoteFromNotePool();
