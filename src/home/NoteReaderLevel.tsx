@@ -302,7 +302,7 @@ const useStyles = makeStyles((theme: Theme) =>
     buttonContainer: {
       display: "flex",
       justifyContent: "center",
-      marginTop: "5em",
+      marginTop: "1em",
     },
     h3: {
       marginTop: "6em",

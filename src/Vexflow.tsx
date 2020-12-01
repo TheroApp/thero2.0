@@ -22,12 +22,12 @@ export function Score({
         Renderer.Backends.CANVAS
       );
 
-      const canvasSize = 400;
+      const canvasSize = 300;
       renderer.resize(canvasSize, canvasSize);
 
       const context = renderer.getContext();
 
-      context.scale(2.5, 2.5);
+      context.scale(2, 2);
       context.setFont("Arial", 10);
       context.setBackgroundFillStyle("#eed");
 
@@ -67,7 +67,7 @@ const useStyles = makeStyles(() =>
       display: "flex",
       justifyContent: "center",
       marginTop: "-4rem",
-      marginLeft: "1.5rem",
+      marginLeft: "0.5rem",
     },
   })
 );
