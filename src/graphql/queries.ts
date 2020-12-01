@@ -62,3 +62,65 @@ export const listPrivateNotes = /* GraphQL */ `
     }
   }
 `;
+export const getStudentUser = /* GraphQL */ `
+  query GetStudentUser($id: ID!) {
+    getStudentUser(id: $id) {
+      id
+      score
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listStudentUsers = /* GraphQL */ `
+  query ListStudentUsers(
+    $filter: ModelStudentUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listStudentUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        score
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getStudentHistory = /* GraphQL */ `
+  query GetStudentHistory($id: ID!) {
+    getStudentHistory(id: $id) {
+      id
+      level
+      accuracy
+      date
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listStudentHistorys = /* GraphQL */ `
+  query ListStudentHistorys(
+    $filter: ModelStudentHistoryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listStudentHistorys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        level
+        accuracy
+        date
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
