@@ -196,48 +196,48 @@ export const NoteReaderLevel = ({
       </MediaQuery>
       <div className={classes.buttonContainer}>
         {selectedNote ? (
-          <Button
+          <button
             className={classes.continueButton}
             onClick={() => {
               checkNote(selectedNote);
             }}
           >
-            <div style={{ marginTop: "20px" }}>
+              <div style={{ marginTop: "16px", marginLeft: "100px" }}>
               <img width="42px" height="42px" src={arrow}></img>
             </div>
-          </Button>
+          </button>
         ) : (
           <></>
         )}
 
         {levelState == "Success" ? (
           <>
-            <Button
+            <button
               className={classes.successbutton}
               onClick={() => {
                 getNewNote();
               }}
             >
-              <div style={{ marginTop: "20px" }}>
+              <div style={{ marginTop: "16px", marginLeft: "100px" }}>
                 <img width="42px" height="42px" src={done}></img>
               </div>
-            </Button>
+            </button>
           </>
         ) : (
           <></>
         )}
         {levelState == "Fail" ? (
           <>
-            <Button
+            <button
               className={classes.errorButton}
               onClick={() => {
                 getNewNote();
               }}
             >
-              <div style={{ marginTop: "25px" }}>
+              <div style={{ marginTop: "22px", marginLeft: "110px" }}>
                 <img width="32px" height="32px" src={wrong}></img>
               </div>
-            </Button>
+            </button>
           </>
         ) : (
           <></>
@@ -286,18 +286,24 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "82px",
       width: "250px",
       borderRadius: "24px",
+      border: "2px solid #5870F9",
+      outline: "none"
     },
     successbutton: {
       background: "#F9E058",
       height: "82px",
       width: "250px",
       borderRadius: "24px",
+      border: "2px solid #F9E058",
+      outline: "none",
     },
     errorButton: {
       background: "#F4302B",
       height: "82px",
       width: "250px",
       borderRadius: "24px",
+      border: "2px solid #F4302B",
+      outline: "none",
     },
     buttonContainer: {
       display: "flex",
