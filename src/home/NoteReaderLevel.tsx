@@ -82,6 +82,9 @@ export const NoteReaderLevel = ({
       setLevelState("Fail");
       setSelectedNote("");
     }
+    setTimeout(() => {
+      getNewNote();
+    }, 800);
   };
 
   const getNewNote = async () => {
