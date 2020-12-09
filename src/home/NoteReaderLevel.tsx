@@ -236,7 +236,6 @@ export const NoteReaderLevel = ({
             <button
               className={classes.successbutton}
               onClick={() => {
-                getNewNote();
               }}
             >
               <div style={{ marginTop: "16px", marginLeft: "100px" }}>
@@ -252,7 +251,6 @@ export const NoteReaderLevel = ({
             <button
               className={classes.errorButton}
               onClick={() => {
-                getNewNote();
               }}
             >
               <div style={{ marginTop: "22px", marginLeft: "110px" }}>
