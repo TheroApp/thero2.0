@@ -24,6 +24,7 @@ type StudentHistory @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   level: Int!
   accuracy: Int!
-  date: AWSDate!
+  date: String!
+  username: String!
 }
 

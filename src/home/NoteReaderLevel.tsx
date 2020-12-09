@@ -22,9 +22,9 @@ import AppBar from "@material-ui/core/AppBar";
 import { ArrowBack } from "@material-ui/icons";
 import ProgressBar from "../components/progressBar";
 import MediaQuery from "react-responsive";
-import { AnyARecord } from "dns";
-import { updateStudentUser } from "../graphql/mutations";
+import { createStudentHistory, updateStudentUser } from "../graphql/mutations";
 import { API } from "aws-amplify";
+import { v4 as uuidv4 } from "uuid";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
@@ -89,16 +89,46 @@ export const NoteReaderLevel = ({
 
   const getNewNote = async () => {
     if (score == 10) {
-      var total = globalScore + Math.round(100 - (tries - 10) * 10);
+      var levelNum = 3;
+      if (practicePool.length === 4) {
+        levelNum = 1;
+      } else if (practicePool.length === 5) {
+        levelNum = 2;
+      }
+
+      const calcScore = Math.round(100 - (tries - 10) * 10);
+      const total = globalScore + calcScore;
 
       const studentUser = {
         id: user.attributes.sub,
         score: total,
       };
-      const studentUserData: any = await API.graphql({
-        query: updateStudentUser,
-        variables: { input: studentUser },
-      });
+      try {
+        const studentUserData: any = await API.graphql({
+          query: updateStudentUser,
+          variables: { input: studentUser },
+        });
+      } catch {
+        console.log("Failed to update score");
+      }
+      const studentLevelData = {
+        id: uuidv4(),
+        level: levelNum,
+        accuracy: calcScore,
+        date: Date.now().toString(),
+        username: user.username.toString(),
+      };
+
+      try {
+        const response: any = await API.graphql({
+          query: createStudentHistory,
+          variables: { input: studentLevelData },
+        });
+        console.log(response);
+      } catch {
+        console.log("failed to create history");
+      }
+
       setSelectedLevel("");
     }
     var randomNote = getRandomNoteFromNotePool();
@@ -233,11 +263,7 @@ export const NoteReaderLevel = ({
 
         {levelState == "Success" ? (
           <>
-            <button
-              className={classes.successbutton}
-              onClick={() => {
-              }}
-            >
+            <button className={classes.successbutton}>
               <div style={{ marginTop: "16px", marginLeft: "100px" }}>
                 <img width="42px" height="42px" src={done}></img>
               </div>
@@ -248,11 +274,7 @@ export const NoteReaderLevel = ({
         )}
         {levelState == "Fail" ? (
           <>
-            <button
-              className={classes.errorButton}
-              onClick={() => {
-              }}
-            >
+            <button className={classes.errorButton}>
               <div style={{ marginTop: "22px", marginLeft: "110px" }}>
                 <img width="32px" height="32px" src={wrong}></img>
               </div>
