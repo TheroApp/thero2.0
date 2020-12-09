@@ -111,6 +111,7 @@ export const onCreateStudentHistory = /* GraphQL */ `
       level
       accuracy
       date
+      username
       createdAt
       updatedAt
       owner
@@ -124,6 +125,7 @@ export const onUpdateStudentHistory = /* GraphQL */ `
       level
       accuracy
       date
+      username
       createdAt
       updatedAt
       owner
@@ -137,6 +139,7 @@ export const onDeleteStudentHistory = /* GraphQL */ `
       level
       accuracy
       date
+      username
       createdAt
       updatedAt
       owner

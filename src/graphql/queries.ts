@@ -98,6 +98,7 @@ export const getStudentHistory = /* GraphQL */ `
       level
       accuracy
       date
+      username
       createdAt
       updatedAt
       owner
@@ -116,6 +117,7 @@ export const listStudentHistorys = /* GraphQL */ `
         level
         accuracy
         date
+        username
         createdAt
         updatedAt
         owner
