@@ -30,11 +30,17 @@ import NoteReaderLevel from "./home/NoteReaderLevel";
 import logo from "./logo.png";
 import between from "./images/BetweenLines.svg";
 import all from "./images/AllTheLines.svg";
+import allvar from "./images/allvar.svg";
+
 import on from "./images/OnTheLines.svg";
+import ledger from "./images/ledger.svg";
+import highledger from "./images/highledger.svg";
 
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
   const [user, setUser] = React.useState<any | undefined>();
+  const [levelNum, setLevelNum] = React.useState<number>(0);
+
   const [selectedLevel, setSelectedLevel] = React.useState<
     Array<string> | undefined
   >();
@@ -76,6 +82,10 @@ const AuthStateApp: React.FunctionComponent = () => {
     }
   }
 
+  function setLevels(array: Array<string>, levelNum: number) {
+    setSelectedLevel(array);
+    setLevelNum(levelNum);
+  }
   const classes = useStyles();
 
   return authState === AuthState.SignedIn && user ? (
@@ -99,48 +109,71 @@ const AuthStateApp: React.FunctionComponent = () => {
           <NoteReaderLevel
             practicePool={selectedLevel}
             setSelectedLevel={setSelectedLevel}
+            levelNum={levelNum}
             user={user}
             globalScore={score}
           />
         ) : (
           <>
-            <div
-              style={{
-                paddingTop: "50px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                width="80px"
-                height="80px"
-                src={between}
-                onClick={() => setSelectedLevel(["f/4", "a/4", "c/5", "e/5"])}
-              />
-              <img
-                width="80px"
-                height="80px"
-                src={on}
-                onClick={() =>
-                  setSelectedLevel(["e/4", "g/4", "b/4", "d/5", "f/5"])
-                }
-              />
-              <img
-                width="80px"
-                height="80px"
-                src={all}
-                onClick={() =>
-                  setSelectedLevel([
-                    "a/4",
-                    "c/5",
-                    "e/4",
-                    "g/4",
-                    "b/4",
-                    "d/5",
-                    "f/5",
-                  ])
-                }
-              />
+            <div className={classes.mobileContainer}>
+              <div className={classes.mobileRow}>
+                <img
+                  width="80px"
+                  height="80px"
+                  src={between}
+                  onClick={() => setLevels(["f/4", "a/4", "c/5", "e/5"], 1)}
+                />
+                <img
+                  width="80px"
+                  height="80px"
+                  src={on}
+                  onClick={() =>
+                    setLevels(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
+                  }
+                />
+              </div>
+              <div className={classes.mobileRow}>
+                <img
+                  width="80px"
+                  height="80px"
+                  src={ledger}
+                  onClick={() =>
+                    setLevels(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
+                  }
+                />
+                <img
+                  width="80px"
+                  height="80px"
+                  src={all}
+                  onClick={() =>
+                    setLevels([
+                      "a/4",
+                      "c/5",
+                      "e/4",
+                      "g/4",
+                      "b/4",
+                      "d/5",
+                      "f/5",
+                    ], 4)
+                  }
+                />
+              </div>
+              <div className={classes.mobileRow}>
+                <img
+                  width="80px"
+                  height="80px"
+                  src={allvar}
+                  onClick={() =>
+                    setLevels(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
+                  }
+                />
+                <img
+                  width="80px"
+                  height="80px"
+                  src={highledger}
+                  onClick={() => setLevels(["g/5", "a/5", "b/5", "f/5"], 6)}
+                />
+              </div>
             </div>
           </>
         )}
@@ -203,6 +236,17 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       display: "flex",
       justifyContent: "center",
+    },
+    mobileContainer: {
+      paddingTop: "30px",
+      display: "flex",
+      justifyContent: "space-around",
+      flexDirection: "column",
+    },
+    mobileRow: {
+      display: "flex",
+      justifyContent: "space-around",
+      marginBottom: "2em",
     },
   })
 );
