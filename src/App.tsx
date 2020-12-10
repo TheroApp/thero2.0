@@ -104,51 +104,49 @@ const AuthStateApp: React.FunctionComponent = () => {
           />
         ) : (
           <>
-            <div
-              style={{
-                paddingTop: "50px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                width="80px"
-                height="80px"
-                src={between}
-                onClick={() => setSelectedLevel(["f/4", "a/4", "c/5", "e/5"])}
-              />
-              <img
-                width="80px"
-                height="80px"
-                src={on}
-                onClick={() =>
-                  setSelectedLevel(["e/4", "g/4", "b/4", "d/5", "f/5"])
-                }
-              />
-                            <img
-                width="80px"
-                height="80px"
-                src={on}
-                onClick={() =>
-                  setSelectedLevel(["b/3", "g/3", "a/3", "c/4", "d/4"])
-                }
-              />
-              <img
-                width="80px"
-                height="80px"
-                src={all}
-                onClick={() =>
-                  setSelectedLevel([
-                    "a/4",
-                    "c/5",
-                    "e/4",
-                    "g/4",
-                    "b/4",
-                    "d/5",
-                    "f/5",
-                  ])
-                }
-              />
+            <div className={classes.mobileContainer}>
+              <div className={classes.mobileRow}>
+                <img
+                  width="80px"
+                  height="80px"
+                  src={between}
+                  onClick={() => setSelectedLevel(["f/4", "a/4", "c/5", "e/5"])}
+                />
+                <img
+                  width="80px"
+                  height="80px"
+                  src={on}
+                  onClick={() =>
+                    setSelectedLevel(["e/4", "g/4", "b/4", "d/5", "f/5"])
+                  }
+                />
+              </div>
+              <div className={classes.mobileRow}>
+                <img
+                  width="80px"
+                  height="80px"
+                  src={on}
+                  onClick={() =>
+                    setSelectedLevel(["b/3", "g/3", "a/3", "c/4", "d/4"])
+                  }
+                />
+                <img
+                  width="80px"
+                  height="80px"
+                  src={all}
+                  onClick={() =>
+                    setSelectedLevel([
+                      "a/4",
+                      "c/5",
+                      "e/4",
+                      "g/4",
+                      "b/4",
+                      "d/5",
+                      "f/5",
+                    ])
+                  }
+                />
+              </div>
             </div>
           </>
         )}
@@ -211,6 +209,17 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       display: "flex",
       justifyContent: "center",
+    },
+    mobileContainer: {
+      paddingTop: "30px",
+      display: "flex",
+      justifyContent: "space-around",
+      flexDirection: "column",
+    },
+    mobileRow: {
+      display: "flex",
+      justifyContent: "space-around",
+      marginBottom: "2em",
     },
   })
 );
