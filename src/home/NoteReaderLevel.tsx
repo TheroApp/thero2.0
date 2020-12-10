@@ -31,6 +31,7 @@ type NoteReaderLevelProp = {
   setSelectedLevel: Function;
   user: any;
   globalScore: number;
+  levelNum: number;
 };
 
 export const NoteReaderLevel = ({
@@ -38,6 +39,7 @@ export const NoteReaderLevel = ({
   setSelectedLevel,
   user,
   globalScore,
+  levelNum
 }: NoteReaderLevelProp) => {
   const getRandomNoteFromNotePool = () => {
     return practicePool[Math.floor(Math.random() * practicePool.length)];
@@ -88,13 +90,7 @@ export const NoteReaderLevel = ({
   };
 
   const getNewNote = async () => {
-    if (score == 10) {
-      var levelNum = 3;
-      if (practicePool.length === 4) {
-        levelNum = 1;
-      } else if (practicePool.length === 5) {
-        levelNum = 2;
-      }
+    if (score == 1) {
 
       const calcScore = Math.round(100 - (tries - 10) * 10);
       const total = globalScore + calcScore;
