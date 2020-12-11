@@ -66,7 +66,7 @@ const AuthStateApp: React.FunctionComponent = () => {
       }
     } catch (err) {
       console.log("error fetching score, creating score");
-      if (user.attributes !== undefined) {
+      if (user.attributes !== undefined && user.attributes['custom:teacher'] !== undefined) {
         const studentUserData = {
           id: user.attributes.sub,
           score: 0,
