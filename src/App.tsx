@@ -57,7 +57,7 @@ const AuthStateApp: React.FunctionComponent = () => {
 
   async function fetchScore() {
     try {
-      if (user) {
+      if (user !== undefined) {
         const studentUserData: any = await API.graphql({
           query: getStudentUser,
           variables: { id: user.attributes.sub },
@@ -66,18 +66,21 @@ const AuthStateApp: React.FunctionComponent = () => {
       }
     } catch (err) {
       console.log("error fetching score, creating score");
+      if (user.attributes !== undefined) {
+        const studentUserData = {
+          id: user.attributes.sub,
+          score: 0,
+          teacherName: user.attributes['custom:teacher']
+        };
 
-      const studentUserData = {
-        id: user.attributes.sub,
-        score: 0,
-      };
-      try {
-        await API.graphql({
-          query: createStudentUser,
-          variables: { input: studentUserData },
-        });
-      } catch {
-        console.log("error creating score");
+        try {
+          await API.graphql({
+            query: createStudentUser,
+            variables: { input: studentUserData },
+          });
+        } catch {
+          console.log("error creating score");
+        }
       }
     }
   }
@@ -85,6 +88,7 @@ const AuthStateApp: React.FunctionComponent = () => {
   function setLevels(array: Array<string>, levelNum: number) {
     setSelectedLevel(array);
     setLevelNum(levelNum);
+    console.log(user);
   }
   const classes = useStyles();
 
@@ -97,7 +101,7 @@ const AuthStateApp: React.FunctionComponent = () => {
               {user.username}: {score}
             </Typography>
             <IconButton edge="end" color="inherit" aria-label="menu">
-              <MoreVertIcon />
+              <AmplifySignOut />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -146,15 +150,10 @@ const AuthStateApp: React.FunctionComponent = () => {
                   height="80px"
                   src={all}
                   onClick={() =>
-                    setLevels([
-                      "a/4",
-                      "c/5",
-                      "e/4",
-                      "g/4",
-                      "b/4",
-                      "d/5",
-                      "f/5",
-                    ], 4)
+                    setLevels(
+                      ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
+                      4
+                    )
                   }
                 />
               </div>
@@ -196,6 +195,12 @@ const AuthStateApp: React.FunctionComponent = () => {
               required: true,
             },
             { type: "email", label: "Email", placeholder: "", required: true },
+            {
+              type: "custom:teacher",
+              label: "Teachers's name",
+              placeholder: "",
+              required: true,
+            },
             {
               type: "password",
               label: "Password",

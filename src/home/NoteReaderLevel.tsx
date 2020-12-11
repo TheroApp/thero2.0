@@ -39,7 +39,7 @@ export const NoteReaderLevel = ({
   setSelectedLevel,
   user,
   globalScore,
-  levelNum
+  levelNum,
 }: NoteReaderLevelProp) => {
   const getRandomNoteFromNotePool = () => {
     return practicePool[Math.floor(Math.random() * practicePool.length)];
@@ -91,40 +91,41 @@ export const NoteReaderLevel = ({
 
   const getNewNote = async () => {
     if (score == 10) {
-
       const calcScore = Math.round(100 - (tries - 10) * 10);
       const total = globalScore + calcScore;
 
-      const studentUser = {
-        id: user.attributes.sub,
-        score: total,
-      };
-      try {
-        const studentUserData: any = await API.graphql({
-          query: updateStudentUser,
-          variables: { input: studentUser },
-        });
-      } catch {
-        console.log("Failed to update score");
-      }
-      const studentLevelData = {
-        id: uuidv4(),
-        level: levelNum,
-        accuracy: calcScore,
-        date: Date.now().toString(),
-        username: user.username.toString(),
-      };
+      if (user != undefined) {
+        const studentUser = {
+          id: user.attributes.sub,
+          score: total,
+        };
+        try {
+          const studentUserData: any = await API.graphql({
+            query: updateStudentUser,
+            variables: { input: studentUser },
+          });
+        } catch {
+          console.log("Failed to update score");
+        }
 
-      try {
-        const response: any = await API.graphql({
-          query: createStudentHistory,
-          variables: { input: studentLevelData },
-        });
-        console.log(response);
-      } catch {
-        console.log("failed to create history");
-      }
+        const studentLevelData = {
+          id: uuidv4(),
+          level: levelNum,
+          accuracy: calcScore,
+          date: Date.now().toString(),
+          username: user.username.toString(),
+        };
 
+        try {
+          const response: any = await API.graphql({
+            query: createStudentHistory,
+            variables: { input: studentLevelData },
+          });
+          console.log(response);
+        } catch {
+          console.log("failed to create history");
+        }
+      }
       setSelectedLevel("");
     }
     var randomNote = getRandomNoteFromNotePool();

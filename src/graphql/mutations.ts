@@ -97,6 +97,7 @@ export const createStudentUser = /* GraphQL */ `
     createStudentUser(input: $input, condition: $condition) {
       id
       score
+      teacherName
       createdAt
       updatedAt
       owner
@@ -111,6 +112,7 @@ export const updateStudentUser = /* GraphQL */ `
     updateStudentUser(input: $input, condition: $condition) {
       id
       score
+      teacherName
       createdAt
       updatedAt
       owner
@@ -125,6 +127,7 @@ export const deleteStudentUser = /* GraphQL */ `
     deleteStudentUser(input: $input, condition: $condition) {
       id
       score
+      teacherName
       createdAt
       updatedAt
       owner
