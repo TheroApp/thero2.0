@@ -1,10 +1,10 @@
 type StudentUser @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   score: Int!
-    teacherName: String!
+  teacherName: String!
 }
 
-type StudentHistory @model @auth(rules: [{ allow: owner}, {allow: private, operations: [read] }]) {
+type StudentHistory @model @auth(rules: [{ allow: public }]) {
   id: ID!
   level: Int!
   accuracy: Int!
