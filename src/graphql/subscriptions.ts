@@ -76,6 +76,7 @@ export const onCreateStudentUser = /* GraphQL */ `
     onCreateStudentUser(owner: $owner) {
       id
       score
+      teacherName
       createdAt
       updatedAt
       owner
@@ -87,6 +88,7 @@ export const onUpdateStudentUser = /* GraphQL */ `
     onUpdateStudentUser(owner: $owner) {
       id
       score
+      teacherName
       createdAt
       updatedAt
       owner
@@ -98,6 +100,7 @@ export const onDeleteStudentUser = /* GraphQL */ `
     onDeleteStudentUser(owner: $owner) {
       id
       score
+      teacherName
       createdAt
       updatedAt
       owner

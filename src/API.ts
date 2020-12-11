@@ -93,10 +93,12 @@ export type DeletePrivateNoteInput = {
 export type CreateStudentUserInput = {
   id?: string | null,
   score: number,
+  teacherName: string,
 };
 
 export type ModelStudentUserConditionInput = {
   score?: ModelIntInput | null,
+  teacherName?: ModelStringInput | null,
   and?: Array< ModelStudentUserConditionInput | null > | null,
   or?: Array< ModelStudentUserConditionInput | null > | null,
   not?: ModelStudentUserConditionInput | null,
@@ -117,6 +119,7 @@ export type ModelIntInput = {
 export type UpdateStudentUserInput = {
   id: string,
   score?: number | null,
+  teacherName?: string | null,
 };
 
 export type DeleteStudentUserInput = {
@@ -190,6 +193,7 @@ export type ModelPrivateNoteFilterInput = {
 export type ModelStudentUserFilterInput = {
   id?: ModelIDInput | null,
   score?: ModelIntInput | null,
+  teacherName?: ModelStringInput | null,
   and?: Array< ModelStudentUserFilterInput | null > | null,
   or?: Array< ModelStudentUserFilterInput | null > | null,
   not?: ModelStudentUserFilterInput | null,
@@ -315,6 +319,7 @@ export type CreateStudentUserMutation = {
     __typename: "StudentUser",
     id: string,
     score: number,
+    teacherName: string,
     createdAt: string,
     updatedAt: string,
     owner: string | null,
@@ -331,6 +336,7 @@ export type UpdateStudentUserMutation = {
     __typename: "StudentUser",
     id: string,
     score: number,
+    teacherName: string,
     createdAt: string,
     updatedAt: string,
     owner: string | null,
@@ -347,6 +353,7 @@ export type DeleteStudentUserMutation = {
     __typename: "StudentUser",
     id: string,
     score: number,
+    teacherName: string,
     createdAt: string,
     updatedAt: string,
     owner: string | null,
@@ -493,6 +500,7 @@ export type GetStudentUserQuery = {
     __typename: "StudentUser",
     id: string,
     score: number,
+    teacherName: string,
     createdAt: string,
     updatedAt: string,
     owner: string | null,
@@ -512,6 +520,7 @@ export type ListStudentUsersQuery = {
       __typename: "StudentUser",
       id: string,
       score: number,
+      teacherName: string,
       createdAt: string,
       updatedAt: string,
       owner: string | null,
@@ -652,6 +661,7 @@ export type OnCreateStudentUserSubscription = {
     __typename: "StudentUser",
     id: string,
     score: number,
+    teacherName: string,
     createdAt: string,
     updatedAt: string,
     owner: string | null,
@@ -667,6 +677,7 @@ export type OnUpdateStudentUserSubscription = {
     __typename: "StudentUser",
     id: string,
     score: number,
+    teacherName: string,
     createdAt: string,
     updatedAt: string,
     owner: string | null,
@@ -682,6 +693,7 @@ export type OnDeleteStudentUserSubscription = {
     __typename: "StudentUser",
     id: string,
     score: number,
+    teacherName: string,
     createdAt: string,
     updatedAt: string,
     owner: string | null,

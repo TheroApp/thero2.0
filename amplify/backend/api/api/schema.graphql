@@ -18,6 +18,7 @@ type PrivateNote @model @auth(rules: [{ allow: owner }]) {
 type StudentUser @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   score: Int!
+  teacherName: String!
 }
 
 type StudentHistory @model @auth(rules: [{ allow: owner }]) {

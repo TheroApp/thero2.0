@@ -67,6 +67,7 @@ export const getStudentUser = /* GraphQL */ `
     getStudentUser(id: $id) {
       id
       score
+      teacherName
       createdAt
       updatedAt
       owner
@@ -83,6 +84,7 @@ export const listStudentUsers = /* GraphQL */ `
       items {
         id
         score
+        teacherName
         createdAt
         updatedAt
         owner
