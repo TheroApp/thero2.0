@@ -2,75 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTask = /* GraphQL */ `
-  subscription OnCreateTask {
-    onCreateTask {
-      id
-      title
-      description
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateTask = /* GraphQL */ `
-  subscription OnUpdateTask {
-    onUpdateTask {
-      id
-      title
-      description
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteTask = /* GraphQL */ `
-  subscription OnDeleteTask {
-    onDeleteTask {
-      id
-      title
-      description
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreatePrivateNote = /* GraphQL */ `
-  subscription OnCreatePrivateNote($owner: String!) {
-    onCreatePrivateNote(owner: $owner) {
-      id
-      content
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onUpdatePrivateNote = /* GraphQL */ `
-  subscription OnUpdatePrivateNote($owner: String!) {
-    onUpdatePrivateNote(owner: $owner) {
-      id
-      content
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onDeletePrivateNote = /* GraphQL */ `
-  subscription OnDeletePrivateNote($owner: String!) {
-    onDeletePrivateNote(owner: $owner) {
-      id
-      content
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
 export const onCreateStudentUser = /* GraphQL */ `
   subscription OnCreateStudentUser($owner: String!) {
     onCreateStudentUser(owner: $owner) {
@@ -108,8 +39,8 @@ export const onDeleteStudentUser = /* GraphQL */ `
   }
 `;
 export const onCreateStudentHistory = /* GraphQL */ `
-  subscription OnCreateStudentHistory($owner: String!) {
-    onCreateStudentHistory(owner: $owner) {
+  subscription OnCreateStudentHistory {
+    onCreateStudentHistory {
       id
       level
       accuracy
@@ -117,13 +48,12 @@ export const onCreateStudentHistory = /* GraphQL */ `
       username
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onUpdateStudentHistory = /* GraphQL */ `
-  subscription OnUpdateStudentHistory($owner: String!) {
-    onUpdateStudentHistory(owner: $owner) {
+  subscription OnUpdateStudentHistory {
+    onUpdateStudentHistory {
       id
       level
       accuracy
@@ -131,13 +61,12 @@ export const onUpdateStudentHistory = /* GraphQL */ `
       username
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onDeleteStudentHistory = /* GraphQL */ `
-  subscription OnDeleteStudentHistory($owner: String!) {
-    onDeleteStudentHistory(owner: $owner) {
+  subscription OnDeleteStudentHistory {
+    onDeleteStudentHistory {
       id
       level
       accuracy
@@ -145,7 +74,6 @@ export const onDeleteStudentHistory = /* GraphQL */ `
       username
       createdAt
       updatedAt
-      owner
     }
   }
 `;
