@@ -1,19 +1,7 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Score } from "../components/vexflow/Vexflow";
-import {
-  Container,
-  Typography,
-  Toolbar,
-  IconButton,
-  Button,
-  Icon,
-} from "@material-ui/core";
-import {
-  createStyles,
-  makeStyles,
-  responsiveFontSizes,
-  Theme,
-} from "@material-ui/core/styles";
+import { Toolbar, IconButton, Button } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import arrow from "../images/thin_big_right.png";
 import done from "../images/done.svg";
 import wrong from "../images/wrong.png";
@@ -90,11 +78,11 @@ export const NoteReaderLevel = ({
   };
 
   const getNewNote = async () => {
-    if (score == 10) {
+    if (score === 10) {
       const calcScore = Math.round(100 - (tries - 10) * 10);
       const total = globalScore + calcScore;
 
-      if (user != undefined) {
+      if (user !== undefined) {
         const studentUser = {
           id: user.attributes.sub,
           score: total,
@@ -129,7 +117,7 @@ export const NoteReaderLevel = ({
       setSelectedLevel("");
     }
     var randomNote = getRandomNoteFromNotePool();
-    while (randomNote == currentNote) {
+    while (randomNote === currentNote) {
       randomNote = getRandomNoteFromNotePool();
     }
     setCurrentNote(randomNote);
@@ -251,32 +239,28 @@ export const NoteReaderLevel = ({
             }}
           >
             <div style={{ marginTop: "16px", marginLeft: "100px" }}>
-              <img width="42px" height="42px" src={arrow}></img>
+              <img width="42px" height="42px" src={arrow} alt="next"></img>
             </div>
           </button>
         ) : (
           <></>
         )}
 
-        {levelState == "Success" ? (
-          <>
-            <button className={classes.successbutton}>
-              <div style={{ marginTop: "16px", marginLeft: "100px" }}>
-                <img width="42px" height="42px" src={done}></img>
-              </div>
-            </button>
-          </>
+        {levelState === "Success" ? (
+          <button className={classes.successbutton}>
+            <div style={{ marginTop: "16px", marginLeft: "100px" }}>
+              <img width="42px" height="42px" src={done} alt="done"></img>
+            </div>
+          </button>
         ) : (
           <></>
         )}
-        {levelState == "Fail" ? (
-          <>
-            <button className={classes.errorButton}>
-              <div style={{ marginTop: "22px", marginLeft: "110px" }}>
-                <img width="32px" height="32px" src={wrong}></img>
-              </div>
-            </button>
-          </>
+        {levelState === "Fail" ? (
+          <button className={classes.errorButton}>
+            <div style={{ marginTop: "22px", marginLeft: "110px" }}>
+              <img width="32px" height="32px" src={wrong} alt="wrong"></img>
+            </div>
+          </button>
         ) : (
           <></>
         )}
