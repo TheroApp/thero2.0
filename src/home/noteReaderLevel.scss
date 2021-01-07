@@ -1,5 +1,4 @@
-$thui-color-blue: #5870f9;
-$thui-color-white: #ffffff;
+@import "../utilities/variables";
 
 .note-reader-level-title {
   margin-top: 6em;
@@ -56,11 +55,11 @@ $thui-color-white: #ffffff;
 }
 
 .submit-button--success {
-  background: #f9e058;
-  border-color: #f9e058;
+  background: $thui-color-yellow;
+  border-color: $thui-color-yellow;
 }
 
 .submit-button--error {
-  background: #f4302b;
-  border: #f4302b;
+  background: $thui-color-red;
+  border: $thui-color-red;
 }
