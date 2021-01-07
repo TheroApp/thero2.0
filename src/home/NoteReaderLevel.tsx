@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { Score } from "../Vexflow";
+import { Score } from "../components/vexflow/Vexflow";
 import {
   Container,
   Typography,

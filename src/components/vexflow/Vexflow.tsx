@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import VexFlow from "vexflow";
-import "./Vexflow.scss";
+import "./vexflow.scss";
 
 const VF = VexFlow.Flow;
 const { Formatter, Renderer, Stave, StaveNote } = VF;
