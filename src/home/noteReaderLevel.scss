@@ -8,33 +8,34 @@
 
 .answer-buttons-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 
   @media (max-width: 600px) {
-    display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
   }
 }
 
 .answer-button {
   background-color: $thui-color-white;
-  color: $thui-color-blue;
-  border: 2px solid $thui-color-blue;
-  height: 80px;
-  width: 80px;
-
+  color: black;
+  border: 1px solid #acacac;
+  border-radius: 12px;
+  height: 120px;
+  width: 120px;
+  font-size: 50px;
+  font-weight: 800;
+  margin: 9px;
   @media (max-width: 600px) {
-    margin: 23px 11vw;
+    margin: 15px;
   }
 
   &--selected {
-    background-color: $thui-color-blue;
+    background-color: $thui-color-blue-500;
     color: $thui-color-white;
     outline: none;
 
     &:hover {
-      background-color: $thui-color-blue;
+      background-color: $thui-color-blue-500;
     }
   }
 }
@@ -46,11 +47,11 @@
 }
 
 .submit-button {
-  background-color: $thui-color-blue;
+  background-color: $thui-color-blue-500;
   height: 82px;
   width: 250px;
   border-radius: 24px;
-  border: 2px solid $thui-color-blue;
+  border: 2px solid $thui-color-blue-500;
   outline: none;
 }
 
@@ -62,4 +63,8 @@
 .submit-button--error {
   background: $thui-color-red;
   border: $thui-color-red;
+}
+
+.toolbar-container {
+  display: flex;
 }

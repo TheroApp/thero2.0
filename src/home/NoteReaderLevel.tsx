@@ -128,7 +128,7 @@ export const NoteReaderLevel = ({
   return (
     <div style={{ height: "70vh" }}>
       <AppBar position="absolute">
-        <Toolbar>
+        <Toolbar className="toolbar-container">
           <IconButton edge="start" color="inherit" aria-label="back">
             <ArrowBack
               onClick={() => {
@@ -154,7 +154,7 @@ export const NoteReaderLevel = ({
                 setSelectedNote(note);
               }}
             >
-              <h1>{note.charAt(0)}</h1>
+              <span>{note.charAt(0)}</span>
             </Button>
           );
         })}
