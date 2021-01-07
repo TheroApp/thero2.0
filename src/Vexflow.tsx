@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import VexFlow from "vexflow";
-import { makeStyles, createStyles } from "@material-ui/core";
+import "./Vexflow.scss";
 
 const VF = VexFlow.Flow;
 const { Formatter, Renderer, Stave, StaveNote } = VF;
@@ -13,7 +13,6 @@ export function Score({
   clef?: string;
 }) {
   const container = useRef<HTMLCanvasElement>(null);
-  const styles = useStyles();
 
   useEffect(() => {
     if (container?.current) {
@@ -55,19 +54,8 @@ export function Score({
   }, [clef, note]);
 
   return (
-    <div className={styles.container}>
-      <canvas ref={container} className={styles.container} />
+    <div className="vexflow-container">
+      <canvas ref={container} />
     </div>
   );
 }
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    container: {
-      display: "flex",
-      justifyContent: "center",
-      marginTop: "-4rem",
-      marginLeft: "0.5rem",
-    },
-  })
-);
