@@ -1,0 +1,16 @@
+.levels-container {
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.levels-row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2em;
+}
+
+.score {
+  flex-grow: 1;
+}
