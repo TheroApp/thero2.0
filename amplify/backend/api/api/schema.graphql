@@ -4,7 +4,7 @@ type StudentUser @model @auth(rules: [{ allow: owner }]) {
   teacherName: String!
 }
 
-type StudentHistory @model @auth(rules: [{ allow: public }]) {
+type StudentHistory @model @auth(rules: [{ allow: owner}, {allow: private, operations: [read] }]) {
   id: ID!
   level: Int!
   accuracy: Int!
