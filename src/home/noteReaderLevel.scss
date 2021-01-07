@@ -30,39 +30,51 @@
   }
 
   &--selected {
-    background-color: $thui-color-blue-500;
-    color: $thui-color-white;
+    background-color: $thui-color-blue-300;
+    border: 1px solid $thui-color-blue-300;
+    color: $thui-color-blue-500;
     outline: none;
 
     &:hover {
-      background-color: $thui-color-blue-500;
+      background-color: $thui-color-blue-300;
     }
+  }
+
+  &--success {
+    background: $thui-color-green-300;
+    border-color: $thui-color-green-300;
+    color: $thui-color-green-700;
   }
 }
 
 .submit-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 2em;
+  margin-top: 6em;
 }
 
 .submit-button {
   background-color: $thui-color-blue-500;
-  height: 82px;
-  width: 250px;
-  border-radius: 24px;
+  height: 56px;
+  width: 300px;
+  border-radius: 64px;
   border: 2px solid $thui-color-blue-500;
   outline: none;
+  color: $thui-color-white;
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .submit-button--success {
-  background: $thui-color-yellow;
-  border-color: $thui-color-yellow;
+  background: $thui-color-white;
+  border-color: $thui-color-green-300;
+  color: $thui-color-green-700;
 }
 
 .submit-button--error {
-  background: $thui-color-red;
-  border: $thui-color-red;
+  background: $thui-color-white;
+  border-color: $thui-color-red-300;
+  color: $thui-color-red-500;
 }
 
 .toolbar-container {

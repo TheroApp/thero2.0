@@ -33,8 +33,8 @@ export const NoteReaderLevel = ({
   };
 
   const getFourOptions = (rightAnswer: string) => {
-    var first = [rightAnswer];
-    var note = practicePool[Math.floor(Math.random() * practicePool.length)];
+    let first = [rightAnswer];
+    let note = practicePool[Math.floor(Math.random() * practicePool.length)];
 
     while (first.length < 4) {
       if (!first.includes(note)) {
@@ -44,7 +44,7 @@ export const NoteReaderLevel = ({
     }
 
     //shuffle the array
-    var i = first.length - 1;
+    let i = first.length - 1;
     for (i; i > 0; i--) {
       const j = Math.floor(Math.random() * i);
       const temp = first[i];
@@ -115,7 +115,7 @@ export const NoteReaderLevel = ({
       }
       setSelectedLevel("");
     }
-    var randomNote = getRandomNoteFromNotePool();
+    let randomNote = getRandomNoteFromNotePool();
     while (randomNote === currentNote) {
       randomNote = getRandomNoteFromNotePool();
     }
@@ -124,6 +124,16 @@ export const NoteReaderLevel = ({
 
     setLevelState("");
   };
+
+  let submitButtonClass = "";
+  switch (levelState) {
+    case "Success":
+      submitButtonClass = "submit-button--success";
+      break;
+    case "Fail":
+      submitButtonClass = "submit-button--error";
+      break;
+  }
 
   return (
     <div style={{ height: "70vh" }}>
@@ -143,9 +153,10 @@ export const NoteReaderLevel = ({
       <Score note={currentNote} />
       <div className="answer-buttons-container">
         {fourOptions.map((note) => {
+          const isButtonDisabled = !(levelState === "");
           return (
             <Button
-              disabled={levelState === "" ? false : true}
+              disabled={isButtonDisabled}
               key={note}
               className={`answer-button ${
                 selectedNote === note && "answer-button--selected"
@@ -167,24 +178,13 @@ export const NoteReaderLevel = ({
               checkNote(selectedNote);
             }}
           >
-            <div style={{ marginTop: "16px", marginLeft: "100px" }}>
-              <img width="42px" height="42px" src={arrow} alt="next"></img>
-            </div>
+            Check
           </button>
         )}
 
-        {levelState === "Success" && (
-          <button className="submit-button submit-button--success">
-            <div style={{ marginTop: "16px", marginLeft: "100px" }}>
-              <img width="42px" height="42px" src={done} alt="done"></img>
-            </div>
-          </button>
-        )}
-        {levelState === "Fail" && (
-          <button className="submit-button submit-button--error">
-            <div style={{ marginTop: "22px", marginLeft: "110px" }}>
-              <img width="32px" height="32px" src={wrong} alt="wrong"></img>
-            </div>
+        {levelState && (
+          <button className={`submit-button ${submitButtonClass}`}>
+            Continue
           </button>
         )}
       </div>
