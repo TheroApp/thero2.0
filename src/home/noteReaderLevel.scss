@@ -1,0 +1,65 @@
+@import "../utilities/variables";
+
+.note-reader-level-title {
+  margin-top: 6em;
+  font-weight: normal;
+  text-align: center;
+}
+
+.answer-buttons-container {
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 600px) {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+}
+
+.answer-button {
+  background-color: $thui-color-white;
+  color: $thui-color-blue;
+  border: 2px solid $thui-color-blue;
+  height: 80px;
+  width: 80px;
+
+  @media (max-width: 600px) {
+    margin: 23px 11vw;
+  }
+
+  &--selected {
+    background-color: $thui-color-blue;
+    color: $thui-color-white;
+    outline: none;
+
+    &:hover {
+      background-color: $thui-color-blue;
+    }
+  }
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.submit-button {
+  background-color: $thui-color-blue;
+  height: 82px;
+  width: 250px;
+  border-radius: 24px;
+  border: 2px solid $thui-color-blue;
+  outline: none;
+}
+
+.submit-button--success {
+  background: $thui-color-yellow;
+  border-color: $thui-color-yellow;
+}
+
+.submit-button--error {
+  background: $thui-color-red;
+  border: $thui-color-red;
+}
