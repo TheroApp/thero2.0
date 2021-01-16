@@ -160,6 +160,10 @@ export const NoteReaderLevel = ({
               key={note}
               className={`answer-button ${
                 selectedNote === note && "answer-button--selected"
+              } ${
+                note === currentNote &&
+                levelState === "Success" &&
+                "answer-button--success"
               }`}
               onClick={() => {
                 setSelectedNote(note);
