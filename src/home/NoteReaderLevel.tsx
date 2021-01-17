@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Score } from "../components/vexflow/Vexflow";
 import { Toolbar, IconButton, Button } from "@material-ui/core";
-import arrow from "../images/thin_big_right.png";
-import done from "../images/done.svg";
-import wrong from "../images/wrong.png";
 import "../index.css";
 import AppBar from "@material-ui/core/AppBar";
 import { ArrowBack } from "@material-ui/icons";
@@ -56,7 +53,9 @@ export const NoteReaderLevel = ({
 
   const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
   const [selectedNote, setSelectedNote] = useState("");
-  const [levelState, setLevelState] = useState("");
+  const [levelState, setLevelState] = useState<"Success" | "Fail" | "Idle">(
+    "Idle"
+  );
   const [fourOptions, setFourOptions] = useState(getFourOptions(currentNote));
   const [score, setScore] = useState(0);
   const [tries, setTries] = useState(0);
@@ -66,13 +65,12 @@ export const NoteReaderLevel = ({
     if (selectedNote === currentNote) {
       setScore(score + 1);
       setLevelState("Success");
-      setSelectedNote("");
     } else {
       setLevelState("Fail");
-      setSelectedNote("");
     }
     setTimeout(() => {
       getNewNote();
+      setSelectedNote("");
     }, 800);
   };
 
@@ -122,7 +120,7 @@ export const NoteReaderLevel = ({
     setCurrentNote(randomNote);
     setFourOptions(getFourOptions(randomNote));
 
-    setLevelState("");
+    setLevelState("Idle");
   };
 
   let submitButtonClass = "";
@@ -153,17 +151,22 @@ export const NoteReaderLevel = ({
       <Score note={currentNote} />
       <div className="answer-buttons-container">
         {fourOptions.map((note) => {
-          const isButtonDisabled = !(levelState === "");
           return (
             <Button
-              disabled={isButtonDisabled}
+              disabled={levelState !== "Idle"}
               key={note}
               className={`answer-button ${
-                selectedNote === note && "answer-button--selected"
+                selectedNote === note &&
+                levelState === "Idle" &&
+                "answer-button--selected"
               } ${
                 note === currentNote &&
-                levelState === "Success" &&
+                levelState !== "Idle" &&
                 "answer-button--success"
+              } ${
+                levelState === "Fail" &&
+                selectedNote === note &&
+                "answer-button--fail"
               }`}
               onClick={() => {
                 setSelectedNote(note);
@@ -175,7 +178,7 @@ export const NoteReaderLevel = ({
         })}
       </div>
       <div className="submit-button-container">
-        {selectedNote && (
+        {levelState === "Idle" && (
           <button
             className="submit-button"
             onClick={() => {
@@ -186,7 +189,7 @@ export const NoteReaderLevel = ({
           </button>
         )}
 
-        {levelState && (
+        {levelState !== "Idle" && (
           <button className={`submit-button ${submitButtonClass}`}>
             Continue
           </button>

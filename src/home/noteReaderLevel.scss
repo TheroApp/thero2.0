@@ -41,9 +41,43 @@
   }
 
   &--success {
+    animation: successAnimation 800ms;
+  }
+
+  &--fail {
+    animation: failAnimation 800ms;
+  }
+}
+
+@keyframes successAnimation {
+  0% {
     background: $thui-color-green-300;
     border-color: $thui-color-green-300;
     color: $thui-color-green-700;
+  }
+  90% {
+    background: $thui-color-green-300;
+    border-color: $thui-color-green-300;
+    color: $thui-color-green-700;
+  }
+  100% {
+    background: $thui-color-white;
+  }
+}
+
+@keyframes failAnimation {
+  0% {
+    background: $thui-color-red-300;
+    border-color: $thui-color-red-300;
+    color: $thui-color-red-500;
+  }
+  90% {
+    background: $thui-color-red-300;
+    border-color: $thui-color-red-300;
+    color: $thui-color-red-500;
+  }
+  100% {
+    background: $thui-color-white;
   }
 }
 
