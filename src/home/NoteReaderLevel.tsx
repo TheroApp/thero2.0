@@ -180,7 +180,10 @@ export const NoteReaderLevel = ({
       <div className="submit-button-container">
         {levelState === "Idle" && (
           <button
-            className="submit-button"
+            disabled={selectedNote === ""}
+            className={`submit-button ${
+              selectedNote === "" && "submit-button--disabled"
+            }`}
             onClick={() => {
               checkNote(selectedNote);
             }}

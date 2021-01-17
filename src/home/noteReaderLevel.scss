@@ -111,6 +111,12 @@
   color: $thui-color-red-500;
 }
 
+.submit-button--disabled {
+  background-color: $thui-color-grey;
+  color: $thui-color-white;
+  border: none;
+}
+
 .toolbar-container {
   display: flex;
 }
