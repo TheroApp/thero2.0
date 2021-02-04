@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Score } from "../components/vexflow/Vexflow";
-import { Toolbar, IconButton, Button } from "@material-ui/core";
+import { Toolbar, IconButton, Button, Typography } from "@material-ui/core";
 import "../index.css";
 import AppBar from "@material-ui/core/AppBar";
 import { ArrowBack } from "@material-ui/icons";
@@ -142,6 +142,9 @@ export const NoteReaderLevel = ({
             />
           </IconButton>
           <ProgressBar completed={score * 10}></ProgressBar>
+          <Typography align="right" color="textPrimary" display="block" style={{marginLeft:"8px"}}>
+            {`${score}/10`}
+          </Typography>
         </Toolbar>
       </AppBar>
       <h4 className="note-reader-level-title">What is this note?</h4>

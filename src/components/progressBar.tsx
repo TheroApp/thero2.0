@@ -12,14 +12,9 @@ const ProgressBar = ({ completed }: ProgressBarProp) => {
   };
 
   return (
-    <>
-      <div className="progress-bar--base">
-        <div className="progress-bar--fill" style={fillerStyles}></div>
-      </div>
-      <div style={{ height: "24px", marginLeft: "12px" }}>
-        <img width="20px" height="20px" src={circleLogo}></img>
-      </div>
-    </>
+    <div className="progress-bar--base">
+      <div className="progress-bar--fill" style={fillerStyles}></div>
+    </div>
   );
 };
 
