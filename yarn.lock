@@ -12509,6 +12509,11 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+typeface-karla@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/typeface-karla/-/typeface-karla-1.1.13.tgz#617a408add211d08828856994c826e2799d51810"
+  integrity sha512-bf23baj5OseN2racGQBcvaLBhIRfw5AEJDyZvD3Ko3vWpd2LlxmMmM2PjODfRH1VAWhI0lrQwmOeSIUTKyj/gA==
+
 typescript@^3.7.5:
   version "3.9.7"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"

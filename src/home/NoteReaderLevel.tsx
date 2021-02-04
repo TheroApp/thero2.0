@@ -9,6 +9,7 @@ import { createStudentHistory, updateStudentUser } from "../graphql/mutations";
 import { API } from "aws-amplify";
 import { v4 as uuidv4 } from "uuid";
 import "./noteReaderLevel.scss";
+import "typeface-karla";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
@@ -142,7 +143,7 @@ export const NoteReaderLevel = ({
             />
           </IconButton>
           <ProgressBar completed={score * 10}></ProgressBar>
-          <Typography align="right" color="textPrimary" display="block" style={{marginLeft:"8px"}}>
+          <Typography align="right" color="textPrimary" display="block" style={{marginLeft:"8px", fontFamily: "Karla"}}>
             {`${score}/10`}
           </Typography>
         </Toolbar>
