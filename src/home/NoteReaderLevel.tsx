@@ -68,10 +68,6 @@ export const NoteReaderLevel = ({
     } else {
       setLevelState("Fail");
     }
-    setTimeout(() => {
-      getNewNote();
-      setSelectedNote("");
-    }, 800);
   };
 
   const getNewNote = async () => {
@@ -121,6 +117,7 @@ export const NoteReaderLevel = ({
     setFourOptions(getFourOptions(randomNote));
 
     setLevelState("Idle");
+    setSelectedNote("");
   };
 
   let submitButtonClass = "";
@@ -161,7 +158,7 @@ export const NoteReaderLevel = ({
                 "answer-button--selected"
               } ${
                 note === currentNote &&
-                levelState !== "Idle" &&
+                levelState === "Success" &&
                 "answer-button--success"
               } ${
                 levelState === "Fail" &&
@@ -193,7 +190,12 @@ export const NoteReaderLevel = ({
         )}
 
         {levelState !== "Idle" && (
-          <button className={`submit-button ${submitButtonClass}`}>
+          <button
+            className={`submit-button ${submitButtonClass}`}
+            onClick={() => {
+              getNewNote();
+            }}
+          >
             Continue
           </button>
         )}
