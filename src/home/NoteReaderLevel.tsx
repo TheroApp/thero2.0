@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Score } from "../components/vexflow/Vexflow";
-import { Toolbar, IconButton, Button } from "@material-ui/core";
-import arrow from "../images/thin_big_right.png";
-import done from "../images/done.svg";
-import wrong from "../images/wrong.png";
+import { Toolbar, IconButton, Button, Typography } from "@material-ui/core";
 import "../index.css";
 import AppBar from "@material-ui/core/AppBar";
 import { ArrowBack } from "@material-ui/icons";
@@ -12,6 +9,8 @@ import { createStudentHistory, updateStudentUser } from "../graphql/mutations";
 import { API } from "aws-amplify";
 import { v4 as uuidv4 } from "uuid";
 import "./noteReaderLevel.scss";
+import "typeface-karla";
+import "@vetixy/circular-std";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
@@ -33,8 +32,8 @@ export const NoteReaderLevel = ({
   };
 
   const getFourOptions = (rightAnswer: string) => {
-    var first = [rightAnswer];
-    var note = practicePool[Math.floor(Math.random() * practicePool.length)];
+    let first = [rightAnswer];
+    let note = practicePool[Math.floor(Math.random() * practicePool.length)];
 
     while (first.length < 4) {
       if (!first.includes(note)) {
@@ -44,7 +43,7 @@ export const NoteReaderLevel = ({
     }
 
     //shuffle the array
-    var i = first.length - 1;
+    let i = first.length - 1;
     for (i; i > 0; i--) {
       const j = Math.floor(Math.random() * i);
       const temp = first[i];
@@ -56,7 +55,9 @@ export const NoteReaderLevel = ({
 
   const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
   const [selectedNote, setSelectedNote] = useState("");
-  const [levelState, setLevelState] = useState("");
+  const [levelState, setLevelState] = useState<"Success" | "Fail" | "Idle">(
+    "Idle"
+  );
   const [fourOptions, setFourOptions] = useState(getFourOptions(currentNote));
   const [score, setScore] = useState(0);
   const [tries, setTries] = useState(0);
@@ -66,14 +67,9 @@ export const NoteReaderLevel = ({
     if (selectedNote === currentNote) {
       setScore(score + 1);
       setLevelState("Success");
-      setSelectedNote("");
     } else {
       setLevelState("Fail");
-      setSelectedNote("");
     }
-    setTimeout(() => {
-      getNewNote();
-    }, 800);
   };
 
   const getNewNote = async () => {
@@ -115,20 +111,31 @@ export const NoteReaderLevel = ({
       }
       setSelectedLevel("");
     }
-    var randomNote = getRandomNoteFromNotePool();
+    let randomNote = getRandomNoteFromNotePool();
     while (randomNote === currentNote) {
       randomNote = getRandomNoteFromNotePool();
     }
     setCurrentNote(randomNote);
     setFourOptions(getFourOptions(randomNote));
 
-    setLevelState("");
+    setLevelState("Idle");
+    setSelectedNote("");
   };
 
+  let submitButtonClass = "";
+  switch (levelState) {
+    case "Success":
+      submitButtonClass = "submit-button--success";
+      break;
+    case "Fail":
+      submitButtonClass = "submit-button--error";
+      break;
+  }
+
   return (
-    <div style={{ height: "70vh" }}>
+    <div>
       <AppBar position="absolute">
-        <Toolbar>
+        <Toolbar className="toolbar-container">
           <IconButton edge="start" color="inherit" aria-label="back">
             <ArrowBack
               onClick={() => {
@@ -137,54 +144,64 @@ export const NoteReaderLevel = ({
             />
           </IconButton>
           <ProgressBar completed={score * 10}></ProgressBar>
+          <Typography align="right" color="textPrimary" display="block" style={{marginLeft:"8px", fontFamily: "Karla"}}>
+            {`${score}/10`}
+          </Typography>
         </Toolbar>
       </AppBar>
-      <h4 className="note-reader-level-title">What is this note?</h4>
+      <h4 className="note-reader-level-title">What is the name of this note?</h4>
       <Score note={currentNote} />
       <div className="answer-buttons-container">
         {fourOptions.map((note) => {
           return (
             <Button
-              disabled={levelState === "" ? false : true}
+              disabled={levelState !== "Idle"}
               key={note}
               className={`answer-button ${
-                selectedNote === note && "answer-button--selected"
+                selectedNote === note &&
+                levelState === "Idle" &&
+                "answer-button--selected"
+              } ${
+                note === currentNote &&
+                levelState === "Success" &&
+                "answer-button--success"
+              } ${
+                levelState === "Fail" &&
+                selectedNote === note &&
+                "answer-button--fail"
               }`}
               onClick={() => {
                 setSelectedNote(note);
               }}
             >
-              <h1>{note.charAt(0)}</h1>
+              <span>{note.charAt(0)}</span>
             </Button>
           );
         })}
       </div>
       <div className="submit-button-container">
-        {selectedNote && (
+        {levelState === "Idle" && (
           <button
-            className="submit-button"
+            disabled={selectedNote === ""}
+            className={`submit-button ${
+              selectedNote === "" && "submit-button--disabled"
+            }`}
             onClick={() => {
               checkNote(selectedNote);
             }}
           >
-            <div style={{ marginTop: "16px", marginLeft: "100px" }}>
-              <img width="42px" height="42px" src={arrow} alt="next"></img>
-            </div>
+            Check
           </button>
         )}
 
-        {levelState === "Success" && (
-          <button className="submit-button submit-button--success">
-            <div style={{ marginTop: "16px", marginLeft: "100px" }}>
-              <img width="42px" height="42px" src={done} alt="done"></img>
-            </div>
-          </button>
-        )}
-        {levelState === "Fail" && (
-          <button className="submit-button submit-button--error">
-            <div style={{ marginTop: "22px", marginLeft: "110px" }}>
-              <img width="32px" height="32px" src={wrong} alt="wrong"></img>
-            </div>
+        {levelState !== "Idle" && (
+          <button
+            className={`submit-button ${submitButtonClass}`}
+            onClick={() => {
+              getNewNote();
+            }}
+          >
+            Continue
           </button>
         )}
       </div>

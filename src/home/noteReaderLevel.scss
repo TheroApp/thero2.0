@@ -1,65 +1,126 @@
 @import "../utilities/variables";
 
 .note-reader-level-title {
-  margin-top: 6em;
+  margin-top: 4em;
   font-weight: normal;
+  font-family: "CircularStd";
   text-align: center;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 30px;
 }
 
 .answer-buttons-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 
   @media (max-width: 600px) {
-    display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
   }
 }
 
 .answer-button {
   background-color: $thui-color-white;
-  color: $thui-color-blue;
-  border: 2px solid $thui-color-blue;
-  height: 80px;
-  width: 80px;
-
+  color: black;
+  border: 1px solid #acacac;
+  border-radius: 12px;
+  height: 120px;
+  width: 120px;
+  font-size: 50px;
+  font-weight: 800;
+  margin: 9px;
   @media (max-width: 600px) {
-    margin: 23px 11vw;
+    margin: 15px;
   }
 
   &--selected {
-    background-color: $thui-color-blue;
-    color: $thui-color-white;
+    background-color: $thui-color-blue-300;
+    border: 1px solid $thui-color-blue-300;
+    color: $thui-color-blue-500;
     outline: none;
 
     &:hover {
-      background-color: $thui-color-blue;
+      background-color: $thui-color-blue-300;
     }
+  }
+
+  &--success {
+    animation: successAnimation 1000ms;
+  }
+
+  &--fail {
+    animation: failAnimation 1000ms;
+  }
+}
+
+@keyframes successAnimation {
+  0% {
+    background: $thui-color-green-300;
+    border-color: $thui-color-green-300;
+    color: $thui-color-green-700;
+  }
+  90% {
+    background: $thui-color-green-300;
+    border-color: $thui-color-green-300;
+    color: $thui-color-green-700;
+  }
+  100% {
+    background: $thui-color-white;
+  }
+}
+
+@keyframes failAnimation {
+  0% {
+    background: $thui-color-red-300;
+    border-color: $thui-color-red-300;
+    color: $thui-color-red-500;
+  }
+  90% {
+    background: $thui-color-red-300;
+    border-color: $thui-color-red-300;
+    color: $thui-color-red-500;
+  }
+  100% {
+    background: $thui-color-white;
   }
 }
 
 .submit-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 2em;
+  margin-top: 6em;
 }
 
 .submit-button {
-  background-color: $thui-color-blue;
-  height: 82px;
-  width: 250px;
-  border-radius: 24px;
-  border: 2px solid $thui-color-blue;
+  background-color: $thui-color-blue-500;
+  height: 56px;
+  width: 300px;
+  border-radius: 64px;
+  border: 2px solid $thui-color-blue-500;
   outline: none;
+  color: $thui-color-white;
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .submit-button--success {
-  background: $thui-color-yellow;
-  border-color: $thui-color-yellow;
+  background: $thui-color-white;
+  border-color: $thui-color-green-300;
+  color: $thui-color-green-700;
 }
 
 .submit-button--error {
-  background: $thui-color-red;
-  border: $thui-color-red;
+  background: $thui-color-white;
+  border-color: $thui-color-red-300;
+  color: $thui-color-red-500;
+}
+
+.submit-button--disabled {
+  background-color: $thui-color-grey;
+  color: $thui-color-white;
+  border: none;
+}
+
+.toolbar-container {
+  display: flex;
 }

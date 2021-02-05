@@ -3172,6 +3172,11 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
+"@vetixy/circular-std@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@vetixy/circular-std/-/circular-std-1.0.0.tgz#faa91ef53f934877f14d69e78bbba824b563aacc"
+  integrity sha512-MNN4+GD7XfTefyAg/5VMWNmGeTfroVx6bFi534hnOJRXbfPcNo7hUGHBh+7rczPeoavcUA5SV5meXh3gh56liw==
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -12508,6 +12513,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typeface-karla@^1.1.13:
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/typeface-karla/-/typeface-karla-1.1.13.tgz#617a408add211d08828856994c826e2799d51810"
+  integrity sha512-bf23baj5OseN2racGQBcvaLBhIRfw5AEJDyZvD3Ko3vWpd2LlxmMmM2PjODfRH1VAWhI0lrQwmOeSIUTKyj/gA==
 
 typescript@^3.7.5:
   version "3.9.7"

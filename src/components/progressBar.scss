@@ -1,0 +1,14 @@
+@import "../utilities/variables";
+
+.progress-bar--base {
+  height: 8px;
+  border-radius: 4px;
+  width: 100%;
+  background-color: $thui-color-blue-300;
+}
+
+.progress-bar--fill {
+  @extend .progress-bar--base;
+  background-color: $thui-color-blue-500;
+  transition: width 1s ease-in-out;
+}
