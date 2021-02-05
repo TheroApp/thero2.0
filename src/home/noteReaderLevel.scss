@@ -1,9 +1,13 @@
 @import "../utilities/variables";
 
 .note-reader-level-title {
-  margin-top: 6em;
+  margin-top: 4em;
   font-weight: normal;
+  font-family: "CircularStd";
   text-align: center;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 30px;
 }
 
 .answer-buttons-container {

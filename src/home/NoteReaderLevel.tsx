@@ -10,6 +10,7 @@ import { API } from "aws-amplify";
 import { v4 as uuidv4 } from "uuid";
 import "./noteReaderLevel.scss";
 import "typeface-karla";
+import "@vetixy/circular-std";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
@@ -132,7 +133,7 @@ export const NoteReaderLevel = ({
   }
 
   return (
-    <div style={{ height: "70vh" }}>
+    <div>
       <AppBar position="absolute">
         <Toolbar className="toolbar-container">
           <IconButton edge="start" color="inherit" aria-label="back">
@@ -148,7 +149,7 @@ export const NoteReaderLevel = ({
           </Typography>
         </Toolbar>
       </AppBar>
-      <h4 className="note-reader-level-title">What is this note?</h4>
+      <h4 className="note-reader-level-title">What is the name of this note?</h4>
       <Score note={currentNote} />
       <div className="answer-buttons-container">
         {fourOptions.map((note) => {

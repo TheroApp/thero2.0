@@ -3172,6 +3172,11 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
+"@vetixy/circular-std@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@vetixy/circular-std/-/circular-std-1.0.0.tgz#faa91ef53f934877f14d69e78bbba824b563aacc"
+  integrity sha512-MNN4+GD7XfTefyAg/5VMWNmGeTfroVx6bFi534hnOJRXbfPcNo7hUGHBh+7rczPeoavcUA5SV5meXh3gh56liw==
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
