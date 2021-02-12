@@ -123,12 +123,15 @@ export const NoteReaderLevel = ({
   };
 
   let submitButtonClass = "";
+  let feedbackText = "";
   switch (levelState) {
     case "Success":
-      submitButtonClass = "submit-button--success";
+      submitButtonClass = "--success";
+      feedbackText = `Good work! This is ${selectedNote.charAt(0).toUpperCase()}`
       break;
     case "Fail":
-      submitButtonClass = "submit-button--error";
+      submitButtonClass = "--error";
+      feedbackText = `This is ${currentNote.charAt(0).toUpperCase()}`
       break;
   }
 
@@ -180,6 +183,8 @@ export const NoteReaderLevel = ({
         })}
       </div>
       <div className="submit-button-container">
+      <div className={`submit-button-background${submitButtonClass}`}></div>
+      <div className={`feedback-text${submitButtonClass}`}>{feedbackText}</div>
         {levelState === "Idle" && (
           <button
             disabled={selectedNote === ""}
@@ -196,7 +201,7 @@ export const NoteReaderLevel = ({
 
         {levelState !== "Idle" && (
           <button
-            className={`submit-button ${submitButtonClass}`}
+            className={`submit-button submit-button${submitButtonClass}`}
             onClick={() => {
               getNewNote();
             }}

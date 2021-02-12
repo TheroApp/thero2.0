@@ -87,8 +87,13 @@
 
 .submit-button-container {
   display: flex;
-  justify-content: center;
-  margin-top: 6em;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 112px;
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
 .submit-button {
@@ -119,6 +124,49 @@
   background-color: $thui-color-grey;
   color: $thui-color-white;
   border: none;
+}
+
+.submit-button-background {
+  position: absolute;
+  width: inherit;
+  height: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: -1;
+  border-radius: 20% 20% 0% 0%;
+  background: #FFFFFF;
+  transition: height 0.1s;
+
+  
+  &--success {
+    @extend .submit-button-background;
+    background: #C9EAB2;
+    height: 160px;
+  }
+
+  &--error {
+    @extend .submit-button-background;
+    background: #FFB9B9;    
+    height: 160px;
+  }
+}
+
+.feedback-text {
+  font-family: Circular Std;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+  &--success {
+    @extend .feedback-text;
+    color: #4E9D00;
+  }
+
+  &--error {
+    @extend .feedback-text;
+    color: #E12929;
+  }
 }
 
 .toolbar-container {
