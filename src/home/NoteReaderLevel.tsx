@@ -123,15 +123,17 @@ export const NoteReaderLevel = ({
   };
 
   let submitButtonClass = "";
-  let feedbackText = "";
+  let feedbackText = "Placeholder";
   switch (levelState) {
     case "Success":
       submitButtonClass = "--success";
-      feedbackText = `Good work! This is ${selectedNote.charAt(0).toUpperCase()}`
+      feedbackText = `Good work! This is ${selectedNote
+        .charAt(0)
+        .toUpperCase()}`;
       break;
     case "Fail":
       submitButtonClass = "--error";
-      feedbackText = `This is ${currentNote.charAt(0).toUpperCase()}`
+      feedbackText = `This is ${currentNote.charAt(0).toUpperCase()}`;
       break;
   }
 
@@ -147,70 +149,80 @@ export const NoteReaderLevel = ({
             />
           </IconButton>
           <ProgressBar completed={score * 10}></ProgressBar>
-          <Typography align="right" color="textPrimary" display="block" style={{marginLeft:"8px", fontFamily: "Karla"}}>
+          <Typography
+            align="right"
+            color="textPrimary"
+            display="block"
+            style={{ marginLeft: "8px", fontFamily: "Karla" }}
+          >
             {`${score}/10`}
           </Typography>
         </Toolbar>
       </AppBar>
-      <h4 className="note-reader-level-title">What is the name of this note?</h4>
-      <Score note={currentNote} />
-      <div className="answer-buttons-container">
-        {fourOptions.map((note) => {
-          return (
-            <Button
-              disabled={levelState !== "Idle"}
-              key={note}
-              className={`answer-button ${
-                selectedNote === note &&
-                levelState === "Idle" &&
-                "answer-button--selected"
-              } ${
-                note === currentNote &&
-                levelState === "Success" &&
-                "answer-button--success"
-              } ${
-                levelState === "Fail" &&
-                selectedNote === note &&
-                "answer-button--fail"
+        <h4 className="note-reader-level-title">
+          What is the name of this note?
+        </h4>
+        <Score note={currentNote} />
+        <div className="answer-buttons-container">
+          {fourOptions.map((note) => {
+            return (
+              <Button
+                disabled={levelState !== "Idle"}
+                key={note}
+                className={`answer-button ${
+                  selectedNote === note &&
+                  levelState === "Idle" &&
+                  "answer-button--selected"
+                } ${
+                  note === currentNote &&
+                  levelState === "Success" &&
+                  "answer-button--success"
+                } ${
+                  levelState === "Fail" &&
+                  selectedNote === note &&
+                  "answer-button--fail"
+                }`}
+                onClick={() => {
+                  setSelectedNote(note);
+                }}
+              >
+                <span>{note.charAt(0)}</span>
+              </Button>
+            );
+          })}
+        </div>
+        <div className={`submit-button-background${submitButtonClass}`}>
+        <div className="submit-button-and-feedback-container">
+          <div className={`feedback-text${submitButtonClass}`}>
+            {feedbackText}
+          </div>
+          {levelState === "Idle" && (
+            <button
+              disabled={selectedNote === ""}
+              className={`submit-button ${
+                selectedNote === "" && "submit-button--disabled"
               }`}
               onClick={() => {
-                setSelectedNote(note);
+                checkNote(selectedNote);
               }}
             >
-              <span>{note.charAt(0)}</span>
-            </Button>
-          );
-        })}
-      </div>
-      <div className="submit-button-container">
-      <div className={`submit-button-background${submitButtonClass}`}></div>
-      <div className={`feedback-text${submitButtonClass}`}>{feedbackText}</div>
-        {levelState === "Idle" && (
-          <button
-            disabled={selectedNote === ""}
-            className={`submit-button ${
-              selectedNote === "" && "submit-button--disabled"
-            }`}
-            onClick={() => {
-              checkNote(selectedNote);
-            }}
-          >
-            Check
-          </button>
-        )}
+              Check
+            </button>
+          )}
 
-        {levelState !== "Idle" && (
-          <button
-            className={`submit-button submit-button${submitButtonClass}`}
-            onClick={() => {
-              getNewNote();
-            }}
-          >
-            Continue
-          </button>
-        )}
+          {levelState !== "Idle" && (
+            <button
+              className={`submit-button submit-button${submitButtonClass}`}
+              onClick={() => {
+                getNewNote();
+              }}
+            >
+              Continue
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+      </div>
   );
 };
 
