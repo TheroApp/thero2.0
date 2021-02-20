@@ -8,11 +8,35 @@ const { Formatter, Renderer, Stave, StaveNote } = VF;
 export function Score({
   note,
   clef = "treble",
+  vhWidth,
+  vhHeight
 }: {
   note: string;
   clef?: string;
+  vhWidth: number;
+  vhHeight: number;
 }) {
   const container = useRef<HTMLCanvasElement>(null);
+
+  function calculateCanvasSize(width: number, height: number) {
+    if (width > 540) {
+      return 400;
+    }
+    if (width <= 360 || height <= 680){
+      return 240;
+    }
+    return 300;
+  }
+
+  function calculateScale(width: number, height: number) {
+    if (width > 540) {
+      return 2.5;
+    }
+    if (width <= 360 || height <= 680){
+      return 1.6;
+    }
+    return 2;
+  }
 
   useEffect(() => {
     if (container?.current) {
@@ -21,12 +45,12 @@ export function Score({
         Renderer.Backends.CANVAS
       );
 
-      const canvasSize = 300;
+      const canvasSize = calculateCanvasSize(vhWidth, vhHeight);
       renderer.resize(canvasSize, canvasSize);
 
       const context = renderer.getContext();
 
-      context.scale(2, 2);
+      context.scale(calculateScale(vhWidth, vhHeight), calculateScale(vhWidth, vhHeight));
       context.setFont("Arial", 10);
       context.setBackgroundFillStyle("#eed");
 

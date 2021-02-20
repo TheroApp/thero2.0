@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import "./noteReaderLevel.scss";
 import "typeface-karla";
 import "@vetixy/circular-std";
+import { useWindowWidth, useWindowHeight } from "@react-hook/window-size";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
@@ -162,7 +163,7 @@ export const NoteReaderLevel = ({
         <h4 className="note-reader-level-title">
           What is the name of this note?
         </h4>
-        <Score note={currentNote} />
+        <Score note={currentNote} vhWidth={useWindowWidth()} vhHeight={useWindowHeight()} />
         <div className="answer-buttons-container">
           {fourOptions.map((note) => {
             return (

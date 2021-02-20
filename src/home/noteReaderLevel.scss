@@ -32,6 +32,12 @@
     margin: 15px;
   }
 
+  @media (min-width: 768px) {
+    height: 135px;
+    width: 144px;
+    }
+
+
   &--selected {
     background-color: $thui-color-blue-300;
     border: 1px solid $thui-color-blue-300;
@@ -98,6 +104,7 @@
 }
 
 .submit-button {
+  font-family: "CircularStd";
   background-color: $thui-color-blue-500;
   height: 56px;
   width: 300px;
@@ -154,13 +161,13 @@
 }
 
 .feedback-text {
-  font-family: Circular Std;
+  font-family: "CircularStd";
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
   line-height: 30px;
   visibility: hidden;
-  
+
   &--success {
     @extend .feedback-text;
     color: #4E9D00;
