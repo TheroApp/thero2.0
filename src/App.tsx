@@ -170,7 +170,9 @@ const AuthStateApp: React.FunctionComponent = () => {
     </ThemeProvider>
   ) : (
     <div className="sign-up-container">
-      <img src={logo} height="100px" width="300px"></img>
+      <div>
+        <img src={logo} height="72px" width="307px"></img>
+      </div>
       <AmplifyAuthenticator>
         <AmplifySignUp
           slot="sign-up"
