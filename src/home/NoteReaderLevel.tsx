@@ -1,30 +1,17 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { Score } from "../Vexflow";
-import {
-  Container,
-  Typography,
-  Toolbar,
-  IconButton,
-  Button,
-  Icon,
-} from "@material-ui/core";
-import {
-  createStyles,
-  makeStyles,
-  responsiveFontSizes,
-  Theme,
-} from "@material-ui/core/styles";
-import arrow from "../images/thin_big_right.png";
-import done from "../images/done.svg";
-import wrong from "../images/wrong.png";
+import React, { useState } from "react";
+import { Score } from "../components/vexflow/Vexflow";
+import { Toolbar, IconButton, Button, Typography } from "@material-ui/core";
 import "../index.css";
 import AppBar from "@material-ui/core/AppBar";
 import { ArrowBack } from "@material-ui/icons";
 import ProgressBar from "../components/progressBar";
-import MediaQuery from "react-responsive";
 import { createStudentHistory, updateStudentUser } from "../graphql/mutations";
 import { API } from "aws-amplify";
 import { v4 as uuidv4 } from "uuid";
+import "./noteReaderLevel.scss";
+import "typeface-karla";
+import "@vetixy/circular-std";
+import { useWindowWidth, useWindowHeight } from "@react-hook/window-size";
 
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
@@ -46,8 +33,8 @@ export const NoteReaderLevel = ({
   };
 
   const getFourOptions = (rightAnswer: string) => {
-    var first = [rightAnswer];
-    var note = practicePool[Math.floor(Math.random() * practicePool.length)];
+    let first = [rightAnswer];
+    let note = practicePool[Math.floor(Math.random() * practicePool.length)];
 
     while (first.length < 4) {
       if (!first.includes(note)) {
@@ -57,7 +44,7 @@ export const NoteReaderLevel = ({
     }
 
     //shuffle the array
-    var i = first.length - 1;
+    let i = first.length - 1;
     for (i; i > 0; i--) {
       const j = Math.floor(Math.random() * i);
       const temp = first[i];
@@ -69,7 +56,9 @@ export const NoteReaderLevel = ({
 
   const [currentNote, setCurrentNote] = useState(getRandomNoteFromNotePool);
   const [selectedNote, setSelectedNote] = useState("");
-  const [levelState, setLevelState] = useState("");
+  const [levelState, setLevelState] = useState<"Success" | "Fail" | "Idle">(
+    "Idle"
+  );
   const [fourOptions, setFourOptions] = useState(getFourOptions(currentNote));
   const [score, setScore] = useState(0);
   const [tries, setTries] = useState(0);
@@ -79,22 +68,17 @@ export const NoteReaderLevel = ({
     if (selectedNote === currentNote) {
       setScore(score + 1);
       setLevelState("Success");
-      setSelectedNote("");
     } else {
       setLevelState("Fail");
-      setSelectedNote("");
     }
-    setTimeout(() => {
-      getNewNote();
-    }, 800);
   };
 
   const getNewNote = async () => {
-    if (score == 10) {
+    if (score === 10) {
       const calcScore = Math.round(100 - (tries - 10) * 10);
       const total = globalScore + calcScore;
 
-      if (user != undefined) {
+      if (user !== undefined) {
         const studentUser = {
           id: user.attributes.sub,
           score: total,
@@ -128,22 +112,36 @@ export const NoteReaderLevel = ({
       }
       setSelectedLevel("");
     }
-    var randomNote = getRandomNoteFromNotePool();
-    while (randomNote == currentNote) {
+    let randomNote = getRandomNoteFromNotePool();
+    while (randomNote === currentNote) {
       randomNote = getRandomNoteFromNotePool();
     }
     setCurrentNote(randomNote);
     setFourOptions(getFourOptions(randomNote));
 
-    setLevelState("");
+    setLevelState("Idle");
+    setSelectedNote("");
   };
 
-  const classes = useStyles();
+  let submitButtonClass = "";
+  let feedbackText = "Placeholder";
+  switch (levelState) {
+    case "Success":
+      submitButtonClass = "--success";
+      feedbackText = `Good work! This is ${selectedNote
+        .charAt(0)
+        .toUpperCase()}`;
+      break;
+    case "Fail":
+      submitButtonClass = "--error";
+      feedbackText = `This is ${currentNote.charAt(0).toUpperCase()}`;
+      break;
+  }
 
   return (
-    <div style={{ height: "70vh" }}>
+    <div>
       <AppBar position="absolute">
-        <Toolbar>
+        <Toolbar className="toolbar-container">
           <IconButton edge="start" color="inherit" aria-label="back">
             <ArrowBack
               onClick={() => {
@@ -152,209 +150,81 @@ export const NoteReaderLevel = ({
             />
           </IconButton>
           <ProgressBar completed={score * 10}></ProgressBar>
+          <Typography
+            align="right"
+            color="textPrimary"
+            display="block"
+            style={{ marginLeft: "8px", fontFamily: "Karla" }}
+          >
+            {`${score}/10`}
+          </Typography>
         </Toolbar>
       </AppBar>
-      <h3 className={classes.h3}>What is this note?</h3>
-      <Score note={currentNote} />
-      <MediaQuery minDeviceWidth={600}>
-        <div className={classes.container}>
+        <h4 className="note-reader-level-title">
+          What is the name of this note?
+        </h4>
+        <Score note={currentNote} vhWidth={useWindowWidth()} vhHeight={useWindowHeight()} />
+        <div className="answer-buttons-container">
           {fourOptions.map((note) => {
             return (
               <Button
-                disabled={levelState === "" ? false : true}
+                disabled={levelState !== "Idle"}
                 key={note}
-                className={
-                  selectedNote === note
-                    ? classes.selectedButton
-                    : classes.button
-                }
+                className={`answer-button ${
+                  selectedNote === note &&
+                  levelState === "Idle" &&
+                  "answer-button--selected"
+                } ${
+                  note === currentNote &&
+                  levelState === "Success" &&
+                  "answer-button--success"
+                } ${
+                  levelState === "Fail" &&
+                  selectedNote === note &&
+                  "answer-button--fail"
+                }`}
                 onClick={() => {
                   setSelectedNote(note);
                 }}
               >
-                <h1>{note.charAt(0)}</h1>
+                <span>{note.charAt(0)}</span>
               </Button>
             );
           })}
         </div>
-      </MediaQuery>
-      <MediaQuery maxDeviceWidth={600}>
-        <div className={classes.mobileContainer}>
-          <div className={classes.mobileRow}>
-            <button
-              disabled={levelState === "" ? false : true}
-              key={fourOptions[0]}
-              className={
-                selectedNote === fourOptions[0]
-                  ? classes.selectedButton
-                  : classes.button
-              }
-              onClick={() => {
-                setSelectedNote(fourOptions[0]);
-              }}
-            >
-              <h1>{fourOptions[0].charAt(0).toUpperCase()}</h1>
-            </button>
-            <button
-              disabled={levelState === "" ? false : true}
-              key={fourOptions[1]}
-              className={
-                selectedNote === fourOptions[1]
-                  ? classes.selectedButton
-                  : classes.button
-              }
-              onClick={() => {
-                setSelectedNote(fourOptions[1]);
-              }}
-            >
-              <h1>{fourOptions[1].charAt(0).toUpperCase()}</h1>
-            </button>
+        <div className={`submit-button-background${submitButtonClass}`}>
+        <div className="submit-button-and-feedback-container">
+          <div className={`feedback-text${submitButtonClass}`}>
+            {feedbackText}
           </div>
-          <div className={classes.mobileRow}>
+          {levelState === "Idle" && (
             <button
-              disabled={levelState === "" ? false : true}
-              key={fourOptions[2]}
-              className={
-                selectedNote === fourOptions[2]
-                  ? classes.selectedButton
-                  : classes.button
-              }
+              disabled={selectedNote === ""}
+              className={`submit-button ${
+                selectedNote === "" && "submit-button--disabled"
+              }`}
               onClick={() => {
-                setSelectedNote(fourOptions[2]);
+                checkNote(selectedNote);
               }}
             >
-              <h1>{fourOptions[2].charAt(0).toUpperCase()}</h1>
+              Check
             </button>
-            <button
-              disabled={levelState === "" ? false : true}
-              key={fourOptions[3]}
-              className={
-                selectedNote === fourOptions[3]
-                  ? classes.selectedButton
-                  : classes.button
-              }
-              onClick={() => {
-                setSelectedNote(fourOptions[3]);
-              }}
-            >
-              <h1>{fourOptions[3].charAt(0).toUpperCase()}</h1>
-            </button>
-          </div>
-        </div>
-      </MediaQuery>
-      <div className={classes.buttonContainer}>
-        {selectedNote ? (
-          <button
-            className={classes.continueButton}
-            onClick={() => {
-              checkNote(selectedNote);
-            }}
-          >
-            <div style={{ marginTop: "16px", marginLeft: "100px" }}>
-              <img width="42px" height="42px" src={arrow}></img>
-            </div>
-          </button>
-        ) : (
-          <></>
-        )}
+          )}
 
-        {levelState == "Success" ? (
-          <>
-            <button className={classes.successbutton}>
-              <div style={{ marginTop: "16px", marginLeft: "100px" }}>
-                <img width="42px" height="42px" src={done}></img>
-              </div>
+          {levelState !== "Idle" && (
+            <button
+              className={`submit-button submit-button${submitButtonClass}`}
+              onClick={() => {
+                getNewNote();
+              }}
+            >
+              Continue
             </button>
-          </>
-        ) : (
-          <></>
-        )}
-        {levelState == "Fail" ? (
-          <>
-            <button className={classes.errorButton}>
-              <div style={{ marginTop: "22px", marginLeft: "110px" }}>
-                <img width="32px" height="32px" src={wrong}></img>
-              </div>
-            </button>
-          </>
-        ) : (
-          <></>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+      </div>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      flexGrow: 1,
-    },
-    container: {
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    mobileContainer: {
-      display: "flex",
-      justifyContent: "space-around",
-      flexDirection: "column",
-    },
-    mobileRow: {
-      display: "flex",
-      justifyContent: "space-around",
-      marginBottom: "2em",
-    },
-    button: {
-      backgroundColor: "#FFFFFF",
-      color: "#5870F9",
-      height: "80px",
-      border: "2px solid #5870F9",
-      width: "80px",
-    },
-    selectedButton: {
-      backgroundColor: "#5870F9",
-      color: "#FFFFFF",
-      border: "2px solid #5870F9",
-      outline: "none",
-      height: "80px",
-      width: "80px",
-    },
-    continueButton: {
-      backgroundColor: "#5870F9",
-      height: "82px",
-      width: "250px",
-      borderRadius: "24px",
-      border: "2px solid #5870F9",
-      outline: "none",
-    },
-    successbutton: {
-      background: "#F9E058",
-      height: "82px",
-      width: "250px",
-      borderRadius: "24px",
-      border: "2px solid #F9E058",
-      outline: "none",
-    },
-    errorButton: {
-      background: "#F4302B",
-      height: "82px",
-      width: "250px",
-      borderRadius: "24px",
-      border: "2px solid #F4302B",
-      outline: "none",
-    },
-    buttonContainer: {
-      display: "flex",
-      justifyContent: "center",
-      marginTop: "1em",
-    },
-    h3: {
-      marginTop: "6em",
-      fontSize: "16px",
-      fontWeight: "normal",
-      textAlign: "center",
-    },
-  })
-);
 
 export default NoteReaderLevel;

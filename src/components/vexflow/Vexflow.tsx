@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import VexFlow from "vexflow";
-import { makeStyles, createStyles } from "@material-ui/core";
+import "./Vexflow.scss";
 
 const VF = VexFlow.Flow;
 const { Formatter, Renderer, Stave, StaveNote } = VF;
@@ -8,12 +8,35 @@ const { Formatter, Renderer, Stave, StaveNote } = VF;
 export function Score({
   note,
   clef = "treble",
+  vhWidth,
+  vhHeight
 }: {
   note: string;
   clef?: string;
+  vhWidth: number;
+  vhHeight: number;
 }) {
   const container = useRef<HTMLCanvasElement>(null);
-  const styles = useStyles();
+
+  function calculateCanvasSize(width: number, height: number) {
+    if (width > 540) {
+      return 400;
+    }
+    if (width <= 360 || height <= 680){
+      return 240;
+    }
+    return 300;
+  }
+
+  function calculateScale(width: number, height: number) {
+    if (width > 540) {
+      return 2.5;
+    }
+    if (width <= 360 || height <= 680){
+      return 1.6;
+    }
+    return 2;
+  }
 
   useEffect(() => {
     if (container?.current) {
@@ -22,12 +45,12 @@ export function Score({
         Renderer.Backends.CANVAS
       );
 
-      const canvasSize = 300;
+      const canvasSize = calculateCanvasSize(vhWidth, vhHeight);
       renderer.resize(canvasSize, canvasSize);
 
       const context = renderer.getContext();
 
-      context.scale(2, 2);
+      context.scale(calculateScale(vhWidth, vhHeight), calculateScale(vhWidth, vhHeight));
       context.setFont("Arial", 10);
       context.setBackgroundFillStyle("#eed");
 
@@ -55,19 +78,8 @@ export function Score({
   }, [clef, note]);
 
   return (
-    <div className={styles.container}>
-      <canvas ref={container} className={styles.container} />
+    <div className="vexflow-container">
+      <canvas ref={container} />
     </div>
   );
 }
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    container: {
-      display: "flex",
-      justifyContent: "center",
-      marginTop: "-4rem",
-      marginLeft: "0.5rem",
-    },
-  })
-);

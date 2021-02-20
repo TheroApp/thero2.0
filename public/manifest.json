@@ -1,6 +1,9 @@
 {
   "short_name": "Thero",
   "name": "Thero Web App",
+  "description": "Thero makes learning music theory easy!",
+  "lang": "en-UK",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "favicon.ico",

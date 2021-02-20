@@ -1,25 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
-import {
-  Container,
-  Typography,
-  Toolbar,
-  IconButton,
-  Button,
-} from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import { Container, Typography, Toolbar, IconButton } from "@material-ui/core";
 import { ThemeProvider } from "./ThemeProvider";
-import { API, graphqlOperation } from "aws-amplify";
-import { GetStudentUserQuery } from "./API";
+import { API } from "aws-amplify";
 import { getStudentUser } from "./graphql/queries";
 import { createStudentUser } from "./graphql/mutations";
+import "./app.scss";
 
 import {
   AmplifyAuthenticator,
   AmplifySignIn,
-  AmplifyS3Image,
   AmplifySignOut,
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
@@ -66,11 +56,14 @@ const AuthStateApp: React.FunctionComponent = () => {
       }
     } catch (err) {
       console.log("error fetching score, creating score");
-      if (user.attributes !== undefined && user.attributes['custom:teacher'] !== undefined) {
+      if (
+        user.attributes !== undefined &&
+        user.attributes["custom:teacher"] !== undefined
+      ) {
         const studentUserData = {
           id: user.attributes.sub,
           score: 0,
-          teacherName: user.attributes['custom:teacher']
+          teacherName: user.attributes["custom:teacher"],
         };
 
         try {
@@ -90,14 +83,13 @@ const AuthStateApp: React.FunctionComponent = () => {
     setLevelNum(levelNum);
     console.log(user);
   }
-  const classes = useStyles();
 
   return authState === AuthState.SignedIn && user ? (
     <ThemeProvider>
       {!selectedLevel ? (
         <AppBar position="relative">
           <Toolbar>
-            <Typography variant="h6" className={classes.title}>
+            <Typography variant="h6" className="score">
               {user.username}: {score}
             </Typography>
             <IconButton edge="end" color="inherit" aria-label="menu">
@@ -118,63 +110,61 @@ const AuthStateApp: React.FunctionComponent = () => {
             globalScore={score}
           />
         ) : (
-          <>
-            <div className={classes.mobileContainer}>
-              <div className={classes.mobileRow}>
-                <img
-                  width="80px"
-                  height="80px"
-                  src={between}
-                  onClick={() => setLevels(["f/4", "a/4", "c/5", "e/5"], 1)}
-                />
-                <img
-                  width="80px"
-                  height="80px"
-                  src={on}
-                  onClick={() =>
-                    setLevels(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
-                  }
-                />
-              </div>
-              <div className={classes.mobileRow}>
-                <img
-                  width="80px"
-                  height="80px"
-                  src={ledger}
-                  onClick={() =>
-                    setLevels(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
-                  }
-                />
-                <img
-                  width="80px"
-                  height="80px"
-                  src={all}
-                  onClick={() =>
-                    setLevels(
-                      ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
-                      4
-                    )
-                  }
-                />
-              </div>
-              <div className={classes.mobileRow}>
-                <img
-                  width="80px"
-                  height="80px"
-                  src={allvar}
-                  onClick={() =>
-                    setLevels(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
-                  }
-                />
-                <img
-                  width="80px"
-                  height="80px"
-                  src={highledger}
-                  onClick={() => setLevels(["g/5", "a/5", "b/5", "f/5"], 6)}
-                />
-              </div>
+          <div className="levels-container">
+            <div className="levels-row">
+              <img
+                width="80px"
+                height="80px"
+                src={between}
+                onClick={() => setLevels(["f/4", "a/4", "c/5", "e/5"], 1)}
+              />
+              <img
+                width="80px"
+                height="80px"
+                src={on}
+                onClick={() =>
+                  setLevels(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
+                }
+              />
             </div>
-          </>
+            <div className="levels-row">
+              <img
+                width="80px"
+                height="80px"
+                src={ledger}
+                onClick={() =>
+                  setLevels(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
+                }
+              />
+              <img
+                width="80px"
+                height="80px"
+                src={all}
+                onClick={() =>
+                  setLevels(
+                    ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
+                    4
+                  )
+                }
+              />
+            </div>
+            <div className="levels-row">
+              <img
+                width="80px"
+                height="80px"
+                src={allvar}
+                onClick={() =>
+                  setLevels(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
+                }
+              />
+              <img
+                width="80px"
+                height="80px"
+                src={highledger}
+                onClick={() => setLevels(["g/5", "a/5", "b/5", "f/5"], 6)}
+              />
+            </div>
+          </div>
         )}
       </Container>
     </ThemeProvider>
@@ -232,28 +222,5 @@ const AuthStateApp: React.FunctionComponent = () => {
     </div>
   );
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      flexGrow: 1,
-    },
-    container: {
-      display: "flex",
-      justifyContent: "center",
-    },
-    mobileContainer: {
-      paddingTop: "30px",
-      display: "flex",
-      justifyContent: "space-around",
-      flexDirection: "column",
-    },
-    mobileRow: {
-      display: "flex",
-      justifyContent: "space-around",
-      marginBottom: "2em",
-    },
-  })
-);
 
 export default AuthStateApp;

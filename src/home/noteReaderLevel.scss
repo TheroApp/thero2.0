@@ -1,0 +1,186 @@
+@import "../utilities/variables";
+
+.note-reader-level-title {
+  margin-top: 12vh;
+  font-weight: normal;
+  font-family: "CircularStd";
+  text-align: center;
+  font-style: normal;
+  font-size: 2.8vh;
+  line-height: 3vh;
+}
+
+.answer-buttons-container {
+  display: flex;
+  justify-content: center;
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+  }
+}
+
+.answer-button {
+  background-color: $thui-color-white;
+  color: black;
+  border: 1px solid #acacac;
+  border-radius: 12px;
+  height: 15vh;
+  width: 15vh;
+  font-size: 50px;
+  font-weight: 800;
+  margin: 9px;
+  @media (max-width: 600px) {
+    margin: 15px;
+  }
+
+  @media (min-width: 768px) {
+    height: 135px;
+    width: 144px;
+    }
+
+
+  &--selected {
+    background-color: $thui-color-blue-300;
+    border: 1px solid $thui-color-blue-300;
+    color: $thui-color-blue-500;
+    outline: none;
+
+    &:hover {
+      background-color: $thui-color-blue-300;
+    }
+  }
+
+  &--success {
+    animation: successAnimation 1000ms;
+  }
+
+  &--fail {
+    animation: failAnimation 1000ms;
+  }
+}
+
+@keyframes successAnimation {
+  0% {
+    background: $thui-color-green-300;
+    border-color: $thui-color-green-300;
+    color: $thui-color-green-700;
+  }
+  90% {
+    background: $thui-color-green-300;
+    border-color: $thui-color-green-300;
+    color: $thui-color-green-700;
+  }
+  100% {
+    background: $thui-color-white;
+  }
+}
+
+@keyframes failAnimation {
+  0% {
+    background: $thui-color-red-300;
+    border-color: $thui-color-red-300;
+    color: $thui-color-red-500;
+  }
+  90% {
+    background: $thui-color-red-300;
+    border-color: $thui-color-red-300;
+    color: $thui-color-red-500;
+  }
+  100% {
+    background: $thui-color-white;
+  }
+}
+
+.submit-button-and-feedback-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 18vh;
+  position: absolute;
+  width: inherit;
+  left: inherit;
+  right: inherit;
+  bottom: inherit;
+}
+
+.submit-button {
+  font-family: "CircularStd";
+  background-color: $thui-color-blue-500;
+  height: 56px;
+  width: 300px;
+  border-radius: 64px;
+  border: 2px solid $thui-color-blue-500;
+  outline: none;
+  color: $thui-color-white;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.submit-button--success {
+  background: $thui-color-white;
+  border-color: $thui-color-green-300;
+  color: $thui-color-green-700;
+}
+
+.submit-button--error {
+  background: $thui-color-white;
+  border-color: $thui-color-red-300;
+  color: $thui-color-red-500;
+}
+
+.submit-button--disabled {
+  background-color: $thui-color-grey;
+  color: $thui-color-white;
+  border: none;
+}
+
+.submit-button-background {
+  position: absolute;
+  width: inherit;
+  height: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: -1;
+  border-radius: 20% 20% 0% 0%;
+  background: #FFFFFF;
+  transition: height 0.1s;
+
+  
+  &--success {
+    @extend .submit-button-background;
+    background: #C9EAB2;
+    height: 18vh;
+  }
+
+  &--error {
+    @extend .submit-button-background;
+    background: #FFB9B9;    
+    height: 18vh;
+  }
+}
+
+.feedback-text {
+  font-family: "CircularStd";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+  visibility: hidden;
+
+  &--success {
+    @extend .feedback-text;
+    color: #4E9D00;
+    visibility: visible;
+  }
+
+  &--error {
+    @extend .feedback-text;
+    color: #E12929;
+    visibility: visible;
+  }
+}
+
+.toolbar-container {
+  display: flex;
+}
