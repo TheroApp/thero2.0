@@ -1,6 +1,6 @@
 {
   "short_name": "Thero",
-  "name": "Thero Web App",
+  "name": "Thero",
   "description": "Thero makes learning music theory easy!",
   "lang": "en-UK",
   "orientation": "portrait-primary",
@@ -14,6 +14,11 @@
       "src": "android-chrome-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "start_url": ".",
