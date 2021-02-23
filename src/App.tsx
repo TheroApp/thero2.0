@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
-import { Container, Typography, Toolbar, IconButton } from "@material-ui/core";
+import {
+  Container,
+  Typography,
+  Toolbar,
+  IconButton,
+} from "@material-ui/core";
 import { ThemeProvider } from "./ThemeProvider";
 import { API } from "aws-amplify";
 import { getStudentUser } from "./graphql/queries";
 import { createStudentUser } from "./graphql/mutations";
 import "./app.scss";
-
+import { ScoreIcon } from "./icons/scoreIcon";
 import {
   AmplifyAuthenticator,
   AmplifySignIn,
@@ -14,9 +19,9 @@ import {
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
-
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import NoteReaderLevel from "./home/NoteReaderLevel";
-
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import logo from "./logo.png";
 import between from "./images/BetweenLines.svg";
 import all from "./images/AllTheLines.svg";
@@ -89,11 +94,15 @@ const AuthStateApp: React.FunctionComponent = () => {
       {!selectedLevel ? (
         <AppBar position="relative">
           <Toolbar>
-            <Typography variant="h6" className="score">
-              {user.username}: {score}
+          <ScoreIcon/>
+            <Typography color="textPrimary" style={{paddingLeft: "15px"}} variant="h6" className="score">
+              {score}
             </Typography>
-            <IconButton edge="end" color="inherit" aria-label="menu">
-              <AmplifySignOut />
+            <IconButton edge="end" color="default" aria-label="menu">
+              <NotificationsIcon></NotificationsIcon>
+            </IconButton>
+            <IconButton edge="end" color="default" aria-label="menu">
+              <MoreVertIcon></MoreVertIcon>
             </IconButton>
           </Toolbar>
         </AppBar>
