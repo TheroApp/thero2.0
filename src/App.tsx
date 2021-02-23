@@ -5,6 +5,7 @@ import {
   Typography,
   Toolbar,
   IconButton,
+  Button,
 } from "@material-ui/core";
 import { ThemeProvider } from "./ThemeProvider";
 import { API } from "aws-amplify";
@@ -19,9 +20,9 @@ import {
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import NotificationsIcon from "@material-ui/icons/Notifications";
 import NoteReaderLevel from "./home/NoteReaderLevel";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import logo from "./logo.png";
 import between from "./images/BetweenLines.svg";
 import all from "./images/AllTheLines.svg";
@@ -30,6 +31,13 @@ import allvar from "./images/allvar.svg";
 import on from "./images/OnTheLines.svg";
 import ledger from "./images/ledger.svg";
 import highledger from "./images/highledger.svg";
+
+import spaces from "./images/home/Spaces.png";
+import lines from "./images/home/Lines.png";
+import mixed1 from "./images/home/Mixed1.png";
+import ledger1 from "./images/home/Ledger 1.png";
+import ledger2 from "./images/home/Ledger 2.png";
+import mixed2 from "./images/home/Mixed 2.png";
 
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
@@ -94,8 +102,13 @@ const AuthStateApp: React.FunctionComponent = () => {
       {!selectedLevel ? (
         <AppBar position="relative">
           <Toolbar>
-          <ScoreIcon/>
-            <Typography color="textPrimary" style={{paddingLeft: "15px"}} variant="h6" className="score">
+            <ScoreIcon />
+            <Typography
+              color="textPrimary"
+              style={{ paddingLeft: "15px" }}
+              variant="h6"
+              className="score"
+            >
               {score}
             </Typography>
             <IconButton edge="end" color="default" aria-label="menu">
@@ -119,61 +132,90 @@ const AuthStateApp: React.FunctionComponent = () => {
             globalScore={score}
           />
         ) : (
-          <div className="levels-container">
-            <div className="levels-row">
+          <>
+            <div className="section-header">
+              <h4 className="section-title">Treble Clef</h4>
               <img
-                width="80px"
-                height="80px"
-                src={between}
-                onClick={() => setLevels(["f/4", "a/4", "c/5", "e/5"], 1)}
-              />
-              <img
-                width="80px"
-                height="80px"
+                className="section-img"
                 src={on}
-                onClick={() =>
-                  setLevels(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
-                }
-              />
+                height="40px"
+                width="40px"
+              ></img>
             </div>
-            <div className="levels-row">
-              <img
-                width="80px"
-                height="80px"
-                src={ledger}
-                onClick={() =>
-                  setLevels(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
-                }
-              />
-              <img
-                width="80px"
-                height="80px"
-                src={all}
-                onClick={() =>
-                  setLevels(
-                    ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
-                    4
-                  )
-                }
-              />
+            <div className="levels-container">
+              <div className="levels-row">
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() => setLevels(["f/4", "a/4", "c/5", "e/5"], 1)}
+                  >
+                    <img style={{ padding: "0" }} src={spaces}></img>
+                  </Button>
+                  <h4 className="section-title">Spaces</h4>
+                </div>
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      setLevels(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
+                    }
+                  >
+                    <img style={{ padding: "0" }} src={lines}></img>
+                  </Button>
+                  <h4 className="section-title">Lines</h4>
+                </div>
+              </div>
+              <div className="levels-row">
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      setLevels(
+                        ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
+                        4
+                      )
+                    }
+                  >
+                    <img style={{ padding: "0" }} src={mixed1}></img>
+                  </Button>
+                  <h4 className="section-title">Mixed 1</h4>
+                </div>
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      setLevels(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
+                    }
+                  >
+                    <img style={{ padding: "0" }} src={ledger1}></img>
+                  </Button>
+                  <h4 className="section-title">Ledger 1</h4>
+                </div>
+              </div>
+              <div className="levels-row">
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() => setLevels(["g/5", "a/5", "b/5", "f/5"], 6)}
+                  >
+                    <img style={{ padding: "0" }} src={ledger2}></img>
+                  </Button>
+                  <h4 className="section-title">Ledger 2</h4>
+                </div>
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      setLevels(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
+                    }
+                  >
+                    <img style={{ padding: "0" }} src={mixed2}></img>
+                  </Button>
+                  <h4 className="section-title">Mixed 2</h4>
+                </div>
+              </div>
             </div>
-            <div className="levels-row">
-              <img
-                width="80px"
-                height="80px"
-                src={allvar}
-                onClick={() =>
-                  setLevels(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
-                }
-              />
-              <img
-                width="80px"
-                height="80px"
-                src={highledger}
-                onClick={() => setLevels(["g/5", "a/5", "b/5", "f/5"], 6)}
-              />
-            </div>
-          </div>
+          </>
         )}
       </Container>
     </ThemeProvider>
