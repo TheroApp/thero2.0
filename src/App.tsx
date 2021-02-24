@@ -41,7 +41,7 @@ import highledger from "./images/highledger.svg";
 
 import spaces from "./images/home/Spaces.png";
 import lines from "./images/home/Lines.png";
-import mixed1 from "./images/home/Mixed1.png";
+import mixed1 from "./images/home/Mixed 1.png";
 import ledger1 from "./images/home/Ledger 1.png";
 import ledger2 from "./images/home/Ledger 2.png";
 import mixed2 from "./images/home/Mixed 2.png";
@@ -203,7 +203,7 @@ const AuthStateApp: React.FunctionComponent = () => {
       ) : (
         <></>
       )}
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" style={{ paddingBottom: "3em" }}>
         {selectedLevel ? (
           <NoteReaderLevel
             practicePool={selectedLevel}
@@ -232,7 +232,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                       openLevel(["f/4", "a/4", "c/5", "e/5"], 1);
                     }}
                   >
-                    <img style={{ padding: "0" }} src={spaces}></img>
+                    <img className="home-level-image" src={spaces}></img>
                   </Button>
                   <h4 className="section-title">Spaces</h4>
                 </div>
@@ -243,7 +243,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                       openLevel(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
                     }
                   >
-                    <img style={{ padding: "0" }} src={lines}></img>
+                    <img className="home-level-image" src={lines}></img>
                   </Button>
                   <h4 className="section-title">Lines</h4>
                 </div>
@@ -259,7 +259,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                       )
                     }
                   >
-                    <img style={{ padding: "0" }} src={mixed1}></img>
+                    <img className="home-level-image" src={mixed1}></img>
                   </Button>
                   <h4 className="section-title">Mixed 1</h4>
                 </div>
@@ -270,7 +270,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                       openLevel(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
                     }
                   >
-                    <img style={{ padding: "0" }} src={ledger1}></img>
+                    <img className="home-level-image" src={ledger1}></img>
                   </Button>
                   <h4 className="section-title">Ledger 1</h4>
                 </div>
@@ -281,7 +281,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                     className="answer-button"
                     onClick={() => openLevel(["g/5", "a/5", "b/5", "f/5"], 6)}
                   >
-                    <img style={{ padding: "0" }} src={ledger2}></img>
+                    <img className="home-level-image" src={ledger2}></img>
                   </Button>
                   <h4 className="section-title">Ledger 2</h4>
                 </div>
@@ -292,7 +292,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                       openLevel(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
                     }
                   >
-                    <img style={{ padding: "0" }} src={mixed2}></img>
+                    <img className="home-level-image" src={mixed2}></img>
                   </Button>
                   <h4 className="section-title">Mixed 2</h4>
                 </div>

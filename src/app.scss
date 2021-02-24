@@ -11,7 +11,7 @@
   align-items: center;
   margin: auto;
   margin-top: 5vh;
-  width: 200px;
+  max-width: 60vw;
 }
 
 .section-title {
@@ -54,4 +54,15 @@
 .account-name-menu-item {
   justify-content: space-between;
   outline: none;
+}
+
+.home-level-image {
+  max-width: calc(15vh - 20px);
+  max-height: 15vh;
+  padding: 0;
+
+  @media (min-width: 768px) {
+    height: default;
+    width: default;
+  }
 }
