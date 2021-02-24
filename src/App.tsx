@@ -6,6 +6,11 @@ import {
   Toolbar,
   IconButton,
   Button,
+  Popper,
+  Paper,
+  ClickAwayListener,
+  MenuList,
+  MenuItem,
 } from "@material-ui/core";
 import { ThemeProvider } from "./ThemeProvider";
 import { API } from "aws-amplify";
@@ -16,13 +21,15 @@ import { ScoreIcon } from "./icons/scoreIcon";
 import {
   AmplifyAuthenticator,
   AmplifySignIn,
-  AmplifySignOut,
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import { Auth } from "aws-amplify";
+
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import NoteReaderLevel from "./home/NoteReaderLevel";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import logo from "./logo.png";
 import between from "./images/BetweenLines.svg";
 import all from "./images/AllTheLines.svg";
@@ -44,13 +51,47 @@ const AuthStateApp: React.FunctionComponent = () => {
   const [user, setUser] = React.useState<any | undefined>();
   const [levelNum, setLevelNum] = React.useState<number>(0);
 
+  const [openMenu, setOpenMenu] = React.useState(false);
+  const anchorRef = React.useRef<HTMLButtonElement>(null);
+  const prevOpen = React.useRef(openMenu);
   const [selectedLevel, setSelectedLevel] = React.useState<
     Array<string> | undefined
   >();
   const [score, setScore] = useState(0);
 
   React.useEffect(() => {
+    if (
+      prevOpen.current === true &&
+      openMenu === false &&
+      anchorRef.current != null
+    ) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = openMenu;
+  }, [openMenu]);
+
+  const handleClose = (event: any) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpenMenu(false);
+  };
+
+  const handleToggle = () => {
+    setOpenMenu((prevOpen) => !prevOpen);
+  };
+
+  const openLevel = (level: any, levelNum: number) => {
+    setSelectedLevel(level);
+    setLevelNum(levelNum);
+    setOpenMenu(false);
+  };
+
+  React.useEffect(() => {
     fetchScore();
+    setOpenMenu(false);
 
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
@@ -91,12 +132,6 @@ const AuthStateApp: React.FunctionComponent = () => {
     }
   }
 
-  function setLevels(array: Array<string>, levelNum: number) {
-    setSelectedLevel(array);
-    setLevelNum(levelNum);
-    console.log(user);
-  }
-
   return authState === AuthState.SignedIn && user ? (
     <ThemeProvider>
       {!selectedLevel ? (
@@ -114,9 +149,55 @@ const AuthStateApp: React.FunctionComponent = () => {
             <IconButton edge="end" color="default" aria-label="menu">
               <NotificationsIcon></NotificationsIcon>
             </IconButton>
-            <IconButton edge="end" color="default" aria-label="menu">
+            <IconButton
+              edge="end"
+              color="default"
+              aria-label="menu"
+              ref={anchorRef}
+              aria-controls={openMenu ? "menu-list" : undefined}
+              aria-haspopup="true"
+              onClick={handleToggle}
+            >
               <MoreVertIcon></MoreVertIcon>
             </IconButton>
+            <Popper
+              open={openMenu}
+              role={undefined}
+              anchorEl={anchorRef.current}
+              placement="bottom-end"
+              disablePortal
+              keepMounted
+              style={{ width: "256px" }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList variant="menu" id="menu-list" disablePadding>
+                    <MenuItem
+                      divider
+                      button={false}
+                      selected={false}
+                      classes={{
+                        root: "account-name-menu-item menu-item",
+                      }}
+                    >
+                      {user.username}
+                      <AccountCircleIcon></AccountCircleIcon>
+                    </MenuItem>
+                    <MenuItem
+                      align-items="center"
+                      classes={{
+                        root: "menu-item",
+                      }}
+                      onClick={async () => {
+                        await Auth.signOut();
+                      }}
+                    >
+                      Log out
+                    </MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Popper>
           </Toolbar>
         </AppBar>
       ) : (
@@ -147,7 +228,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                 <div className="button-and-title-container">
                   <Button
                     className="answer-button"
-                    onClick={() => setLevels(["f/4", "a/4", "c/5", "e/5"], 1)}
+                    onClick={() => {
+                      openLevel(["f/4", "a/4", "c/5", "e/5"], 1);
+                    }}
                   >
                     <img style={{ padding: "0" }} src={spaces}></img>
                   </Button>
@@ -157,7 +240,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                   <Button
                     className="answer-button"
                     onClick={() =>
-                      setLevels(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
+                      openLevel(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
                     }
                   >
                     <img style={{ padding: "0" }} src={lines}></img>
@@ -170,7 +253,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                   <Button
                     className="answer-button"
                     onClick={() =>
-                      setLevels(
+                      openLevel(
                         ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
                         4
                       )
@@ -184,7 +267,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                   <Button
                     className="answer-button"
                     onClick={() =>
-                      setLevels(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
+                      openLevel(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
                     }
                   >
                     <img style={{ padding: "0" }} src={ledger1}></img>
@@ -196,7 +279,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                 <div className="button-and-title-container">
                   <Button
                     className="answer-button"
-                    onClick={() => setLevels(["g/5", "a/5", "b/5", "f/5"], 6)}
+                    onClick={() => openLevel(["g/5", "a/5", "b/5", "f/5"], 6)}
                   >
                     <img style={{ padding: "0" }} src={ledger2}></img>
                   </Button>
@@ -206,7 +289,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                   <Button
                     className="answer-button"
                     onClick={() =>
-                      setLevels(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
+                      openLevel(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
                     }
                   >
                     <img style={{ padding: "0" }} src={mixed2}></img>

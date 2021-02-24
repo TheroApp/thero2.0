@@ -33,6 +33,8 @@
 
 .section-img {
   padding: 0;
+  padding-left: 10px;
+  max-width: 40px;
 }
 
 .levels-row {
@@ -43,4 +45,13 @@
 
 .score {
   flex-grow: 1;
+}
+
+.menu-item {
+  height: 53px;
+}
+
+.account-name-menu-item {
+  justify-content: space-between;
+  outline: none;
 }
