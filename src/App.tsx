@@ -1,22 +1,35 @@
 import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
-import { Container, Typography, Toolbar, IconButton } from "@material-ui/core";
+import {
+  Container,
+  Typography,
+  Toolbar,
+  IconButton,
+  Button,
+  Popper,
+  Paper,
+  ClickAwayListener,
+  MenuList,
+  MenuItem,
+} from "@material-ui/core";
 import { ThemeProvider } from "./ThemeProvider";
 import { API } from "aws-amplify";
 import { getStudentUser } from "./graphql/queries";
 import { createStudentUser } from "./graphql/mutations";
 import "./app.scss";
-
+import { ScoreIcon } from "./icons/scoreIcon";
 import {
   AmplifyAuthenticator,
   AmplifySignIn,
-  AmplifySignOut,
   AmplifySignUp,
 } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import { Auth } from "aws-amplify";
 
+import NotificationsIcon from "@material-ui/icons/Notifications";
 import NoteReaderLevel from "./home/NoteReaderLevel";
-
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import logo from "./logo.png";
 import between from "./images/BetweenLines.svg";
 import all from "./images/AllTheLines.svg";
@@ -26,18 +39,59 @@ import on from "./images/OnTheLines.svg";
 import ledger from "./images/ledger.svg";
 import highledger from "./images/highledger.svg";
 
+import spaces from "./images/home/Spaces.png";
+import lines from "./images/home/Lines.png";
+import mixed1 from "./images/home/Mixed 1.png";
+import ledger1 from "./images/home/Ledger 1.png";
+import ledger2 from "./images/home/Ledger 2.png";
+import mixed2 from "./images/home/Mixed 2.png";
+
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
   const [user, setUser] = React.useState<any | undefined>();
   const [levelNum, setLevelNum] = React.useState<number>(0);
 
+  const [openMenu, setOpenMenu] = React.useState(false);
+  const anchorRef = React.useRef<HTMLButtonElement>(null);
+  const prevOpen = React.useRef(openMenu);
   const [selectedLevel, setSelectedLevel] = React.useState<
     Array<string> | undefined
   >();
   const [score, setScore] = useState(0);
 
   React.useEffect(() => {
+    if (
+      prevOpen.current === true &&
+      openMenu === false &&
+      anchorRef.current != null
+    ) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = openMenu;
+  }, [openMenu]);
+
+  const handleClose = (event: any) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpenMenu(false);
+  };
+
+  const handleToggle = () => {
+    setOpenMenu((prevOpen) => !prevOpen);
+  };
+
+  const openLevel = (level: any, levelNum: number) => {
+    setSelectedLevel(level);
+    setLevelNum(levelNum);
+    setOpenMenu(false);
+  };
+
+  React.useEffect(() => {
     fetchScore();
+    setOpenMenu(false);
 
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
@@ -78,29 +132,78 @@ const AuthStateApp: React.FunctionComponent = () => {
     }
   }
 
-  function setLevels(array: Array<string>, levelNum: number) {
-    setSelectedLevel(array);
-    setLevelNum(levelNum);
-    console.log(user);
-  }
-
   return authState === AuthState.SignedIn && user ? (
     <ThemeProvider>
       {!selectedLevel ? (
         <AppBar position="relative">
           <Toolbar>
-            <Typography variant="h6" className="score">
-              {user.username}: {score}
+            <ScoreIcon />
+            <Typography
+              color="textPrimary"
+              style={{ paddingLeft: "15px" }}
+              variant="h6"
+              className="score"
+            >
+              {score}
             </Typography>
-            <IconButton edge="end" color="inherit" aria-label="menu">
-              <AmplifySignOut />
+            <IconButton edge="end" color="default" aria-label="menu">
+              <NotificationsIcon></NotificationsIcon>
             </IconButton>
+            <IconButton
+              edge="end"
+              color="default"
+              aria-label="menu"
+              ref={anchorRef}
+              aria-controls={openMenu ? "menu-list" : undefined}
+              aria-haspopup="true"
+              onClick={handleToggle}
+            >
+              <MoreVertIcon></MoreVertIcon>
+            </IconButton>
+            <Popper
+              open={openMenu}
+              role={undefined}
+              anchorEl={anchorRef.current}
+              placement="bottom-end"
+              disablePortal
+              keepMounted
+              style={{ width: "256px" }}
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
+                  <MenuList variant="menu" id="menu-list" disablePadding>
+                    <MenuItem
+                      divider
+                      button={false}
+                      selected={false}
+                      classes={{
+                        root: "account-name-menu-item menu-item",
+                      }}
+                    >
+                      {user.username}
+                      <AccountCircleIcon></AccountCircleIcon>
+                    </MenuItem>
+                    <MenuItem
+                      align-items="center"
+                      classes={{
+                        root: "menu-item",
+                      }}
+                      onClick={async () => {
+                        await Auth.signOut();
+                      }}
+                    >
+                      Log out
+                    </MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Popper>
           </Toolbar>
         </AppBar>
       ) : (
         <></>
       )}
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" style={{ paddingBottom: "3em" }}>
         {selectedLevel ? (
           <NoteReaderLevel
             practicePool={selectedLevel}
@@ -110,61 +213,92 @@ const AuthStateApp: React.FunctionComponent = () => {
             globalScore={score}
           />
         ) : (
-          <div className="levels-container">
-            <div className="levels-row">
+          <>
+            <div className="section-header">
+              <h4 className="section-title">Treble Clef</h4>
               <img
-                width="80px"
-                height="80px"
-                src={between}
-                onClick={() => setLevels(["f/4", "a/4", "c/5", "e/5"], 1)}
-              />
-              <img
-                width="80px"
-                height="80px"
+                className="section-img"
                 src={on}
-                onClick={() =>
-                  setLevels(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
-                }
-              />
+                height="40px"
+                width="40px"
+              ></img>
             </div>
-            <div className="levels-row">
-              <img
-                width="80px"
-                height="80px"
-                src={ledger}
-                onClick={() =>
-                  setLevels(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
-                }
-              />
-              <img
-                width="80px"
-                height="80px"
-                src={all}
-                onClick={() =>
-                  setLevels(
-                    ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
-                    4
-                  )
-                }
-              />
+            <div className="levels-container">
+              <div className="levels-row">
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() => {
+                      openLevel(["f/4", "a/4", "c/5", "e/5"], 1);
+                    }}
+                  >
+                    <img className="home-level-image" src={spaces}></img>
+                  </Button>
+                  <h4 className="section-title">Spaces</h4>
+                </div>
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      openLevel(["e/4", "g/4", "b/4", "d/5", "f/5"], 2)
+                    }
+                  >
+                    <img className="home-level-image" src={lines}></img>
+                  </Button>
+                  <h4 className="section-title">Lines</h4>
+                </div>
+              </div>
+              <div className="levels-row">
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      openLevel(
+                        ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
+                        4
+                      )
+                    }
+                  >
+                    <img className="home-level-image" src={mixed1}></img>
+                  </Button>
+                  <h4 className="section-title">Mixed 1</h4>
+                </div>
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      openLevel(["b/3", "g/3", "a/3", "c/4", "d/4"], 3)
+                    }
+                  >
+                    <img className="home-level-image" src={ledger1}></img>
+                  </Button>
+                  <h4 className="section-title">Ledger 1</h4>
+                </div>
+              </div>
+              <div className="levels-row">
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() => openLevel(["g/5", "a/5", "b/5", "f/5"], 6)}
+                  >
+                    <img className="home-level-image" src={ledger2}></img>
+                  </Button>
+                  <h4 className="section-title">Ledger 2</h4>
+                </div>
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      openLevel(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
+                    }
+                  >
+                    <img className="home-level-image" src={mixed2}></img>
+                  </Button>
+                  <h4 className="section-title">Mixed 2</h4>
+                </div>
+              </div>
             </div>
-            <div className="levels-row">
-              <img
-                width="80px"
-                height="80px"
-                src={allvar}
-                onClick={() =>
-                  setLevels(["a/5", "c/4", "g/3", "d/4", "f/5"], 5)
-                }
-              />
-              <img
-                width="80px"
-                height="80px"
-                src={highledger}
-                onClick={() => setLevels(["g/5", "a/5", "b/5", "f/5"], 6)}
-              />
-            </div>
-          </div>
+          </>
         )}
       </Container>
     </ThemeProvider>
