@@ -10,7 +10,6 @@ export const getStudentUser = /* GraphQL */ `
       teacherName
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -27,7 +26,6 @@ export const listStudentUsers = /* GraphQL */ `
         teacherName
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }

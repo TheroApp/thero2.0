@@ -13,7 +13,6 @@ export const createStudentUser = /* GraphQL */ `
       teacherName
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -28,7 +27,6 @@ export const updateStudentUser = /* GraphQL */ `
       teacherName
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -43,7 +41,6 @@ export const deleteStudentUser = /* GraphQL */ `
       teacherName
       createdAt
       updatedAt
-      owner
     }
   }
 `;
