@@ -11,6 +11,7 @@ export const createStudentUser = /* GraphQL */ `
       id
       score
       teacherName
+      userName
       createdAt
       updatedAt
     }
@@ -25,6 +26,7 @@ export const updateStudentUser = /* GraphQL */ `
       id
       score
       teacherName
+      userName
       createdAt
       updatedAt
     }
@@ -39,6 +41,7 @@ export const deleteStudentUser = /* GraphQL */ `
       id
       score
       teacherName
+      userName
       createdAt
       updatedAt
     }

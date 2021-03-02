@@ -118,6 +118,7 @@ const AuthStateApp: React.FunctionComponent = () => {
           id: user.attributes.sub,
           score: 0,
           teacherName: user.attributes["custom:teacher"],
+          userName: user.username,
         };
 
         try {

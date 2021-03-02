@@ -9,6 +9,7 @@ type StudentUser
   id: ID!
   score: Int!
   teacherName: String!
+  userName: String!
 }
 
 type StudentHistory @model @auth(rules: [{ allow: owner}, {allow: private, operations: [read] }]) {
