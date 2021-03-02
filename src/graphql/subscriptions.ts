@@ -3,38 +3,35 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateStudentUser = /* GraphQL */ `
-  subscription OnCreateStudentUser($owner: String!) {
-    onCreateStudentUser(owner: $owner) {
+  subscription OnCreateStudentUser {
+    onCreateStudentUser {
       id
       score
       teacherName
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onUpdateStudentUser = /* GraphQL */ `
-  subscription OnUpdateStudentUser($owner: String!) {
-    onUpdateStudentUser(owner: $owner) {
+  subscription OnUpdateStudentUser {
+    onUpdateStudentUser {
       id
       score
       teacherName
       createdAt
       updatedAt
-      owner
     }
   }
 `;
 export const onDeleteStudentUser = /* GraphQL */ `
-  subscription OnDeleteStudentUser($owner: String!) {
-    onDeleteStudentUser(owner: $owner) {
+  subscription OnDeleteStudentUser {
+    onDeleteStudentUser {
       id
       score
       teacherName
       createdAt
       updatedAt
-      owner
     }
   }
 `;

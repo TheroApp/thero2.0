@@ -68,6 +68,15 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type StudentUser = {
+  __typename: "StudentUser",
+  id?: string,
+  score?: number,
+  teacherName?: string,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
 export type UpdateStudentUserInput = {
   id: string,
   score?: number | null,
@@ -94,6 +103,17 @@ export type ModelStudentHistoryConditionInput = {
   and?: Array< ModelStudentHistoryConditionInput | null > | null,
   or?: Array< ModelStudentHistoryConditionInput | null > | null,
   not?: ModelStudentHistoryConditionInput | null,
+};
+
+export type StudentHistory = {
+  __typename: "StudentHistory",
+  id?: string,
+  level?: number,
+  accuracy?: number,
+  date?: string,
+  username?: string,
+  createdAt?: string,
+  updatedAt?: string,
 };
 
 export type UpdateStudentHistoryInput = {
@@ -133,6 +153,12 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type ModelStudentUserConnection = {
+  __typename: "ModelStudentUserConnection",
+  items?:  Array<StudentUser | null > | null,
+  nextToken?: string | null,
+};
+
 export type ModelStudentHistoryFilterInput = {
   id?: ModelIDInput | null,
   level?: ModelIntInput | null,
@@ -144,64 +170,67 @@ export type ModelStudentHistoryFilterInput = {
   not?: ModelStudentHistoryFilterInput | null,
 };
 
+export type ModelStudentHistoryConnection = {
+  __typename: "ModelStudentHistoryConnection",
+  items?:  Array<StudentHistory | null > | null,
+  nextToken?: string | null,
+};
+
 export type CreateStudentUserMutationVariables = {
-  input: CreateStudentUserInput,
+  input?: CreateStudentUserInput,
   condition?: ModelStudentUserConditionInput | null,
 };
 
 export type CreateStudentUserMutation = {
-  createStudentUser:  {
+  createStudentUser?:  {
     __typename: "StudentUser",
     id: string,
     score: number,
     teacherName: string,
     createdAt: string,
     updatedAt: string,
-    owner: string | null,
   } | null,
 };
 
 export type UpdateStudentUserMutationVariables = {
-  input: UpdateStudentUserInput,
+  input?: UpdateStudentUserInput,
   condition?: ModelStudentUserConditionInput | null,
 };
 
 export type UpdateStudentUserMutation = {
-  updateStudentUser:  {
+  updateStudentUser?:  {
     __typename: "StudentUser",
     id: string,
     score: number,
     teacherName: string,
     createdAt: string,
     updatedAt: string,
-    owner: string | null,
   } | null,
 };
 
 export type DeleteStudentUserMutationVariables = {
-  input: DeleteStudentUserInput,
+  input?: DeleteStudentUserInput,
   condition?: ModelStudentUserConditionInput | null,
 };
 
 export type DeleteStudentUserMutation = {
-  deleteStudentUser:  {
+  deleteStudentUser?:  {
     __typename: "StudentUser",
     id: string,
     score: number,
     teacherName: string,
     createdAt: string,
     updatedAt: string,
-    owner: string | null,
   } | null,
 };
 
 export type CreateStudentHistoryMutationVariables = {
-  input: CreateStudentHistoryInput,
+  input?: CreateStudentHistoryInput,
   condition?: ModelStudentHistoryConditionInput | null,
 };
 
 export type CreateStudentHistoryMutation = {
-  createStudentHistory:  {
+  createStudentHistory?:  {
     __typename: "StudentHistory",
     id: string,
     level: number,
@@ -214,12 +243,12 @@ export type CreateStudentHistoryMutation = {
 };
 
 export type UpdateStudentHistoryMutationVariables = {
-  input: UpdateStudentHistoryInput,
+  input?: UpdateStudentHistoryInput,
   condition?: ModelStudentHistoryConditionInput | null,
 };
 
 export type UpdateStudentHistoryMutation = {
-  updateStudentHistory:  {
+  updateStudentHistory?:  {
     __typename: "StudentHistory",
     id: string,
     level: number,
@@ -232,12 +261,12 @@ export type UpdateStudentHistoryMutation = {
 };
 
 export type DeleteStudentHistoryMutationVariables = {
-  input: DeleteStudentHistoryInput,
+  input?: DeleteStudentHistoryInput,
   condition?: ModelStudentHistoryConditionInput | null,
 };
 
 export type DeleteStudentHistoryMutation = {
-  deleteStudentHistory:  {
+  deleteStudentHistory?:  {
     __typename: "StudentHistory",
     id: string,
     level: number,
@@ -250,18 +279,17 @@ export type DeleteStudentHistoryMutation = {
 };
 
 export type GetStudentUserQueryVariables = {
-  id: string,
+  id?: string,
 };
 
 export type GetStudentUserQuery = {
-  getStudentUser:  {
+  getStudentUser?:  {
     __typename: "StudentUser",
     id: string,
     score: number,
     teacherName: string,
     createdAt: string,
     updatedAt: string,
-    owner: string | null,
   } | null,
 };
 
@@ -272,27 +300,26 @@ export type ListStudentUsersQueryVariables = {
 };
 
 export type ListStudentUsersQuery = {
-  listStudentUsers:  {
+  listStudentUsers?:  {
     __typename: "ModelStudentUserConnection",
-    items:  Array< {
+    items?:  Array< {
       __typename: "StudentUser",
       id: string,
       score: number,
       teacherName: string,
       createdAt: string,
       updatedAt: string,
-      owner: string | null,
     } | null > | null,
-    nextToken: string | null,
+    nextToken?: string | null,
   } | null,
 };
 
 export type GetStudentHistoryQueryVariables = {
-  id: string,
+  id?: string,
 };
 
 export type GetStudentHistoryQuery = {
-  getStudentHistory:  {
+  getStudentHistory?:  {
     __typename: "StudentHistory",
     id: string,
     level: number,
@@ -311,9 +338,9 @@ export type ListStudentHistorysQueryVariables = {
 };
 
 export type ListStudentHistorysQuery = {
-  listStudentHistorys:  {
+  listStudentHistorys?:  {
     __typename: "ModelStudentHistoryConnection",
-    items:  Array< {
+    items?:  Array< {
       __typename: "StudentHistory",
       id: string,
       level: number,
@@ -323,60 +350,45 @@ export type ListStudentHistorysQuery = {
       createdAt: string,
       updatedAt: string,
     } | null > | null,
-    nextToken: string | null,
+    nextToken?: string | null,
   } | null,
-};
-
-export type OnCreateStudentUserSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnCreateStudentUserSubscription = {
-  onCreateStudentUser:  {
+  onCreateStudentUser?:  {
     __typename: "StudentUser",
     id: string,
     score: number,
     teacherName: string,
     createdAt: string,
     updatedAt: string,
-    owner: string | null,
   } | null,
-};
-
-export type OnUpdateStudentUserSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnUpdateStudentUserSubscription = {
-  onUpdateStudentUser:  {
+  onUpdateStudentUser?:  {
     __typename: "StudentUser",
     id: string,
     score: number,
     teacherName: string,
     createdAt: string,
     updatedAt: string,
-    owner: string | null,
   } | null,
 };
 
-export type OnDeleteStudentUserSubscriptionVariables = {
-  owner: string,
-};
-
 export type OnDeleteStudentUserSubscription = {
-  onDeleteStudentUser:  {
+  onDeleteStudentUser?:  {
     __typename: "StudentUser",
     id: string,
     score: number,
     teacherName: string,
     createdAt: string,
     updatedAt: string,
-    owner: string | null,
   } | null,
 };
 
 export type OnCreateStudentHistorySubscription = {
-  onCreateStudentHistory:  {
+  onCreateStudentHistory?:  {
     __typename: "StudentHistory",
     id: string,
     level: number,
@@ -389,7 +401,7 @@ export type OnCreateStudentHistorySubscription = {
 };
 
 export type OnUpdateStudentHistorySubscription = {
-  onUpdateStudentHistory:  {
+  onUpdateStudentHistory?:  {
     __typename: "StudentHistory",
     id: string,
     level: number,
@@ -402,7 +414,7 @@ export type OnUpdateStudentHistorySubscription = {
 };
 
 export type OnDeleteStudentHistorySubscription = {
-  onDeleteStudentHistory:  {
+  onDeleteStudentHistory?:  {
     __typename: "StudentHistory",
     id: string,
     level: number,
