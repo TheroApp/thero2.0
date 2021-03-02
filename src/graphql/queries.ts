@@ -8,6 +8,7 @@ export const getStudentUser = /* GraphQL */ `
       id
       score
       teacherName
+      userName
       createdAt
       updatedAt
     }
@@ -24,6 +25,7 @@ export const listStudentUsers = /* GraphQL */ `
         id
         score
         teacherName
+        userName
         createdAt
         updatedAt
       }
