@@ -1,6 +1,11 @@
 type StudentUser
   @model
-  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
+  @auth (
+    rules: [
+    { allow: owner, operations: [create, update, read] }, 
+    { allow: private, operations: [read] }
+    ]
+  ) {
   id: ID!
   score: Int!
   teacherName: String!
