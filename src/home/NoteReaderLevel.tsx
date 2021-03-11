@@ -13,12 +13,49 @@ import "typeface-karla";
 import "@vetixy/circular-std";
 import { useWindowWidth, useWindowHeight } from "@react-hook/window-size";
 
+function getFingeringForNote(note: string) {
+  switch (note) {
+    case "g/2":
+      return "G0";
+    case "a/3":
+      return "G1";
+    case "b/3":
+      return "G2";
+    case "c/4":
+      return "G3";
+    case "d/4":
+      return "D0";
+    case "e/4":
+      return "D1";
+    case "f/4":
+      return "D2";
+    case "g/4":
+      return "D3";
+    case "a/4":
+      return "A0";
+    case "b/4":
+      return "A1";
+    case "c/5":
+      return "A2";
+    case "d/5":
+      return "A3";
+    case "e/5":
+      return "E0";
+    case "f/5":
+      return "E1";
+    case "g/5":
+      return "E2";
+    case "a/5":
+      return "E3";
+  }
+}
 type NoteReaderLevelProp = {
   practicePool: Array<string>;
   setSelectedLevel: Function;
   user: any;
   globalScore: number;
   levelNum: number;
+  showFingerPosition: boolean;
 };
 
 export const NoteReaderLevel = ({
@@ -27,6 +64,7 @@ export const NoteReaderLevel = ({
   user,
   globalScore,
   levelNum,
+  showFingerPosition,
 }: NoteReaderLevelProp) => {
   const getRandomNoteFromNotePool = () => {
     return practicePool[Math.floor(Math.random() * practicePool.length)];
@@ -128,13 +166,25 @@ export const NoteReaderLevel = ({
   switch (levelState) {
     case "Success":
       submitButtonClass = "--success";
-      feedbackText = `Good work! This is ${selectedNote
-        .charAt(0)
-        .toUpperCase()}`;
+      if (levelNum >= 7) {
+        feedbackText = `Good work! You play this note with ${getFingeringForNote(
+          selectedNote
+        )}`;
+      } else {
+        feedbackText = `Good work! This is ${selectedNote
+          .charAt(0)
+          .toUpperCase()}`;
+      }
       break;
     case "Fail":
       submitButtonClass = "--error";
-      feedbackText = `This is ${currentNote.charAt(0).toUpperCase()}`;
+      if (levelNum >= 7) {
+        feedbackText = `This is played with ${getFingeringForNote(currentNote)}`;
+      } else {
+        feedbackText = `This is ${currentNote
+          .charAt(0)
+          .toUpperCase()}`;
+      }
       break;
   }
 
@@ -160,39 +210,50 @@ export const NoteReaderLevel = ({
           </Typography>
         </Toolbar>
       </AppBar>
-        <h4 className="note-reader-level-title">
-          What is the name of this note?
-        </h4>
-        <Score note={currentNote} vhWidth={useWindowWidth()} vhHeight={useWindowHeight()} />
-        <div className="answer-buttons-container">
-          {fourOptions.map((note) => {
-            return (
-              <Button
-                disabled={levelState !== "Idle"}
-                key={note}
-                className={`answer-button ${
-                  selectedNote === note &&
-                  levelState === "Idle" &&
-                  "answer-button--selected"
-                } ${
-                  note === currentNote &&
-                  levelState === "Success" &&
-                  "answer-button--success"
-                } ${
-                  levelState === "Fail" &&
-                  selectedNote === note &&
-                  "answer-button--fail"
-                }`}
-                onClick={() => {
-                  setSelectedNote(note);
-                }}
-              >
-                <span>{note.charAt(0)}</span>
-              </Button>
-            );
-          })}
-        </div>
-        <div className={`submit-button-background${submitButtonClass}`}>
+      <h4 className="note-reader-level-title">
+        {levelNum >= 7
+          ? "Which string and finger do you use to play this note?"
+          : "What is the name of this note?"}
+      </h4>
+      <Score
+        keySignature={levelNum >= 7 ? "A" : "C"}
+        note={currentNote}
+        vhWidth={useWindowWidth()}
+        vhHeight={useWindowHeight()}
+      />
+      <div className="answer-buttons-container">
+        {fourOptions.map((note) => {
+          return (
+            <Button
+              disabled={levelState !== "Idle"}
+              key={note}
+              className={`answer-button ${
+                selectedNote === note &&
+                levelState === "Idle" &&
+                "answer-button--selected"
+              } ${
+                note === currentNote &&
+                levelState === "Success" &&
+                "answer-button--success"
+              } ${
+                levelState === "Fail" &&
+                selectedNote === note &&
+                "answer-button--fail"
+              }`}
+              onClick={() => {
+                setSelectedNote(note);
+              }}
+            >
+              <span>
+                {showFingerPosition
+                  ? getFingeringForNote(note)
+                  : note.charAt(0)}
+              </span>
+            </Button>
+          );
+        })}
+      </div>
+      <div className={`submit-button-background${submitButtonClass}`}>
         <div className="submit-button-and-feedback-container">
           <div className={`feedback-text${submitButtonClass}`}>
             {feedbackText}
@@ -223,7 +284,7 @@ export const NoteReaderLevel = ({
           )}
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 
