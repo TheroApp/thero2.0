@@ -301,7 +301,7 @@ const AuthStateApp: React.FunctionComponent = () => {
               </div>
             </div>
             <div className="section-header">
-              <h4 className="section-title">Note Positions</h4>
+              <h4 className="section-title">Violin Fingering</h4>
               <img
                 className="section-img"
                 src={allvar}
