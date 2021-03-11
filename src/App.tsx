@@ -331,7 +331,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                     onClick={() =>
                       openLevel(
                         ["a/4", "b/4", "c/5", "d/5", "e/5", "f/5", "g/5", "a/5"],
-                        7
+                        8
                       )
                     }
                   >
