@@ -207,6 +207,7 @@ const AuthStateApp: React.FunctionComponent = () => {
       <Container maxWidth="sm" style={{ paddingBottom: "3em" }}>
         {selectedLevel ? (
           <NoteReaderLevel
+            showFingerPosition={levelNum > 6 ? true : false}
             practicePool={selectedLevel}
             setSelectedLevel={setSelectedLevel}
             levelNum={levelNum}
@@ -296,6 +297,47 @@ const AuthStateApp: React.FunctionComponent = () => {
                     <img className="home-level-image" src={mixed2}></img>
                   </Button>
                   <h4 className="section-title">Mixed 2</h4>
+                </div>
+              </div>
+            </div>
+            <div className="section-header">
+              <h4 className="section-title">Note Positions</h4>
+              <img
+                className="section-img"
+                src={allvar}
+                height="40px"
+                width="40px"
+              ></img>
+            </div>
+            <div className="levels-container">
+              <div className="levels-row">
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      openLevel(
+                        ["a/3", "b/3", "c/4", "d/4", "e/4", "f/4", "g/4"],
+                        7
+                      )
+                    }
+                  >
+                    <img className="home-level-image" src={mixed2}></img>
+                  </Button>
+                  <h4 className="section-title">A Major 1</h4>
+                </div>
+                <div className="button-and-title-container">
+                  <Button
+                    className="answer-button"
+                    onClick={() =>
+                      openLevel(
+                        ["a/4", "b/4", "c/5", "d/5", "e/5", "f/5", "g/5", "a/5"],
+                        7
+                      )
+                    }
+                  >
+                    <img className="home-level-image" src={mixed2}></img>
+                  </Button>
+                  <h4 className="section-title">A Major 2</h4>
                 </div>
               </div>
             </div>

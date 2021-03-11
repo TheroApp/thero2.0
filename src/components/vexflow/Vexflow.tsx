@@ -9,12 +9,14 @@ export function Score({
   note,
   clef = "treble",
   vhWidth,
-  vhHeight
+  vhHeight,
+  keySignature = "C",
 }: {
   note: string;
   clef?: string;
   vhWidth: number;
   vhHeight: number;
+  keySignature?: string;
 }) {
   const container = useRef<HTMLCanvasElement>(null);
 
@@ -54,9 +56,10 @@ export function Score({
       context.setFont("Arial", 10);
       context.setBackgroundFillStyle("#eed");
 
-      const stave = new Stave(20, 40, 100);
+      const stave = new Stave(keySignature == "A" ? 0 : 20, 40, keySignature == "A" ? 150 : 100);
 
       stave.addClef(clef);
+      stave.addKeySignature(keySignature);
       stave.setContext(context).draw();
 
       const notes = [
