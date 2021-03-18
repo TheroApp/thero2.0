@@ -21,3 +21,6 @@ Otherwise choose the defualts for a react app.
 ```
 npm start
 ```
+
+## Release instructions
+When new content is merged to the Release branch, and https://play.thero.app has been tested, publish a release. The release body will be sent to existing users in an update email notification.
