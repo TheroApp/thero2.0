@@ -34,7 +34,7 @@ import logo from "./logo.png";
 import between from "./images/BetweenLines.svg";
 import all from "./images/AllTheLines.svg";
 import allvar from "./images/allvar.svg";
-
+import ProgressBar from "./components/progressBar";
 import on from "./images/OnTheLines.svg";
 import ledger from "./images/ledger.svg";
 import highledger from "./images/highledger.svg";
@@ -246,6 +246,14 @@ const AuthStateApp: React.FunctionComponent = () => {
                     >
                       <img className="home-level-image" src={spaces}></img>
                     </Button>
+                    {goalLevels.includes(1) ? (
+                      <div style={{ width: "100px", paddingBottom: "1em" }}>
+                        <ProgressBar completed={20}></ProgressBar>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+
                     <h4 className="section-title">Spaces</h4>
                   </div>
                 ) : (
@@ -261,6 +269,13 @@ const AuthStateApp: React.FunctionComponent = () => {
                     >
                       <img className="home-level-image" src={lines}></img>
                     </Button>
+                    {goalLevels.includes(2) ? (
+                      <div style={{ width: "100px", paddingBottom: "1em" }}>
+                        <ProgressBar completed={20}></ProgressBar>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
                     <h4 className="section-title">Lines</h4>
                   </div>
                 ) : (
@@ -271,7 +286,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                 {goalLevels.length === 0 || goalLevels.includes(4) ? (
                   <div className="button-and-title-container">
                     <Button
-                      className="answer-button"
+                      className=""
                       onClick={() =>
                         openLevel(
                           ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
@@ -281,6 +296,13 @@ const AuthStateApp: React.FunctionComponent = () => {
                     >
                       <img className="home-level-image" src={mixed1}></img>
                     </Button>
+                    {goalLevels.includes(4) ? (
+                      <div style={{ width: "100px", paddingBottom: "1em" }}>
+                        <ProgressBar completed={20}></ProgressBar>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
                     <h4 className="section-title">Mixed 1</h4>
                   </div>
                 ) : (
@@ -296,6 +318,13 @@ const AuthStateApp: React.FunctionComponent = () => {
                     >
                       <img className="home-level-image" src={ledger1}></img>
                     </Button>
+                    {goalLevels.includes(3) ? (
+                      <div style={{ width: "100px", paddingBottom: "1em" }}>
+                        <ProgressBar completed={20}></ProgressBar>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
                     <h4 className="section-title">Ledger 1</h4>
                   </div>
                 ) : (
@@ -311,6 +340,13 @@ const AuthStateApp: React.FunctionComponent = () => {
                     >
                       <img className="home-level-image" src={ledger2}></img>
                     </Button>
+                    {goalLevels.includes(6) ? (
+                      <div style={{ width: "100px", paddingBottom: "1em" }}>
+                        <ProgressBar completed={20}></ProgressBar>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
                     <h4 className="section-title">Ledger 2</h4>
                   </div>
                 ) : (
@@ -326,6 +362,13 @@ const AuthStateApp: React.FunctionComponent = () => {
                     >
                       <img className="home-level-image" src={mixed2}></img>
                     </Button>
+                    {goalLevels.includes(5) ? (
+                      <div style={{ width: "100px", paddingBottom: "1em" }}>
+                        <ProgressBar completed={20}></ProgressBar>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
                     <h4 className="section-title">Mixed 2</h4>
                   </div>
                 ) : (
@@ -362,12 +405,19 @@ const AuthStateApp: React.FunctionComponent = () => {
                     >
                       <img className="home-level-image" src={mixed2}></img>
                     </Button>
+                    {goalLevels.includes(7) ? (
+                      <div style={{ width: "100px", paddingBottom: "1em" }}>
+                        <ProgressBar completed={20}></ProgressBar>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
                     <h4 className="section-title">A Major 1</h4>
                   </div>
                 ) : (
                   <></>
                 )}
-                {goalLevels.length === 0 || goalLevels.includes(7) ? (
+                {goalLevels.length === 0 || goalLevels.includes(8) ? (
                   <div className="button-and-title-container">
                     <Button
                       className="answer-button"
@@ -389,6 +439,13 @@ const AuthStateApp: React.FunctionComponent = () => {
                     >
                       <img className="home-level-image" src={mixed2}></img>
                     </Button>
+                    {goalLevels.includes(8) ? (
+                      <div style={{ width: "100px", paddingBottom: "1em" }}>
+                        <ProgressBar completed={20}></ProgressBar>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
                     <h4 className="section-title">A Major 2</h4>
                   </div>
                 ) : (
