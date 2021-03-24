@@ -10,11 +10,11 @@ type StudentUser
   score: Int!
   teacherName: String!
   userName: String!
-  task: [Int]
+  goalLevels: [Int]
   repeat: Int
   repeatTimeFrame: String
-  taskDueDate: String
-  taskSetDate: String
+  goalDueDate: String
+  goalSetDate: String
 }
 
 type StudentHistory
