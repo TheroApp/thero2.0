@@ -12,11 +12,11 @@ export const createStudentUser = /* GraphQL */ `
       score
       teacherName
       userName
-      task
+      goalLevels
       repeat
       repeatTimeFrame
-      taskDueDate
-      taskSetDate
+      goalDueDate
+      goalSetDate
       createdAt
       updatedAt
     }
@@ -32,11 +32,11 @@ export const updateStudentUser = /* GraphQL */ `
       score
       teacherName
       userName
-      task
+      goalLevels
       repeat
       repeatTimeFrame
-      taskDueDate
-      taskSetDate
+      goalDueDate
+      goalSetDate
       createdAt
       updatedAt
     }
@@ -52,11 +52,11 @@ export const deleteStudentUser = /* GraphQL */ `
       score
       teacherName
       userName
-      task
+      goalLevels
       repeat
       repeatTimeFrame
-      taskDueDate
-      taskSetDate
+      goalDueDate
+      goalSetDate
       createdAt
       updatedAt
     }
