@@ -59,7 +59,23 @@ const AuthStateApp: React.FunctionComponent = () => {
   >();
   const [score, setScore] = useState(0);
   const [goalLevels, setGoalLevels] = useState<Array<number>>([]);
-  const [repeats, setRepeats] = useState();
+  const [progressPerGoalLevels, setProgressPerGoalLevels] = useState<
+    Array<number>
+  >([]);
+  const [goalDueDate, setGoalDueDate] = useState<string>("");
+  const [goalSetDate, setGoalSetDate] = useState<string>("");
+  const [repeats, setRepeats] = useState(0);
+
+  const getCompletedPercentage = (levelNum: number) => {
+    var calc =
+      (progressPerGoalLevels[goalLevels.findIndex((e) => levelNum === e)] /
+        repeats) *
+      100;
+    if (calc > 100) {
+      calc = 100;
+    }
+    return calc;
+  };
 
   React.useEffect(() => {
     if (
@@ -109,7 +125,18 @@ const AuthStateApp: React.FunctionComponent = () => {
           variables: { id: user.attributes.sub },
         });
         setScore(studentUserData.data.getStudentUser.score);
-        setGoalLevels(studentUserData.data.getStudentUser.goalLevels);
+        if (
+          studentUserData.data.getStudentUser.goalLevels != null &&
+          studentUserData.data.getStudentUser.goalLevels.length !== 0
+        ) {
+          setGoalLevels(studentUserData.data.getStudentUser.goalLevels);
+          setProgressPerGoalLevels(
+            studentUserData.data.getStudentUser.goalProgressPerLevel
+          );
+          setRepeats(studentUserData.data.getStudentUser.repeat);
+          setGoalDueDate(studentUserData.data.getStudentUser.goalDueDate);
+          setGoalSetDate(studentUserData.data.getStudentUser.goalSetDate);
+        }
       }
     } catch (err) {
       console.log("error fetching user data, creating new user");
@@ -216,13 +243,21 @@ const AuthStateApp: React.FunctionComponent = () => {
             levelNum={levelNum}
             user={user}
             globalScore={score}
+            userGoalLevels={goalLevels}
+            userProgressPerGoalLevels={progressPerGoalLevels}
+            goalDueDate={goalDueDate}
+            goalSetDate={goalSetDate}
           />
         ) : (
           <>
             {goalLevels.length === 0 ||
             goalLevels.some((r) => [1, 2, 3, 4, 5, 6].includes(r)) ? (
               <div className="section-header">
-                <h4 className="section-title">Treble Clef</h4>
+                <h4 className="section-title">
+                  {goalLevels.length === 0
+                    ? "Treble Clef"
+                    : "Treble Clef Practice"}
+                </h4>
                 <img
                   className="section-img"
                   src={on}
@@ -248,7 +283,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                     </Button>
                     {goalLevels.includes(1) ? (
                       <div style={{ width: "100px", paddingBottom: "1em" }}>
-                        <ProgressBar completed={20}></ProgressBar>
+                        <ProgressBar
+                          completed={getCompletedPercentage(1)}
+                        ></ProgressBar>
                       </div>
                     ) : (
                       <> </>
@@ -271,7 +308,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                     </Button>
                     {goalLevels.includes(2) ? (
                       <div style={{ width: "100px", paddingBottom: "1em" }}>
-                        <ProgressBar completed={20}></ProgressBar>
+                        <ProgressBar
+                          completed={getCompletedPercentage(2)}
+                        ></ProgressBar>{" "}
                       </div>
                     ) : (
                       <> </>
@@ -286,7 +325,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                 {goalLevels.length === 0 || goalLevels.includes(4) ? (
                   <div className="button-and-title-container">
                     <Button
-                      className=""
+                      className="answer-button"
                       onClick={() =>
                         openLevel(
                           ["a/4", "c/5", "e/4", "g/4", "b/4", "d/5", "f/5"],
@@ -296,13 +335,11 @@ const AuthStateApp: React.FunctionComponent = () => {
                     >
                       <img className="home-level-image" src={mixed1}></img>
                     </Button>
-                    {goalLevels.includes(4) ? (
-                      <div style={{ width: "100px", paddingBottom: "1em" }}>
-                        <ProgressBar completed={20}></ProgressBar>
-                      </div>
-                    ) : (
-                      <> </>
-                    )}
+                    <div style={{ width: "100px", paddingBottom: "1em" }}>
+                      <ProgressBar
+                        completed={getCompletedPercentage(4)}
+                      ></ProgressBar>{" "}
+                    </div>
                     <h4 className="section-title">Mixed 1</h4>
                   </div>
                 ) : (
@@ -320,7 +357,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                     </Button>
                     {goalLevels.includes(3) ? (
                       <div style={{ width: "100px", paddingBottom: "1em" }}>
-                        <ProgressBar completed={20}></ProgressBar>
+                        <ProgressBar
+                          completed={getCompletedPercentage(3)}
+                        ></ProgressBar>{" "}
                       </div>
                     ) : (
                       <> </>
@@ -342,7 +381,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                     </Button>
                     {goalLevels.includes(6) ? (
                       <div style={{ width: "100px", paddingBottom: "1em" }}>
-                        <ProgressBar completed={20}></ProgressBar>
+                        <ProgressBar
+                          completed={getCompletedPercentage(6)}
+                        ></ProgressBar>{" "}
                       </div>
                     ) : (
                       <> </>
@@ -364,7 +405,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                     </Button>
                     {goalLevels.includes(5) ? (
                       <div style={{ width: "100px", paddingBottom: "1em" }}>
-                        <ProgressBar completed={20}></ProgressBar>
+                        <ProgressBar
+                          completed={getCompletedPercentage(5)}
+                        ></ProgressBar>{" "}
                       </div>
                     ) : (
                       <> </>
@@ -379,7 +422,11 @@ const AuthStateApp: React.FunctionComponent = () => {
             {goalLevels.length === 0 ||
             goalLevels.some((r) => [7, 8].includes(r)) ? (
               <div className="section-header">
-                <h4 className="section-title">Violin Fingering</h4>
+                <h4 className="section-title">
+                  {goalLevels.length === 0
+                    ? "Violin Fingering"
+                    : "Violin Fingering Practice"}
+                </h4>{" "}
                 <img
                   className="section-img"
                   src={allvar}
@@ -407,7 +454,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                     </Button>
                     {goalLevels.includes(7) ? (
                       <div style={{ width: "100px", paddingBottom: "1em" }}>
-                        <ProgressBar completed={20}></ProgressBar>
+                        <ProgressBar
+                          completed={getCompletedPercentage(7)}
+                        ></ProgressBar>
                       </div>
                     ) : (
                       <> </>
@@ -441,7 +490,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                     </Button>
                     {goalLevels.includes(8) ? (
                       <div style={{ width: "100px", paddingBottom: "1em" }}>
-                        <ProgressBar completed={20}></ProgressBar>
+                        <ProgressBar
+                          completed={getCompletedPercentage(8)}
+                        ></ProgressBar>
                       </div>
                     ) : (
                       <> </>
