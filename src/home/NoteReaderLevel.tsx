@@ -157,7 +157,7 @@ export const NoteReaderLevel = ({
             variables: { input: studentUser },
           });
         } catch {
-          console.log("Failed to update score");
+          console.log("Failed to update user");
         }
 
         const studentLevelData = {

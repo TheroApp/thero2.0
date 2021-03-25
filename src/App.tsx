@@ -282,7 +282,12 @@ const AuthStateApp: React.FunctionComponent = () => {
                       <img className="home-level-image" src={spaces}></img>
                     </Button>
                     {goalLevels.includes(1) ? (
-                      <div style={{ width: "100px", paddingBottom: "1em" }}>
+                      <div
+                        style={{
+                          width: "100px",
+                          paddingBottom: "1em",
+                        }}
+                      >
                         <ProgressBar
                           completed={getCompletedPercentage(1)}
                         ></ProgressBar>
