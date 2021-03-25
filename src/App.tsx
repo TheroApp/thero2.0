@@ -111,19 +111,18 @@ const AuthStateApp: React.FunctionComponent = () => {
   };
 
   React.useEffect(() => {
+    setIsLoading(true);
     fetchUserDetails().then(() => setIsLoading(false));
-  }, [selectedLevel]);
+  }, [selectedLevel, user, authState]);
 
   React.useEffect(() => {
-    setIsLoading(true);
     const something = onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
       setUser(authData);
     });
-    setIsLoading(false);
 
     return something;
-  }, [user]);
+  }, [user, authState]);
 
   async function fetchUserDetails() {
     try {
