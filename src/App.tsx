@@ -356,9 +356,17 @@ const AuthStateApp: React.FunctionComponent = () => {
                           <img className="home-level-image" src={mixed1}></img>
                         </Button>
                         <div style={{ width: "100px", paddingBottom: "1em" }}>
-                          <ProgressBar
-                            completed={getCompletedPercentage(4)}
-                          ></ProgressBar>{" "}
+                          {goalLevels.includes(4) ? (
+                            <div
+                              style={{ width: "100px", paddingBottom: "1em" }}
+                            >
+                              <ProgressBar
+                                completed={getCompletedPercentage(4)}
+                              ></ProgressBar>{" "}
+                            </div>
+                          ) : (
+                            <> </>
+                          )}
                         </div>
                         <h4 className="section-title">Mixed 1</h4>
                       </div>
