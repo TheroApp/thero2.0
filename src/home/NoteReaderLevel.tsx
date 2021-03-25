@@ -120,7 +120,7 @@ export const NoteReaderLevel = ({
   };
 
   const getNewNote = async () => {
-    if (score === 1) {
+    if (score === 10) {
       const calcScore = Math.round(100 - (tries - 10) * 10);
       const total = globalScore + calcScore;
       var studentUser;
