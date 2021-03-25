@@ -561,7 +561,7 @@ const AuthStateApp: React.FunctionComponent = () => {
             { type: "email", label: "Email", placeholder: "", required: true },
             {
               type: "custom:teacher",
-              label: "Teachers's name",
+              label: "Teachers's username",
               placeholder: "",
               required: true,
             },
