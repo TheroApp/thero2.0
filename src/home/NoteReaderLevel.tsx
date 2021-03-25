@@ -56,6 +56,10 @@ type NoteReaderLevelProp = {
   globalScore: number;
   levelNum: number;
   showFingerPosition: boolean;
+  userGoalLevels: Array<number>;
+  userProgressPerGoalLevels: Array<number>;
+  goalSetDate: string;
+  goalDueDate: string;
 };
 
 export const NoteReaderLevel = ({
@@ -65,6 +69,10 @@ export const NoteReaderLevel = ({
   globalScore,
   levelNum,
   showFingerPosition,
+  userGoalLevels,
+  userProgressPerGoalLevels,
+  goalSetDate,
+  goalDueDate,
 }: NoteReaderLevelProp) => {
   const getRandomNoteFromNotePool = () => {
     return practicePool[Math.floor(Math.random() * practicePool.length)];
@@ -115,19 +123,41 @@ export const NoteReaderLevel = ({
     if (score === 10) {
       const calcScore = Math.round(100 - (tries - 10) * 10);
       const total = globalScore + calcScore;
+      var studentUser;
 
-      if (user !== undefined) {
-        const studentUser = {
+      if (
+        userGoalLevels.includes(levelNum) &&
+        Date.now() > new Date(0).setUTCMilliseconds(parseInt(goalSetDate)) &&
+        Date.now() <= new Date(0).setUTCMilliseconds(parseInt(goalDueDate))
+      ) {
+        const index = userGoalLevels.findIndex((e) => levelNum === e);
+        console.log(index);
+        var temp = userProgressPerGoalLevels;
+        temp.splice(index, 1, temp[index] + 1);
+
+        console.log(temp);
+
+        studentUser = {
+          id: user.attributes.sub,
+          score: total,
+          goalProgressPerLevel: temp,
+        };
+      } else {
+        studentUser = {
           id: user.attributes.sub,
           score: total,
         };
+      }
+      console.log(user);
+
+      if (user !== undefined) {
         try {
           const studentUserData: any = await API.graphql({
             query: updateStudentUser,
             variables: { input: studentUser },
           });
         } catch {
-          console.log("Failed to update score");
+          console.log("Failed to update user");
         }
 
         const studentLevelData = {
@@ -179,11 +209,11 @@ export const NoteReaderLevel = ({
     case "Fail":
       submitButtonClass = "--error";
       if (levelNum >= 7) {
-        feedbackText = `This is played with ${getFingeringForNote(currentNote)}`;
+        feedbackText = `This is played with ${getFingeringForNote(
+          currentNote
+        )}`;
       } else {
-        feedbackText = `This is ${currentNote
-          .charAt(0)
-          .toUpperCase()}`;
+        feedbackText = `This is ${currentNote.charAt(0).toUpperCase()}`;
       }
       break;
   }

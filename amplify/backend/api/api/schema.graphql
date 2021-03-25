@@ -1,18 +1,26 @@
 type StudentUser
   @model
-  @auth (
+  @auth(
     rules: [
-    { allow: owner, operations: [create, update, read] }, 
-    { allow: private, operations: [read] }
+      { allow: owner, operations: [create, update, read] }
+      { allow: private, operations: [update, read] }
     ]
   ) {
   id: ID!
   score: Int!
   teacherName: String!
   userName: String!
+  goalLevels: [Int]
+  goalProgressPerLevel: [Int]
+  repeat: Int
+  repeatTimeFrame: String
+  goalDueDate: String
+  goalSetDate: String
 }
 
-type StudentHistory @model @auth(rules: [{ allow: owner}, {allow: private, operations: [read] }]) {
+type StudentHistory
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   id: ID!
   level: Int!
   accuracy: Int!

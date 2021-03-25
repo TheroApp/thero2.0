@@ -9,6 +9,12 @@ export const getStudentUser = /* GraphQL */ `
       score
       teacherName
       userName
+      goalLevels
+      goalProgressPerLevel
+      repeat
+      repeatTimeFrame
+      goalDueDate
+      goalSetDate
       createdAt
       updatedAt
     }
@@ -26,6 +32,12 @@ export const listStudentUsers = /* GraphQL */ `
         score
         teacherName
         userName
+        goalLevels
+        goalProgressPerLevel
+        repeat
+        repeatTimeFrame
+        goalDueDate
+        goalSetDate
         createdAt
         updatedAt
       }
