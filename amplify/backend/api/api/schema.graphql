@@ -11,6 +11,7 @@ type StudentUser
   teacherName: String!
   userName: String!
   goalLevels: [Int]
+  goalProgressPerLevel: [Int]
   repeat: Int
   repeatTimeFrame: String
   goalDueDate: String

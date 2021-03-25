@@ -10,6 +10,7 @@ export const onCreateStudentUser = /* GraphQL */ `
       teacherName
       userName
       goalLevels
+      goalProgressPerLevel
       repeat
       repeatTimeFrame
       goalDueDate
@@ -27,6 +28,7 @@ export const onUpdateStudentUser = /* GraphQL */ `
       teacherName
       userName
       goalLevels
+      goalProgressPerLevel
       repeat
       repeatTimeFrame
       goalDueDate
@@ -44,6 +46,7 @@ export const onDeleteStudentUser = /* GraphQL */ `
       teacherName
       userName
       goalLevels
+      goalProgressPerLevel
       repeat
       repeatTimeFrame
       goalDueDate
