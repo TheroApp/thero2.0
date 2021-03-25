@@ -113,14 +113,16 @@ const AuthStateApp: React.FunctionComponent = () => {
   React.useEffect(() => {
     setIsLoading(true);
     fetchUserDetails().then(() => setIsLoading(false));
+  }, [selectedLevel, user, authState]);
 
-    setOpenMenu(false);
-
-    return onAuthUIStateChange((nextAuthState, authData) => {
+  React.useEffect(() => {
+    const something = onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
       setUser(authData);
     });
-  }, [user, selectedLevel]);
+
+    return something;
+  }, [user, authState]);
 
   async function fetchUserDetails() {
     try {
@@ -226,6 +228,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                         root: "menu-item",
                       }}
                       onClick={async () => {
+                        setOpenMenu(false);
                         await Auth.signOut();
                       }}
                     >
@@ -542,57 +545,73 @@ const AuthStateApp: React.FunctionComponent = () => {
     </ThemeProvider>
   ) : (
     <div className="sign-up-container">
-      <div>
-        <img src={logo} height="72px" width="307px"></img>
-      </div>
-      <AmplifyAuthenticator>
-        <AmplifySignUp
-          slot="sign-up"
-          headerText="Sign up to Thero"
-          haveAccountText="Already signed up?"
-          formFields={[
-            {
-              type: "username",
-              label: "Username",
-              placeholder: "",
-              hint: "Usernames are case sensitive",
-              required: true,
-            },
-            { type: "email", label: "Email", placeholder: "", required: true },
-            {
-              type: "custom:teacher",
-              label: "Teachers's username",
-              placeholder: "",
-              required: true,
-            },
-            {
-              type: "password",
-              label: "Password",
-              placeholder: "",
-              required: true,
-            },
-          ]}
-        ></AmplifySignUp>
-        <AmplifySignIn
-          slot="sign-in"
-          headerText=""
-          formFields={[
-            {
-              type: "username",
-              label: "Username",
-              placeholder: "",
-              hint: "Usernames are case sensitive",
-              required: true,
-            },
-            {
-              type: "password",
-              label: "Password",
-              placeholder: "",
-              required: true,
-            },
-          ]}
-        ></AmplifySignIn>
-      </AmplifyAuthenticator>
+      {isLoading ? (
+        <div style={{ paddingTop: "3em", alignItems: "center" }}>
+          <CircularProgress
+            color="secondary"
+            style={{ marginLeft: "50%" }}
+          ></CircularProgress>
+        </div>
+      ) : (
+        <>
+          <div>
+            <img src={logo} height="72px" width="307px"></img>
+          </div>
+          <AmplifyAuthenticator>
+            <AmplifySignUp
+              slot="sign-up"
+              headerText="Sign up to Thero"
+              haveAccountText="Already signed up?"
+              formFields={[
+                {
+                  type: "username",
+                  label: "Username",
+                  placeholder: "",
+                  hint: "Usernames are case sensitive",
+                  required: true,
+                },
+                {
+                  type: "email",
+                  label: "Email",
+                  placeholder: "",
+                  required: true,
+                },
+                {
+                  type: "custom:teacher",
+                  label: "Teachers's username",
+                  placeholder: "",
+                  required: true,
+                },
+                {
+                  type: "password",
+                  label: "Password",
+                  placeholder: "",
+                  required: true,
+                },
+              ]}
+            ></AmplifySignUp>
+            <AmplifySignIn
+              slot="sign-in"
+              headerText=""
+              formFields={[
+                {
+                  type: "username",
+                  label: "Username",
+                  placeholder: "",
+                  hint: "Usernames are case sensitive",
+                  required: true,
+                },
+                {
+                  type: "password",
+                  label: "Password",
+                  placeholder: "",
+                  required: true,
+                },
+              ]}
+            ></AmplifySignIn>
+          </AmplifyAuthenticator>
+        </>
+      )}
     </div>
   );
 };
