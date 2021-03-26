@@ -222,12 +222,15 @@ export const NoteReaderLevel = ({
     <div>
       <AppBar position="absolute">
         <Toolbar className="toolbar-container">
-          <IconButton edge="start" color="default" aria-label="back">
-            <ArrowBack
-              onClick={() => {
-                setSelectedLevel("");
-              }}
-            />
+          <IconButton
+            edge="start"
+            color="default"
+            aria-label="back"
+            onClick={() => {
+              setSelectedLevel("");
+            }}
+          >
+            <ArrowBack />
           </IconButton>
           <ProgressBar completed={score * 10}></ProgressBar>
           <Typography
