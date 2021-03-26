@@ -6,7 +6,10 @@ import * as serviceWorker from "./serviceWorker";
 import Amplify from "aws-amplify";
 import awsExports from "./aws-exports";
 import { StylesProvider } from "@material-ui/core/styles";
+import { hotjar } from "react-hotjar";
+
 Amplify.configure(awsExports);
+hotjar.initialize(2020899, 6);
 
 ReactDOM.render(
   <React.StrictMode>
