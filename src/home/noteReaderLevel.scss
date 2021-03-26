@@ -8,6 +8,12 @@
   font-style: normal;
   font-size: 2.8vh;
   line-height: 3vh;
+
+  @media (max-width: 414px) and (display-mode: browser) {
+    margin-top: 11vh;
+    font-size: 2.4vh;
+    line-height: 2.4vh;
+  }
 }
 
 .answer-buttons-container {
@@ -35,8 +41,14 @@
   @media (min-width: 768px) {
     height: 135px;
     width: 144px;
-    }
+  }
 
+  @media (max-width: 414px) and (display-mode: browser) {
+    height: 12vh;
+    width: 12vh;
+    margin: 9px 20px;
+    font-size: 38px;
+  }
 
   &--selected {
     background-color: $thui-color-blue-300;
@@ -101,6 +113,9 @@
   left: inherit;
   right: inherit;
   bottom: inherit;
+  @media (max-width: 414px) and (display-mode: browser) {
+    height: 12vh;
+  }
 }
 
 .submit-button {
@@ -114,6 +129,10 @@
   color: $thui-color-white;
   font-size: 20px;
   font-weight: 900;
+  @media (max-width: 414px) and (display-mode: browser) {
+    height: 40px;
+    font-size: 16px;
+  }
 }
 
 .submit-button--success {
@@ -143,20 +162,25 @@
   bottom: 0px;
   z-index: -1;
   border-radius: 20% 20% 0% 0%;
-  background: #FFFFFF;
+  background: #ffffff;
   transition: height 0.1s;
 
-  
   &--success {
     @extend .submit-button-background;
-    background: #C9EAB2;
+    background: #c9eab2;
     height: 18vh;
+    @media (max-width: 414px) and (display-mode: browser) {
+      height: 14vh;
+    }
   }
 
   &--error {
     @extend .submit-button-background;
-    background: #FFB9B9;    
+    background: #ffb9b9;
     height: 18vh;
+    @media (max-width: 414px) and (display-mode: browser) {
+      height: 14vh;
+    }
   }
 }
 
@@ -167,16 +191,19 @@
   font-size: 2.8vh;
   line-height: 3vh;
   visibility: hidden;
-
+  @media (max-width: 414px) and (display-mode: browser) {
+    font-size: 2.5vh;
+    line-height: 2.5vh;
+  }
   &--success {
     @extend .feedback-text;
-    color: #4E9D00;
+    color: #4e9d00;
     visibility: visible;
   }
 
   &--error {
     @extend .feedback-text;
-    color: #E12929;
+    color: #e12929;
     visibility: visible;
   }
 }
