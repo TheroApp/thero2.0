@@ -21,7 +21,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/?utm_source=launcher",
   "display": "standalone",
   "theme_color": "#5870F9",
   "background_color": "#FFFFFF"
