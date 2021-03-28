@@ -9,7 +9,9 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { hotjar } from "react-hotjar";
 
 Amplify.configure(awsExports);
-hotjar.initialize(2020899, 6);
+if (window.location.href.includes("play.thero.app")) {
+  hotjar.initialize(2020899, 6);
+}
 
 ReactDOM.render(
   <React.StrictMode>
