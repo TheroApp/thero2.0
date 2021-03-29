@@ -111,8 +111,11 @@ const AuthStateApp: React.FunctionComponent = () => {
   };
 
   React.useEffect(() => {
-    setIsLoading(true);
-    fetchUserDetails().then(() => setIsLoading(false));
+    setIsLoading(false);
+    if (authState === AuthState.SignedIn) {
+      setIsLoading(true);
+      fetchUserDetails().then(() => setIsLoading(false));
+    }
   }, [selectedLevel, user, authState]);
 
   React.useEffect(() => {
