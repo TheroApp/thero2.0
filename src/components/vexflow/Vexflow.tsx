@@ -24,7 +24,7 @@ export function Score({
     if (width > 540) {
       return 400;
     }
-    if (width <= 360 || height <= 680){
+    if (width <= 360 || height <= 680) {
       return 240;
     }
     return 300;
@@ -34,7 +34,7 @@ export function Score({
     if (width > 540) {
       return 2.5;
     }
-    if (width <= 360 || height <= 680){
+    if (width <= 360 || height <= 680) {
       return 1.6;
     }
     return 2;
@@ -52,11 +52,18 @@ export function Score({
 
       const context = renderer.getContext();
 
-      context.scale(calculateScale(vhWidth, vhHeight), calculateScale(vhWidth, vhHeight));
+      context.scale(
+        calculateScale(vhWidth, vhHeight),
+        calculateScale(vhWidth, vhHeight)
+      );
       context.setFont("Arial", 10);
       context.setBackgroundFillStyle("#eed");
 
-      const stave = new Stave(keySignature == "A" ? 0 : 20, 40, keySignature == "A" ? 150 : 100);
+      const stave = new Stave(
+        keySignature == "A" ? 0 : 20,
+        40,
+        keySignature == "A" ? 150 : 100
+      );
 
       stave.addClef(clef);
       stave.addKeySignature(keySignature);
@@ -64,7 +71,7 @@ export function Score({
 
       const notes = [
         new StaveNote({
-          clef: "treble",
+          clef: clef,
           keys: [note],
           duration: "q",
           auto_stem: true,
