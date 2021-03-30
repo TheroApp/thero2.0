@@ -562,7 +562,6 @@ const AuthStateApp: React.FunctionComponent = () => {
           </div>
           <AmplifyAuthenticator>
             <AmplifySignUp
-              inputMode="email"
               slot="sign-up"
               headerText="Sign up to Thero"
               haveAccountText="Already signed up?"
