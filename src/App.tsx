@@ -562,12 +562,16 @@ const AuthStateApp: React.FunctionComponent = () => {
           </div>
           <AmplifyAuthenticator>
             <AmplifySignUp
+              inputMode="email"
               slot="sign-up"
               headerText="Sign up to Thero"
               haveAccountText="Already signed up?"
               formFields={[
                 {
                   type: "username",
+                  inputProps: {
+                    type: "email",
+                  },
                   label: "Username",
                   placeholder: "Usernames are case sensitive",
                   hint: "Usernames are case sensitive",
@@ -582,6 +586,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                 {
                   type: "custom:teacher",
                   label: "Teachers's username",
+                  inputProps: {
+                    type: "email",
+                  },
                   placeholder: "Usernames are case sensitive",
                   required: true,
                 },
@@ -603,6 +610,9 @@ const AuthStateApp: React.FunctionComponent = () => {
                   hint: "Usernames are case sensitive",
                   placeholder: "Usernames are case sensitive",
                   required: true,
+                  inputProps: {
+                    type: "email",
+                  },
                 },
                 {
                   type: "password",
