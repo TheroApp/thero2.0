@@ -29,6 +29,7 @@ import { Auth } from "aws-amplify";
 
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import NoteReaderLevel from "./home/NoteReaderLevel";
+import RhythmLevel from "./home/RhythmLevel";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import logo from "./logo.png";
@@ -258,23 +259,55 @@ const AuthStateApp: React.FunctionComponent = () => {
         ) : (
           <>
             {selectedLevel ? (
-              <NoteReaderLevel
-                clef={levelNum <= 8 ? "treble" : "bass"}
-                showFingerPosition={
-                  levelNum == 7 || levelNum == 8 ? true : false
-                }
-                practicePool={selectedLevel}
-                setSelectedLevel={setSelectedLevel}
-                levelNum={levelNum}
-                user={user}
-                globalScore={score}
-                userGoalLevels={goalLevels}
-                userProgressPerGoalLevels={progressPerGoalLevels}
-                goalDueDate={goalDueDate}
-                goalSetDate={goalSetDate}
-              />
+              <>
+                {levelNum < 15 ? (
+                  <NoteReaderLevel
+                    clef={levelNum <= 8 ? "treble" : "bass"}
+                    showFingerPosition={
+                      levelNum == 7 || levelNum == 8 ? true : false
+                    }
+                    practicePool={selectedLevel}
+                    setSelectedLevel={setSelectedLevel}
+                    levelNum={levelNum}
+                    user={user}
+                    globalScore={score}
+                    userGoalLevels={goalLevels}
+                    userProgressPerGoalLevels={progressPerGoalLevels}
+                    goalDueDate={goalDueDate}
+                    goalSetDate={goalSetDate}
+                  />
+                ) : (
+                  <RhythmLevel
+                    practicePool={selectedLevel}
+                    setSelectedLevel={setSelectedLevel}
+                    levelNum={levelNum}
+                    user={user}
+                    globalScore={score}
+                    userGoalLevels={goalLevels}
+                    userProgressPerGoalLevels={progressPerGoalLevels}
+                    goalDueDate={goalDueDate}
+                    goalSetDate={goalSetDate}
+                  ></RhythmLevel>
+                )}
+              </>
             ) : (
               <>
+                <Button
+                  className="answer-button"
+                  onClick={() => {
+                    openLevel(["q", "8", "w", "h", "16"], 15);
+                  }}
+                >
+                  <img className="home-level-image" src={spaces}></img>
+                </Button>
+                <Button
+                  className="answer-button"
+                  onClick={() => {
+                    openLevel(["qr", "8r", "wr", "hr", "16r"], 15);
+                  }}
+                >
+                  <img className="home-level-image" src={spaces}></img>
+                </Button>
                 {goalLevels.length === 0 ||
                 goalLevels.some((r) => [1, 2, 3, 4, 5, 6].includes(r)) ? (
                   <div className="section-header">
