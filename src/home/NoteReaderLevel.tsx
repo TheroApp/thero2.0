@@ -60,6 +60,7 @@ type NoteReaderLevelProp = {
   userProgressPerGoalLevels: Array<number>;
   goalSetDate: string;
   goalDueDate: string;
+  clef: string;
 };
 
 export const NoteReaderLevel = ({
@@ -73,6 +74,7 @@ export const NoteReaderLevel = ({
   userProgressPerGoalLevels,
   goalSetDate,
   goalDueDate,
+  clef,
 }: NoteReaderLevelProp) => {
   const getRandomNoteFromNotePool = () => {
     return practicePool[Math.floor(Math.random() * practicePool.length)];
@@ -196,7 +198,7 @@ export const NoteReaderLevel = ({
   switch (levelState) {
     case "Success":
       submitButtonClass = "--success";
-      if (levelNum >= 7) {
+      if (levelNum === 7 || levelNum === 8) {
         feedbackText = `Good work! You play this note with ${getFingeringForNote(
           selectedNote
         )}`;
@@ -208,7 +210,7 @@ export const NoteReaderLevel = ({
       break;
     case "Fail":
       submitButtonClass = "--error";
-      if (levelNum >= 7) {
+      if (levelNum === 7 || levelNum === 8) {
         feedbackText = `This is played with ${getFingeringForNote(
           currentNote
         )}`;
@@ -244,12 +246,13 @@ export const NoteReaderLevel = ({
         </Toolbar>
       </AppBar>
       <h4 className="note-reader-level-title">
-        {levelNum >= 7
+        {levelNum === 7 || levelNum === 8
           ? "Which string and finger do you use to play this note?"
           : "What is the name of this note?"}
       </h4>
       <Score
-        keySignature={levelNum >= 7 ? "A" : "C"}
+        clef={clef}
+        keySignature={levelNum === 7 || levelNum === 8 ? "A" : "C"}
         note={currentNote}
         vhWidth={useWindowWidth()}
         vhHeight={useWindowHeight()}

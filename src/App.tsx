@@ -46,6 +46,7 @@ import mixed1 from "./images/home/Mixed 1.png";
 import ledger1 from "./images/home/Ledger 1.png";
 import ledger2 from "./images/home/Ledger 2.png";
 import mixed2 from "./images/home/Mixed 2.png";
+import violin from "./images/home/violin.png";
 
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
@@ -258,7 +259,10 @@ const AuthStateApp: React.FunctionComponent = () => {
           <>
             {selectedLevel ? (
               <NoteReaderLevel
-                showFingerPosition={levelNum > 6 ? true : false}
+                clef={levelNum <= 8 ? "treble" : "bass"}
+                showFingerPosition={
+                  levelNum == 7 || levelNum == 8 ? true : false
+                }
                 practicePool={selectedLevel}
                 setSelectedLevel={setSelectedLevel}
                 levelNum={levelNum}
@@ -456,6 +460,193 @@ const AuthStateApp: React.FunctionComponent = () => {
                   </div>
                 </div>
                 {goalLevels.length === 0 ||
+                goalLevels.some((r) => [9, 10, 11, 12, 13, 14].includes(r)) ? (
+                  <div className="section-header">
+                    <h4 className="section-title">
+                      {goalLevels.length === 0
+                        ? "Bass Clef"
+                        : "Bass Clef Practice"}
+                    </h4>
+                    <img
+                      className="section-img"
+                      src={between}
+                      height="40px"
+                      width="40px"
+                    ></img>
+                  </div>
+                ) : (
+                  <></>
+                )}
+
+                <div className="levels-container">
+                  <div className="levels-row">
+                    {goalLevels.length === 0 || goalLevels.includes(9) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() => {
+                            openLevel(["a/2", "c/3", "e/3", "g/3"], 9);
+                          }}
+                        >
+                          <img className="home-level-image" src={spaces}></img>
+                        </Button>
+                        {goalLevels.includes(9) ? (
+                          <div
+                            style={{
+                              width: "100px",
+                              paddingBottom: "1em",
+                            }}
+                          >
+                            <ProgressBar
+                              completed={getCompletedPercentage(9)}
+                            ></ProgressBar>
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+
+                        <h4 className="section-title">Spaces</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                    {goalLevels.length === 0 || goalLevels.includes(10) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() =>
+                            openLevel(["g/2", "b/2", "d/3", "f/3", "a/3"], 10)
+                          }
+                        >
+                          <img className="home-level-image" src={lines}></img>
+                        </Button>
+                        {goalLevels.includes(10) ? (
+                          <div style={{ width: "100px", paddingBottom: "1em" }}>
+                            <ProgressBar
+                              completed={getCompletedPercentage(10)}
+                            ></ProgressBar>{" "}
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+                        <h4 className="section-title">Lines</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                  </div>
+                  <div className="levels-row">
+                    {goalLevels.length === 0 || goalLevels.includes(11) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() =>
+                            openLevel(
+                              ["g/2", "a/2", "b/2", "c/3", "d/3", "e/3", "f/3"],
+                              11
+                            )
+                          }
+                        >
+                          <img className="home-level-image" src={mixed1}></img>
+                        </Button>
+                        <div style={{ width: "100px", paddingBottom: "1em" }}>
+                          {goalLevels.includes(11) ? (
+                            <div
+                              style={{ width: "100px", paddingBottom: "1em" }}
+                            >
+                              <ProgressBar
+                                completed={getCompletedPercentage(11)}
+                              ></ProgressBar>{" "}
+                            </div>
+                          ) : (
+                            <> </>
+                          )}
+                        </div>
+                        <h4 className="section-title">Mixed 1</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                    {goalLevels.length === 0 || goalLevels.includes(12) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() =>
+                            openLevel(["f/2", "e/2", "d/2", "c/2", "b/1"], 12)
+                          }
+                        >
+                          <img className="home-level-image" src={ledger1}></img>
+                        </Button>
+                        {goalLevels.includes(12) ? (
+                          <div style={{ width: "100px", paddingBottom: "1em" }}>
+                            <ProgressBar
+                              completed={getCompletedPercentage(12)}
+                            ></ProgressBar>{" "}
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+                        <h4 className="section-title">Ledger 1</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                  </div>
+                  <div className="levels-row">
+                    {goalLevels.length === 0 || goalLevels.includes(13) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() =>
+                            openLevel(["b/3", "c/4", "d/4", "e/4"], 13)
+                          }
+                        >
+                          <img className="home-level-image" src={ledger2}></img>
+                        </Button>
+                        {goalLevels.includes(13) ? (
+                          <div style={{ width: "100px", paddingBottom: "1em" }}>
+                            <ProgressBar
+                              completed={getCompletedPercentage(13)}
+                            ></ProgressBar>{" "}
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+                        <h4 className="section-title">Ledger 2</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                    {goalLevels.length === 0 || goalLevels.includes(14) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() =>
+                            openLevel(
+                              ["c/4", "b/2", "a/2", "g/3", "f/2", "e/3", "d/2"],
+                              14
+                            )
+                          }
+                        >
+                          <img className="home-level-image" src={mixed2}></img>
+                        </Button>
+                        {goalLevels.includes(14) ? (
+                          <div style={{ width: "100px", paddingBottom: "1em" }}>
+                            <ProgressBar
+                              completed={getCompletedPercentage(14)}
+                            ></ProgressBar>{" "}
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+                        <h4 className="section-title">Mixed 2</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                  </div>
+                </div>
+                {goalLevels.length === 0 ||
                 goalLevels.some((r) => [7, 8].includes(r)) ? (
                   <div className="section-header">
                     <h4 className="section-title">
@@ -465,7 +656,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                     </h4>{" "}
                     <img
                       className="section-img"
-                      src={allvar}
+                      src={violin}
                       height="40px"
                       width="40px"
                     ></img>
