@@ -1,14 +1,14 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 .sign-up-container {
@@ -18,31 +18,56 @@ code {
   justify-content: space-around;
   align-items: center;
 }
-.rotate-in-ver{-webkit-animation:rotate-in-ver .5s cubic-bezier(.25,.46,.45,.94) both;animation:rotate-in-ver .5s cubic-bezier(.25,.46,.45,.94) both}
-@-webkit-keyframes rotate-in-ver{0%{-webkit-transform:rotateY(-360deg);transform:rotateY(-360deg);opacity:0}100%{-webkit-transform:rotateY(0deg);transform:rotateY(0deg);opacity:1}}@keyframes rotate-in-ver{0%{-webkit-transform:rotateY(-360deg);transform:rotateY(-360deg);opacity:0}100%{-webkit-transform:rotateY(0deg);transform:rotateY(0deg);opacity:1}}
+.rotate-in-ver {
+  -webkit-animation: rotate-in-ver 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    both;
+  animation: rotate-in-ver 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@-webkit-keyframes rotate-in-ver {
+  0% {
+    -webkit-transform: rotateY(-360deg);
+    transform: rotateY(-360deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+@keyframes rotate-in-ver {
+  0% {
+    -webkit-transform: rotateY(-360deg);
+    transform: rotateY(-360deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
 
 .fb-button {
   width: 280px;
-  font-family: 'Roboto';
-
+  font-family: "Roboto";
 }
 
 amplify-signup {
-  font-family: 'Roboto';
+  font-family: "Roboto";
 }
 
 img {
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   flex: 1;
   padding-bottom: 2em;
 }
 
-
 :root {
-    --amplify-primary-color: #798DFA;
-    --amplify-primary-tint: #5870F9;
-    --amplify-primary-shade: #5870F9;
-    --amplify-font-family: -apple-system, BlinkMacSystemFont, Roboto;
+  --amplify-primary-color: #798dfa;
+  --amplify-primary-tint: #5870f9;
+  --amplify-primary-shade: #5870f9;
+  --amplify-font-family: -apple-system, BlinkMacSystemFont, Roboto;
 }
