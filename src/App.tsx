@@ -569,7 +569,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                 {
                   type: "username",
                   label: "Username",
-                  placeholder: "",
+                  placeholder: "Usernames are case sensitive",
                   hint: "Usernames are case sensitive",
                   required: true,
                 },
@@ -582,7 +582,7 @@ const AuthStateApp: React.FunctionComponent = () => {
                 {
                   type: "custom:teacher",
                   label: "Teachers's username",
-                  placeholder: "",
+                  placeholder: "Usernames are case sensitive",
                   required: true,
                 },
                 {
@@ -600,8 +600,8 @@ const AuthStateApp: React.FunctionComponent = () => {
                 {
                   type: "username",
                   label: "Username",
-                  placeholder: "",
                   hint: "Usernames are case sensitive",
+                  placeholder: "Usernames are case sensitive",
                   required: true,
                 },
                 {
