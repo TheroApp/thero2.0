@@ -250,13 +250,15 @@ export const NoteReaderLevel = ({
           ? "Which string and finger do you use to play this note?"
           : "What is the name of this note?"}
       </h4>
-      <Score
-        clef={clef}
-        keySignature={levelNum === 7 || levelNum === 8 ? "A" : "C"}
-        note={currentNote}
-        vhWidth={useWindowWidth()}
-        vhHeight={useWindowHeight()}
-      />
+      <div style={{ marginTop: "4vh" }}>
+        <Score
+          clef={clef}
+          keySignature={levelNum === 7 || levelNum === 8 ? "A" : "C"}
+          note={currentNote}
+          vhWidth={useWindowWidth()}
+          vhHeight={useWindowHeight()}
+        />
+      </div>
       <div className="answer-buttons-container">
         {fourOptions.map((note) => {
           return (

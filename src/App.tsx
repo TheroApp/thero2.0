@@ -260,11 +260,14 @@ const AuthStateApp: React.FunctionComponent = () => {
       )}
       <Container maxWidth="sm" style={{ paddingBottom: "3em" }}>
         {isLoading ? (
-          <div style={{ paddingTop: "3em", alignItems: "center" }}>
-            <CircularProgress
-              color="secondary"
-              style={{ marginLeft: "50%" }}
-            ></CircularProgress>
+          <div
+            style={{
+              paddingTop: "3em",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <CircularProgress color="secondary"></CircularProgress>
           </div>
         ) : (
           <>
@@ -939,11 +942,14 @@ const AuthStateApp: React.FunctionComponent = () => {
   ) : (
     <div className="sign-up-container">
       {isLoading ? (
-        <div style={{ paddingTop: "3em", alignItems: "center" }}>
-          <CircularProgress
-            color="secondary"
-            style={{ marginLeft: "50%" }}
-          ></CircularProgress>
+        <div
+          style={{
+            paddingTop: "3em",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress color="secondary"></CircularProgress>
         </div>
       ) : (
         <>

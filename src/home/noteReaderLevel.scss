@@ -139,6 +139,8 @@
   color: $thui-color-white;
   font-size: 20px;
   font-weight: 900;
+  margin-bottom: 0.8em;
+
   @media (max-width: 414px) and (display-mode: browser) {
     height: 40px;
     font-size: 16px;
@@ -209,12 +211,12 @@
   font-family: "CircularStd";
   font-style: normal;
   font-weight: bold;
-  font-size: 2.8vh;
+  font-size: 2.4vh;
   line-height: 3vh;
   visibility: hidden;
   @media (max-width: 414px) and (display-mode: browser) {
-    font-size: 2.5vh;
-    line-height: 2.5vh;
+    font-size: 2.4vh;
+    line-height: 2.4vh;
   }
   &--success {
     @extend .feedback-text;
