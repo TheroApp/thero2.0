@@ -52,6 +52,13 @@ import ledger2 from "./images/home/Ledger 2.png";
 import mixed2 from "./images/home/Mixed 2.png";
 import violin from "./images/home/violin.png";
 
+import bassSpaces from "./images/home/BassSpaces.png";
+import bassLines from "./images/home/BassLines.png";
+import bassMixed1 from "./images/home/BassMixed1.png";
+import bassLedger1 from "./images/home/BassLedger1.png";
+import bassLedger2 from "./images/home/BassLedger2.png";
+import bassMixed2 from "./images/home/BassMixed2.png";
+
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
   const [user, setUser] = React.useState<any | undefined>();
@@ -662,7 +669,10 @@ const AuthStateApp: React.FunctionComponent = () => {
                             openLevel(["a/2", "c/3", "e/3", "g/3"], 9);
                           }}
                         >
-                          <img className="home-level-image" src={spaces}></img>
+                          <img
+                            className="home-level-image"
+                            src={bassSpaces}
+                          ></img>
                         </Button>
                         {goalLevels.includes(9) ? (
                           <div
@@ -692,7 +702,10 @@ const AuthStateApp: React.FunctionComponent = () => {
                             openLevel(["g/2", "b/2", "d/3", "f/3", "a/3"], 10)
                           }
                         >
-                          <img className="home-level-image" src={lines}></img>
+                          <img
+                            className="home-level-image"
+                            src={bassLines}
+                          ></img>
                         </Button>
                         {goalLevels.includes(10) ? (
                           <div style={{ width: "100px", paddingBottom: "1em" }}>
@@ -721,7 +734,10 @@ const AuthStateApp: React.FunctionComponent = () => {
                             )
                           }
                         >
-                          <img className="home-level-image" src={mixed1}></img>
+                          <img
+                            className="home-level-image"
+                            src={bassMixed1}
+                          ></img>
                         </Button>
                         <div style={{ width: "100px", paddingBottom: "1em" }}>
                           {goalLevels.includes(11) ? (
@@ -749,7 +765,10 @@ const AuthStateApp: React.FunctionComponent = () => {
                             openLevel(["f/2", "e/2", "d/2", "c/2", "b/1"], 12)
                           }
                         >
-                          <img className="home-level-image" src={ledger1}></img>
+                          <img
+                            className="home-level-image"
+                            src={bassLedger1}
+                          ></img>
                         </Button>
                         {goalLevels.includes(12) ? (
                           <div style={{ width: "100px", paddingBottom: "1em" }}>
@@ -775,7 +794,10 @@ const AuthStateApp: React.FunctionComponent = () => {
                             openLevel(["b/3", "c/4", "d/4", "e/4"], 13)
                           }
                         >
-                          <img className="home-level-image" src={ledger2}></img>
+                          <img
+                            className="home-level-image"
+                            src={bassLedger2}
+                          ></img>
                         </Button>
                         {goalLevels.includes(13) ? (
                           <div style={{ width: "100px", paddingBottom: "1em" }}>
@@ -802,7 +824,10 @@ const AuthStateApp: React.FunctionComponent = () => {
                             )
                           }
                         >
-                          <img className="home-level-image" src={mixed2}></img>
+                          <img
+                            className="home-level-image"
+                            src={bassMixed2}
+                          ></img>
                         </Button>
                         {goalLevels.includes(14) ? (
                           <div style={{ width: "100px", paddingBottom: "1em" }}>
