@@ -158,11 +158,35 @@ export const RhythmLevel = ({
   switch (levelState) {
     case "Success":
       submitButtonClass = "--success";
-      feedbackText = `Good work! It has ${getCounts(currentNote)} counts`;
+
+      feedbackText = `Good work! It's worth ${getCounts(currentNote)} ${
+        getCounts(currentNote) == "½" || getCounts(currentNote) == "¼"
+          ? "a "
+          : ""
+      }count${
+        getCounts(currentNote) == 2 || getCounts(currentNote) == 4 ? "s" : ""
+      }`;
+
+      if (levelNum >= 17) {
+        feedbackText = `Good work! It's a ${getName(currentNote)} ${
+          levelNum == 18 ? "rest" : ""
+        }`;
+      }
       break;
     case "Fail":
       submitButtonClass = "--error";
-      feedbackText = `It has ${getCounts(currentNote)} counts`;
+      feedbackText = `It's worth ${getCounts(currentNote)} ${
+        getCounts(currentNote) == "½" || getCounts(currentNote) == "¼"
+          ? "a "
+          : ""
+      }count${
+        getCounts(currentNote) == 2 || getCounts(currentNote) == 4 ? "s" : ""
+      }`;
+      if (levelNum >= 17) {
+        feedbackText = `Good work! It's a ${getName(currentNote)} ${
+          levelNum == 18 ? "rest" : ""
+        }`;
+      }
       break;
   }
 
@@ -192,7 +216,13 @@ export const RhythmLevel = ({
         </Toolbar>
       </AppBar>
       <h4 className="note-reader-level-title">
-        How many counts does this rhythm note have?
+        {levelNum < 17
+          ? `How many counts does this ${
+              levelNum == 15 ? "note" : "rest"
+            } have?`
+          : `What's the name of this rhythm ${
+              levelNum == 17 ? "note" : "rest"
+            }?`}
       </h4>
       <div style={{ marginTop: "16vh" }}>
         <RhythmScore
@@ -201,13 +231,19 @@ export const RhythmLevel = ({
           vhHeight={useWindowHeight()}
         />
       </div>
-      <div className="answer-buttons-container">
+      <div
+        className={
+          levelNum < 17 ? "answer-buttons-container" : "name-answer-container"
+        }
+      >
         {fourOptions.map((note) => {
           return (
             <Button
               disabled={levelState !== "Idle"}
               key={note}
-              className={`answer-button ${
+              className={`${
+                levelNum < 17 ? "answer-button" : "answer-button-name"
+              } ${
                 selectedNote === note &&
                 levelState === "Idle" &&
                 "answer-button--selected"
@@ -224,7 +260,7 @@ export const RhythmLevel = ({
                 setSelectedNote(note);
               }}
             >
-              <span>{getCounts(note)}</span>
+              <span>{levelNum < 17 ? getCounts(note) : getName(note)}</span>
             </Button>
           );
         })}
@@ -276,5 +312,18 @@ function getCounts(duration: string): React.ReactNode {
   } else if (duration.includes("8")) return "½";
   else {
     return "¼";
+  }
+}
+
+function getName(duration: string): React.ReactNode {
+  if (duration.includes("q")) {
+    return "Crotchet";
+  } else if (duration.includes("h")) {
+    return "Minim";
+  } else if (duration.includes("w")) {
+    return "Semibreve";
+  } else if (duration.includes("8")) return "Quaver";
+  else {
+    return "Semiquaver";
   }
 }

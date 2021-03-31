@@ -313,6 +313,74 @@ const AuthStateApp: React.FunctionComponent = () => {
                 )}
                 <div className="levels-container">
                   <div className="levels-row">
+                    {goalLevels.length === 0 || goalLevels.includes(17) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() => {
+                            openLevel(["q", "8", "w", "h", "16"], 17);
+                          }}
+                        >
+                          <img
+                            className="home-level-image"
+                            src={noteCounts}
+                          ></img>
+                        </Button>
+                        {goalLevels.includes(17) ? (
+                          <div
+                            style={{
+                              width: "100px",
+                              paddingBottom: "1em",
+                            }}
+                          >
+                            <ProgressBar
+                              completed={getCompletedPercentage(17)}
+                            ></ProgressBar>
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+
+                        <h4 className="section-title">Names 1</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                    {goalLevels.length === 0 || goalLevels.includes(18) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() => {
+                            openLevel(["qr", "8r", "wr", "hr", "16r"], 18);
+                          }}
+                        >
+                          <img
+                            className="home-level-image"
+                            src={restCounts}
+                          ></img>
+                        </Button>
+                        {goalLevels.includes(18) ? (
+                          <div
+                            style={{
+                              width: "100px",
+                              paddingBottom: "1em",
+                            }}
+                          >
+                            <ProgressBar
+                              completed={getCompletedPercentage(18)}
+                            ></ProgressBar>
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+
+                        <h4 className="section-title">Names 2</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                  </div>
+                  <div className="levels-row">
                     {goalLevels.length === 0 || goalLevels.includes(15) ? (
                       <div className="button-and-title-container">
                         <Button
