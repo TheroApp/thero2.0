@@ -296,7 +296,7 @@ const AuthStateApp: React.FunctionComponent = () => {
             ) : (
               <>
                 {goalLevels.length === 0 ||
-                goalLevels.some((r) => [15, 16].includes(r)) ? (
+                goalLevels.some((r) => [15, 16, 17, 18].includes(r)) ? (
                   <div className="section-header">
                     <h4 className="section-title">
                       {goalLevels.length === 0 ? "Rhythms" : "Rhythms Practice"}
