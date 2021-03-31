@@ -183,7 +183,7 @@ export const RhythmLevel = ({
         getCounts(currentNote) == 2 || getCounts(currentNote) == 4 ? "s" : ""
       }`;
       if (levelNum >= 17) {
-        feedbackText = `Good work! It's a ${getName(currentNote)} ${
+        feedbackText = `It's a ${getName(currentNote)} ${
           levelNum == 18 ? "rest" : ""
         }`;
       }
