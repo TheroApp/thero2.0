@@ -16,6 +16,16 @@
   }
 }
 
+.name-answer-container {
+  margin-top: "3em";
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+}
+
 .answer-buttons-container {
   display: flex;
   justify-content: center;
@@ -127,6 +137,17 @@
   border: 2px solid $thui-color-blue-500;
   outline: none;
   color: $thui-color-white;
+  font-size: 20px;
+  font-weight: 900;
+  @media (max-width: 414px) and (display-mode: browser) {
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+.answer-button-name {
+  font-family: "CircularStd";
+  height: 56px;
   font-size: 20px;
   font-weight: 900;
   @media (max-width: 414px) and (display-mode: browser) {
