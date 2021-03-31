@@ -29,6 +29,7 @@ import { Auth } from "aws-amplify";
 
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import NoteReaderLevel from "./home/NoteReaderLevel";
+import RhythmLevel from "./home/RhythmLevel";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import logo from "./logo.png";
@@ -39,6 +40,9 @@ import ProgressBar from "./components/progressBar";
 import on from "./images/OnTheLines.svg";
 import ledger from "./images/ledger.svg";
 import highledger from "./images/highledger.svg";
+import rhythms from "./images/rhythms.png";
+import noteCounts from "./images/home/NoteCounts.png";
+import restCounts from "./images/home/RestCounts.png";
 
 import spaces from "./images/home/Spaces.png";
 import lines from "./images/home/Lines.png";
@@ -258,23 +262,125 @@ const AuthStateApp: React.FunctionComponent = () => {
         ) : (
           <>
             {selectedLevel ? (
-              <NoteReaderLevel
-                clef={levelNum <= 8 ? "treble" : "bass"}
-                showFingerPosition={
-                  levelNum == 7 || levelNum == 8 ? true : false
-                }
-                practicePool={selectedLevel}
-                setSelectedLevel={setSelectedLevel}
-                levelNum={levelNum}
-                user={user}
-                globalScore={score}
-                userGoalLevels={goalLevels}
-                userProgressPerGoalLevels={progressPerGoalLevels}
-                goalDueDate={goalDueDate}
-                goalSetDate={goalSetDate}
-              />
+              <>
+                {levelNum < 15 ? (
+                  <NoteReaderLevel
+                    clef={levelNum <= 8 ? "treble" : "bass"}
+                    showFingerPosition={
+                      levelNum == 7 || levelNum == 8 ? true : false
+                    }
+                    practicePool={selectedLevel}
+                    setSelectedLevel={setSelectedLevel}
+                    levelNum={levelNum}
+                    user={user}
+                    globalScore={score}
+                    userGoalLevels={goalLevels}
+                    userProgressPerGoalLevels={progressPerGoalLevels}
+                    goalDueDate={goalDueDate}
+                    goalSetDate={goalSetDate}
+                  />
+                ) : (
+                  <RhythmLevel
+                    practicePool={selectedLevel}
+                    setSelectedLevel={setSelectedLevel}
+                    levelNum={levelNum}
+                    user={user}
+                    globalScore={score}
+                    userGoalLevels={goalLevels}
+                    userProgressPerGoalLevels={progressPerGoalLevels}
+                    goalDueDate={goalDueDate}
+                    goalSetDate={goalSetDate}
+                  ></RhythmLevel>
+                )}
+              </>
             ) : (
               <>
+                {goalLevels.length === 0 ||
+                goalLevels.some((r) => [15, 16].includes(r)) ? (
+                  <div className="section-header">
+                    <h4 className="section-title">
+                      {goalLevels.length === 0 ? "Rhythms" : "Rhythms Practice"}
+                    </h4>
+                    <img
+                      className="section-img"
+                      src={rhythms}
+                      height="40px"
+                      width="40px"
+                    ></img>
+                  </div>
+                ) : (
+                  <></>
+                )}
+                <div className="levels-container">
+                  <div className="levels-row">
+                    {goalLevels.length === 0 || goalLevels.includes(15) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() => {
+                            openLevel(["q", "8", "w", "h", "16"], 15);
+                          }}
+                        >
+                          <img
+                            className="home-level-image"
+                            src={noteCounts}
+                          ></img>
+                        </Button>
+                        {goalLevels.includes(15) ? (
+                          <div
+                            style={{
+                              width: "100px",
+                              paddingBottom: "1em",
+                            }}
+                          >
+                            <ProgressBar
+                              completed={getCompletedPercentage(15)}
+                            ></ProgressBar>
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+
+                        <h4 className="section-title">Counts 1</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                    {goalLevels.length === 0 || goalLevels.includes(16) ? (
+                      <div className="button-and-title-container">
+                        <Button
+                          className="answer-button"
+                          onClick={() => {
+                            openLevel(["qr", "8r", "wr", "hr", "16r"], 16);
+                          }}
+                        >
+                          <img
+                            className="home-level-image"
+                            src={restCounts}
+                          ></img>
+                        </Button>
+                        {goalLevels.includes(16) ? (
+                          <div
+                            style={{
+                              width: "100px",
+                              paddingBottom: "1em",
+                            }}
+                          >
+                            <ProgressBar
+                              completed={getCompletedPercentage(16)}
+                            ></ProgressBar>
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+
+                        <h4 className="section-title">Counts 2</h4>
+                      </div>
+                    ) : (
+                      <> </>
+                    )}
+                  </div>
+                </div>
                 {goalLevels.length === 0 ||
                 goalLevels.some((r) => [1, 2, 3, 4, 5, 6].includes(r)) ? (
                   <div className="section-header">
