@@ -168,7 +168,7 @@ export const RhythmLevel = ({
       }`;
 
       if (levelNum >= 17) {
-        feedbackText = `Good work! It's a ${getName(currentNote)} ${
+        feedbackText = `Good work! It's a ${getName(currentNote, levelNum)} ${
           levelNum == 18 ? "rest" : ""
         }`;
       }
@@ -183,7 +183,7 @@ export const RhythmLevel = ({
         getCounts(currentNote) == 2 || getCounts(currentNote) == 4 ? "s" : ""
       }`;
       if (levelNum >= 17) {
-        feedbackText = `It's a ${getName(currentNote)} ${
+        feedbackText = `It's a ${getName(currentNote, levelNum)} ${
           levelNum == 18 ? "rest" : ""
         }`;
       }
@@ -260,7 +260,9 @@ export const RhythmLevel = ({
                 setSelectedNote(note);
               }}
             >
-              <span>{levelNum < 17 ? getCounts(note) : getName(note)}</span>
+              <span>
+                {levelNum < 17 ? getCounts(note) : getName(note, levelNum)}
+              </span>
             </Button>
           );
         })}
@@ -315,15 +317,28 @@ function getCounts(duration: string): React.ReactNode {
   }
 }
 
-function getName(duration: string): React.ReactNode {
-  if (duration.includes("q")) {
-    return "Crotchet";
-  } else if (duration.includes("h")) {
-    return "Minim";
-  } else if (duration.includes("w")) {
-    return "Semibreve";
-  } else if (duration.includes("8")) return "Quaver";
-  else {
-    return "Semiquaver";
+function getName(duration: string, levelNum: number): React.ReactNode {
+  if (levelNum < 19) {
+    if (duration.includes("q")) {
+      return "Crotchet";
+    } else if (duration.includes("h")) {
+      return "Minim";
+    } else if (duration.includes("w")) {
+      return "Semibreve";
+    } else if (duration.includes("8")) return "Quaver";
+    else {
+      return "Semiquaver";
+    }
+  } else {
+    if (duration.includes("q")) {
+      return "Quarter";
+    } else if (duration.includes("h")) {
+      return "Half";
+    } else if (duration.includes("w")) {
+      return "Whole";
+    } else if (duration.includes("8")) return "Eighth";
+    else {
+      return "Sixteenth";
+    }
   }
 }
