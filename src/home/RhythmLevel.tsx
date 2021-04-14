@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { RhythmScore, Score } from "../components/vexflow/Vexflow";
+import { RhythmScore } from "../components/vexflow/Vexflow";
 import { Toolbar, IconButton, Button, Typography } from "@material-ui/core";
 import "../index.css";
 import AppBar from "@material-ui/core/AppBar";
@@ -41,10 +41,15 @@ export const RhythmLevel = ({
   };
 
   const getFourOptions = (rightAnswer: string) => {
+    var options = 4;
+    if (levelNum > 20) {
+      options = 3;
+    }
+
     let first = [rightAnswer];
     let note = practicePool[Math.floor(Math.random() * practicePool.length)];
 
-    while (first.length < 4) {
+    while (first.length < options) {
       if (!first.includes(note)) {
         first.push(note);
       }
@@ -215,18 +220,11 @@ export const RhythmLevel = ({
           </Typography>
         </Toolbar>
       </AppBar>
-      <h4 className="note-reader-level-title">
-        {levelNum < 17
-          ? `How many counts does this ${
-              levelNum == 15 ? "note" : "rest"
-            } have?`
-          : `What's the name of this rhythm ${
-              levelNum == 17 ? "note" : "rest"
-            }?`}
-      </h4>
+      <h4 className="note-reader-level-title">{getQuestion(levelNum)}</h4>
       <div style={{ marginTop: "16vh" }}>
         <RhythmScore
-          duration={currentNote}
+          accidental={isAccidental(currentNote) ? currentNote : undefined}
+          duration={isAccidental(currentNote) ? "q" : currentNote}
           vhWidth={useWindowWidth()}
           vhHeight={useWindowHeight()}
         />
@@ -317,6 +315,13 @@ function getCounts(duration: string): React.ReactNode {
   }
 }
 
+function isAccidental(string: string) {
+  if (string.includes("#") || string.includes("b") || string.includes("n")) {
+    return true;
+  }
+  return false;
+}
+
 function getName(duration: string, levelNum: number): React.ReactNode {
   if (levelNum < 19) {
     if (duration.includes("q")) {
@@ -329,7 +334,7 @@ function getName(duration: string, levelNum: number): React.ReactNode {
     else {
       return "Semiquaver";
     }
-  } else {
+  } else if (levelNum < 21) {
     if (duration.includes("q")) {
       return "Quarter";
     } else if (duration.includes("h")) {
@@ -340,5 +345,26 @@ function getName(duration: string, levelNum: number): React.ReactNode {
     else {
       return "Sixteenth";
     }
+  } else {
+    if (duration.includes("#")) {
+      return "Sharp";
+    } else if (duration.includes("n")) {
+      return "Natural";
+    } else {
+      return "Flat";
+    }
+  }
+}
+function getQuestion(levelNum: number): React.ReactNode {
+  if (levelNum < 17) {
+    return `How many counts does this ${
+      levelNum == 15 ? "note" : "rest"
+    } have?`;
+  } else if (levelNum < 21) {
+    return `What's the name of this rhythm ${
+      levelNum == 17 ? "note" : "rest"
+    }?`;
+  } else {
+    return `What is the name of this accidental?`;
   }
 }

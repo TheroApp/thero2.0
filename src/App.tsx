@@ -58,6 +58,7 @@ import bassMixed1 from "./images/home/BassMixed1.png";
 import bassLedger1 from "./images/home/BassLedger1.png";
 import bassLedger2 from "./images/home/BassLedger2.png";
 import bassMixed2 from "./images/home/BassMixed2.png";
+import accidentals from "./images/home/Accidentals.png";
 
 const AuthStateApp: React.FunctionComponent = () => {
   const [authState, setAuthState] = React.useState<AuthState>();
@@ -916,6 +917,55 @@ const AuthStateApp: React.FunctionComponent = () => {
                     )}
                   </div>
                 </div>
+                {goalLevels.length === 0 ||
+                goalLevels.some((r) => [21].includes(r)) ? (
+                  <>
+                    <div className="section-header">
+                      <h4 className="section-title">
+                        {goalLevels.length === 0 ? "Scales" : "Scales Practice"}
+                      </h4>
+                      <img
+                        className="section-img"
+                        src={highledger}
+                        height="40px"
+                        width="40px"
+                      ></img>
+                    </div>
+                    <div className="levels-container">
+                      <div className="levels-row">
+                        {goalLevels.includes(21) || goalLevels.length === 0 ? (
+                          <div className="button-and-title-container">
+                            <Button
+                              className="answer-button"
+                              onClick={() => openLevel(["#", "b", "n"], 21)}
+                            >
+                              <img
+                                className="home-level-image"
+                                src={accidentals}
+                              ></img>
+                            </Button>
+                            {goalLevels.includes(21) ? (
+                              <div
+                                style={{ width: "100px", paddingBottom: "1em" }}
+                              >
+                                <ProgressBar
+                                  completed={getCompletedPercentage(21)}
+                                ></ProgressBar>
+                              </div>
+                            ) : (
+                              <> </>
+                            )}
+                            <h4 className="section-title">Accidentals</h4>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
                 {goalLevels.length === 0 ||
                 goalLevels.some((r) => [7, 8].includes(r)) ? (
                   <div className="section-header">
