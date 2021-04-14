@@ -3,7 +3,7 @@ import VexFlow from "vexflow";
 import "./Vexflow.scss";
 
 const VF = VexFlow.Flow;
-const { Formatter, Renderer, Stave, StaveNote, Accidental } = VF;
+const { Formatter, Renderer, Stave, StaveNote, Accidental, Barline } = VF;
 
 export function Score({
   note,
@@ -197,6 +197,83 @@ export function RhythmScore({
       voice.draw(context, stave);
     }
   }, [duration, accidental]);
+
+  return (
+    <div className="vexflow-container">
+      <canvas ref={container} />
+    </div>
+  );
+}
+
+export function ElementScore({
+  element,
+  vhWidth,
+  vhHeight,
+}: {
+  element: string;
+  vhWidth: number;
+  vhHeight: number;
+}) {
+  const container = useRef<HTMLCanvasElement>(null);
+
+  function calculateCanvasSize(width: number, height: number) {
+    if (width > 540) {
+      return 240;
+    }
+    if (width <= 360 || height <= 680) {
+      return 180;
+    }
+    return 180;
+  }
+
+  function calculateScale(width: number, height: number) {
+    if (width > 540) {
+      return 2;
+    }
+    if (width <= 360 || height <= 680) {
+      return 1.5;
+    }
+    return 1.5;
+  }
+
+  useEffect(() => {
+    if (container?.current) {
+      var renderer = new Renderer(container.current, Renderer.Backends.CANVAS);
+
+      const canvasSize = calculateCanvasSize(vhWidth, vhHeight);
+      renderer.resize(canvasSize, canvasSize);
+
+      var context = renderer.getContext();
+
+      context.scale(
+        calculateScale(vhWidth, vhHeight),
+        calculateScale(vhWidth, vhHeight)
+      );
+      context.setFont("Arial", 10);
+      context.setBackgroundFillStyle("#eed");
+
+      var stave = new Stave(10, 20, 80, {
+        num_lines: 5,
+        fill_style: element === "Bar" ? "#5870F9" : "#000000",
+      });
+      if (element.includes("Time Signature")) {
+        stave.addTimeSignature("4/4");
+        stave.setBegBarType(Barline.type.NONE);
+        stave.setEndBarType(Barline.type.NONE);
+      }
+      if (element.includes("Bar-line")) {
+        stave.setEndBarType(Barline.type.NONE);
+      }
+      if (element.includes("Double")) {
+        stave.setBegBarType(Barline.type.NONE);
+
+        stave.setEndBarType(Barline.type.DOUBLE);
+      }
+      context.setFillStyle("#5870F9");
+
+      stave.setContext(context).draw();
+    }
+  }, [element]);
 
   return (
     <div className="vexflow-container">
