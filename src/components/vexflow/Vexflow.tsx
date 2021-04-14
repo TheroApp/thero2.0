@@ -3,7 +3,7 @@ import VexFlow from "vexflow";
 import "./Vexflow.scss";
 
 const VF = VexFlow.Flow;
-const { Formatter, Renderer, Stave, StaveNote } = VF;
+const { Formatter, Renderer, Stave, StaveNote, Accidental } = VF;
 
 export function Score({
   note,
@@ -98,10 +98,12 @@ export function RhythmScore({
   duration,
   vhWidth,
   vhHeight,
+  accidental,
 }: {
   duration: string;
   vhWidth: number;
   vhHeight: number;
+  accidental: string | undefined;
 }) {
   const container = useRef<HTMLCanvasElement>(null);
 
@@ -144,19 +146,36 @@ export function RhythmScore({
       context.setFont("Arial", 10);
       context.setBackgroundFillStyle("#eed");
 
-      const stave = new Stave(10, 20, 50, {
-        num_lines: 1,
-      });
+      const stave = new Stave(
+        accidental != undefined ? 20 : 10,
+        20,
+        accidental != undefined ? 40 : 50,
+        {
+          num_lines: accidental != undefined ? 0 : 1,
+        }
+      );
+
+      var notes;
 
       stave.setContext(context).draw();
+      if (accidental != undefined) {
+        notes = [
+          new StaveNote({
+            keys: ["f/5"],
+            duration: "q",
+            clef: "treble",
+          }).addAccidental(0, new Accidental(accidental)),
+        ];
+      } else {
+        notes = [
+          new StaveNote({
+            keys: ["f/5"],
+            duration: duration,
+            clef: "treble",
+          }),
+        ];
+      }
 
-      const notes = [
-        new StaveNote({
-          keys: ["f/5"],
-          duration: duration,
-          clef: "treble",
-        }),
-      ];
       var num_beats;
       if (duration.includes("q")) {
         num_beats = 1;
@@ -177,7 +196,7 @@ export function RhythmScore({
 
       voice.draw(context, stave);
     }
-  }, [duration]);
+  }, [duration, accidental]);
 
   return (
     <div className="vexflow-container">
