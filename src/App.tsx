@@ -30,6 +30,8 @@ import { Auth } from "aws-amplify";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import NoteReaderLevel from "./home/NoteReaderLevel";
 import RhythmLevel from "./home/RhythmLevel";
+import ElementLevel from "./home/ElementsLevel";
+
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import logo from "./logo.png";
@@ -187,6 +189,58 @@ const AuthStateApp: React.FunctionComponent = () => {
     }
   }
 
+  function renderLevel() {
+    {
+      if (selectedLevel != undefined) {
+        if (levelNum < 15) {
+          return (
+            <NoteReaderLevel
+              clef={levelNum <= 8 ? "treble" : "bass"}
+              showFingerPosition={levelNum == 7 || levelNum == 8 ? true : false}
+              practicePool={selectedLevel}
+              setSelectedLevel={setSelectedLevel}
+              levelNum={levelNum}
+              user={user}
+              globalScore={score}
+              userGoalLevels={goalLevels}
+              userProgressPerGoalLevels={progressPerGoalLevels}
+              goalDueDate={goalDueDate}
+              goalSetDate={goalSetDate}
+            />
+          );
+        } else if (levelNum < 22) {
+          return (
+            <RhythmLevel
+              practicePool={selectedLevel}
+              setSelectedLevel={setSelectedLevel}
+              levelNum={levelNum}
+              user={user}
+              globalScore={score}
+              userGoalLevels={goalLevels}
+              userProgressPerGoalLevels={progressPerGoalLevels}
+              goalDueDate={goalDueDate}
+              goalSetDate={goalSetDate}
+            ></RhythmLevel>
+          );
+        } else {
+          return (
+            <ElementLevel
+              practicePool={selectedLevel}
+              setSelectedLevel={setSelectedLevel}
+              levelNum={levelNum}
+              user={user}
+              globalScore={score}
+              userGoalLevels={goalLevels}
+              userProgressPerGoalLevels={progressPerGoalLevels}
+              goalDueDate={goalDueDate}
+              goalSetDate={goalSetDate}
+            ></ElementLevel>
+          );
+        }
+      }
+    }
+  }
+
   return authState === AuthState.SignedIn && user ? (
     <ThemeProvider>
       {!selectedLevel ? (
@@ -273,41 +327,13 @@ const AuthStateApp: React.FunctionComponent = () => {
         ) : (
           <>
             {selectedLevel ? (
-              <>
-                {levelNum < 15 ? (
-                  <NoteReaderLevel
-                    clef={levelNum <= 8 ? "treble" : "bass"}
-                    showFingerPosition={
-                      levelNum == 7 || levelNum == 8 ? true : false
-                    }
-                    practicePool={selectedLevel}
-                    setSelectedLevel={setSelectedLevel}
-                    levelNum={levelNum}
-                    user={user}
-                    globalScore={score}
-                    userGoalLevels={goalLevels}
-                    userProgressPerGoalLevels={progressPerGoalLevels}
-                    goalDueDate={goalDueDate}
-                    goalSetDate={goalSetDate}
-                  />
-                ) : (
-                  <RhythmLevel
-                    practicePool={selectedLevel}
-                    setSelectedLevel={setSelectedLevel}
-                    levelNum={levelNum}
-                    user={user}
-                    globalScore={score}
-                    userGoalLevels={goalLevels}
-                    userProgressPerGoalLevels={progressPerGoalLevels}
-                    goalDueDate={goalDueDate}
-                    goalSetDate={goalSetDate}
-                  ></RhythmLevel>
-                )}
-              </>
+              <>{renderLevel()}</>
             ) : (
               <>
                 {goalLevels.length === 0 ||
-                goalLevels.some((r) => [15, 16, 17, 18, 19, 20].includes(r)) ? (
+                goalLevels.some((r) =>
+                  [15, 16, 17, 18, 19, 20, 22].includes(r)
+                ) ? (
                   <>
                     <div className="section-header">
                       <h4 className="section-title">
@@ -522,6 +548,49 @@ const AuthStateApp: React.FunctionComponent = () => {
                             )}
 
                             <h4 className="section-title">Counts 2</h4>
+                          </div>
+                        ) : (
+                          <> </>
+                        )}
+                      </div>
+                      <div className="levels-row">
+                        {goalLevels.length === 0 || goalLevels.includes(22) ? (
+                          <div className="button-and-title-container">
+                            <Button
+                              className="answer-button"
+                              onClick={() => {
+                                openLevel(
+                                  [
+                                    "Time Signature",
+                                    "Bar-line",
+                                    "Bar",
+                                    "Double Bar-line",
+                                  ],
+                                  22
+                                );
+                              }}
+                            >
+                              <img
+                                className="home-level-image"
+                                src={restCounts}
+                              ></img>
+                            </Button>
+                            {goalLevels.includes(22) ? (
+                              <div
+                                style={{
+                                  width: "100px",
+                                  paddingBottom: "1em",
+                                }}
+                              >
+                                <ProgressBar
+                                  completed={getCompletedPercentage(22)}
+                                ></ProgressBar>
+                              </div>
+                            ) : (
+                              <> </>
+                            )}
+
+                            <h4 className="section-title">Elements 1</h4>
                           </div>
                         ) : (
                           <> </>
