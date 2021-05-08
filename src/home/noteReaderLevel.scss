@@ -33,7 +33,6 @@
     flex-wrap: wrap;
   }
 }
-
 .answer-button {
   background-color: $thui-color-white;
   color: black;
@@ -72,11 +71,29 @@
   }
 
   &--success {
+    -webkit-animation: successAnimation 1000ms;
     animation: successAnimation 1000ms;
   }
 
   &--fail {
+    -webkit-animation: failAnimation 1000ms;
     animation: failAnimation 1000ms;
+  }
+}
+
+@-webkit-keyframes successAnimation {
+  0% {
+    background: $thui-color-green-300;
+    border-color: $thui-color-green-300;
+    color: $thui-color-green-700;
+  }
+  90% {
+    background: $thui-color-green-300;
+    border-color: $thui-color-green-300;
+    color: $thui-color-green-700;
+  }
+  100% {
+    background: $thui-color-white;
   }
 }
 
@@ -90,6 +107,22 @@
     background: $thui-color-green-300;
     border-color: $thui-color-green-300;
     color: $thui-color-green-700;
+  }
+  100% {
+    background: $thui-color-white;
+  }
+}
+
+@-webkit-keyframes failAnimation {
+  0% {
+    background: $thui-color-red-300;
+    border-color: $thui-color-red-300;
+    color: $thui-color-red-500;
+  }
+  90% {
+    background: $thui-color-red-300;
+    border-color: $thui-color-red-300;
+    color: $thui-color-red-500;
   }
   100% {
     background: $thui-color-white;
